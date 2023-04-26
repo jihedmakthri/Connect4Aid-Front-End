@@ -11,6 +11,12 @@ export class UserPageComponent implements OnInit {
   constructor(private router:Router) { }
 
   ngOnInit(): void {
+              let token:string;
+    token=JSON.parse(localStorage.getItem('userId') || '{}');
+    if(token !='{}')
+    {
+      this.router.navigateByUrl('/user/main')
+    }
   }
     logout() {
     localStorage.clear()

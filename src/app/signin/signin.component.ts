@@ -17,6 +17,14 @@ export class SigninComponent implements OnInit {
   constructor(private userService: UserService, private router:Router,private jwtHelper: JwtHelperService) { }
 
   ngOnInit(): void {
+    let token;
+    token = localStorage.getItem('token')
+    if(token != null )
+    {
+      if (this.jwtHelper.decodeToken(token).role === 'USER') { this.router.navigateByUrl('/user/main') }
+      else if (this.jwtHelper.decodeToken(token).role === 'ADMIN') { this.router.navigateByUrl('/dashboard') }
+      else { this.router.navigateByUrl('/member/main') }
+    }
   }
 
   login() {
