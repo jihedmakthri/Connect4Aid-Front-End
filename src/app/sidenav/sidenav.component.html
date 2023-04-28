@@ -1,0 +1,29 @@
+<div class="navbarrr">
+    <app-navbar-app></app-navbar-app>
+</div>
+<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
+    <div class="logo-container">
+        <button class="logo" (click)="toggleCollapse()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-list"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+            </svg>
+        </button>
+        <div class="logo-text"  *ngIf="collapsed">Menu</div>
+        <button class="btn-close"  *ngIf="collapsed" (click)="closeSidenav()">
+            <i class="fal fa-times close-icon"></i>
+        </button>
+    </div>
+    <ul class="sidenav-nav">
+        <li class="sidenav-nav-item" *ngFor="let data of navData">
+            <a class="sidenav-nav-link" [routerLink]="[data.routeLink]" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">
+                <i class="sidenav-link-icon" [class]="data.icon"></i>
+                <span class="sidenav-link-text" *ngIf="collapsed">
+                    {{data.label}}
+                </span>
+            </a>
+        </li>
+    </ul>
+</div>

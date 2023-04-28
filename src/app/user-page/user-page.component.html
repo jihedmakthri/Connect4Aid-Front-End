@@ -1,2 +1,4 @@
+<app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
+<app-body [collapsed]="isSideNavCollapsed" [screenWidth]="screenWidth"></app-body>
 <p> this is the user page </p>
 <button type="submit" (click)="logout()">logout</button>

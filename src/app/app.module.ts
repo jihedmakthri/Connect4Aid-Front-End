@@ -15,6 +15,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { UserPageComponent } from './user-page/user-page.component';
 import { MemberPageComponent } from './member-page/member-page.component';
+import {MatButtonModule} from '@angular/material/button';
+import { SidenavComponent } from './sidenav/sidenav.component';
+import { BodyComponent } from './body/body.component';
+import { OutletComponent } from './outlet/outlet.component';
+import { TestComponent } from './test/test.component';
+import { NavbarAppComponent } from './navbar-app/navbar-app.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +34,11 @@ import { MemberPageComponent } from './member-page/member-page.component';
     DashboardComponent,
     UserPageComponent,
     MemberPageComponent,
+    SidenavComponent,
+    BodyComponent,
+    OutletComponent,
+    TestComponent,
+    NavbarAppComponent,
     
   ],
   imports: [
@@ -35,6 +47,7 @@ import { MemberPageComponent } from './member-page/member-page.component';
     NgbModule,
     FormsModule,
     HttpClientModule,
+    MatButtonModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

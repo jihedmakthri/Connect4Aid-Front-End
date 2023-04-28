@@ -1,0 +1,11 @@
+.img{
+    width: 280px;
+    height: 60px;
+}
+
+@media only screen and (max-width: 992px) {
+    .dropdown:hover .dropdown-menu {
+        max-height: 350px;
+        overflow-y: scroll;
+    }
+}
