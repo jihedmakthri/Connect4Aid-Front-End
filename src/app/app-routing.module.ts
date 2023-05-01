@@ -11,21 +11,28 @@ import { MemberPageComponent } from './member-page/member-page.component';
 import { AdminGuard } from './service/admin.guard';
 import { UserGuard } from './service/user.guard';
 import { MemberGuard } from './service/member.guard';
-import { BodyComponent } from './body/body.component';
-import { OutletComponent } from './outlet/outlet.component';
+import { UsersDetailsComponent } from './users-details/users-details.component';
+import { ProfileComponent } from './profile/profile.component';
 import { TestComponent } from './test/test.component';
+import { DashboardMainComponent } from './dashboard-main/dashboard-main.component';
 
 const routes: Routes = [
-  { path: '', redirectTo:'home', pathMatch:'full'},
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {path:'test',component:TestComponent},
   { path: 'home', component: HomeComponent },
   { path: 'signin', component: SigninComponent },
   { path: 'register', component: RegisterComponent},
   { path: 'forgotpassword', component: ForgotPasswordComponent },
   {
-    path: 'dashboard', component: DashboardComponent, canActivate: [AdminGuard], children: [
-    {path: 'test',component:TestComponent}
+    path: 'admin', component: DashboardComponent, canActivate: [AdminGuard], children: [
+      { path: 'usersDetails', component: UsersDetailsComponent },
+      { path: 'profile', component: ProfileComponent },
+      {path:'dashboard',component:DashboardMainComponent},
   ]},
-  { path: 'user/main', component: UserPageComponent, canActivate: [UserGuard] },
+  {
+    path: 'user/main', component: UserPageComponent, canActivate: [UserGuard], children: [
+          { path: 'profile', component: ProfileComponent },
+  ]},
   { path: 'member/main', component: MemberPageComponent, canActivate: [MemberGuard] },
   { path: 'notfound', component: NotFoundComponent },
   { path: '**', component: NotFoundComponent }

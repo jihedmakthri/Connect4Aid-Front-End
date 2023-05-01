@@ -1,11 +1,11 @@
 export const navbarData = [
     {
-        routeLink: 'test',
+        routeLink: 'dashboard',
         icon: 'fal fa-tachometer-slowest', 
         label: 'Dashboard Main'
     },
     {
-        routeLink: 'Users',
+        routeLink: 'usersDetails',
         icon: 'fal fa-users',
         label: 'Users'
     },

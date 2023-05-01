@@ -1,6 +1,5 @@
 <app-navbar></app-navbar>
 <div class="container">
-
     <div class="row">
                     <header class="page-header">
                         <h1 class="page-title">Registration</h1>
@@ -21,35 +20,35 @@
                         <form (ngSubmit)="userRegister()">
                             <div class="top-margin form-group">
                                 <label for="firstName">First Name</label>
-                                <input id="firstName" type="text" class="form-control" [(ngModel)]="user.firstName" name="firstName">
+                                <input id="firstName" type="text" class="form-control" [(ngModel)]="user.firstName" name="firstName" required>
                             </div>
                             <div class="top-margin form-group">
                                 <label>Last Name</label>
-                                <input id="lastName" type="text" class="form-control"  [(ngModel)]="user.lastName" name="lastName">
+                                <input id="lastName" type="text" class="form-control"  [(ngModel)]="user.lastName" name="lastName" required>
                             </div>
                             <div class="top-margin form-group">
                                 <label>Email Address</label>
-                                <input id="email" type="email" class="form-control"  [(ngModel)]="user.email" name="email">
+                                <input id="email" type="email" class="form-control"  [(ngModel)]="user.email" name="email" required>
                             </div>
                             <div class="top-margin form-group">
                                 <label>Contact Number</label>
-                                <input id="contactNumber" type="number" class="form-control"  [(ngModel)]="user.contactNumber" name="contactNumber">
+                                <input id="contactNumber" type="number" class="form-control"  [(ngModel)]="user.contactNumber" name="contactNumber" required minlength="8">
                             </div>
                             <div class="top-margin form-group">
                                 <label>Date Of Birth</label>
                                 <input id="dateOfBirth" class="form-control" (click)="d.toggle()" placeholder="yyyy-mm-dd" name="dateOfBirth" [(ngModel)]="user.dateOfBirth" ngbDatepicker
                                     #d="ngbDatepicker" [minDate]="{year: 1900, month: 1, day: 1}"
-           [maxDate]="{year: 2022, month: 12, day: 31}">
+                                    [maxDate]="{year: 2022, month: 12, day: 31}" required>
                             </div>
         
                             <div class="row top-margin">
                                 <div class="col-sm-6 form-group">
                                     <label>Password</label>
-                                    <input id="password" type="password" class="form-control" [(ngModel)]="user.password" name="password">
+                                    <input id="password" type="password" class="form-control" [(ngModel)]="user.password" name="password" required>
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label>Confirm Password</label>
-                                    <input id="confirmPassword" type="password" class="form-control" [(ngModel)]="user.confirmPassword" name="confirmPassword">
+                                    <input id="confirmPassword" type="password" class="form-control" [(ngModel)]="user.confirmPassword" name="confirmPassword" required>
                                 </div>
                             </div>
 

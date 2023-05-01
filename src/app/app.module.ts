@@ -19,8 +19,11 @@ import {MatButtonModule} from '@angular/material/button';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { BodyComponent } from './body/body.component';
 import { OutletComponent } from './outlet/outlet.component';
-import { TestComponent } from './test/test.component';
 import { NavbarAppComponent } from './navbar-app/navbar-app.component';
+import { UsersDetailsComponent } from './users-details/users-details.component';
+import { ProfileComponent } from './profile/profile.component';
+import { TestComponent } from './test/test.component';
+import { DashboardMainComponent } from './dashboard-main/dashboard-main.component';
 
 @NgModule({
   declarations: [
@@ -37,8 +40,11 @@ import { NavbarAppComponent } from './navbar-app/navbar-app.component';
     SidenavComponent,
     BodyComponent,
     OutletComponent,
-    TestComponent,
     NavbarAppComponent,
+    UsersDetailsComponent,
+    ProfileComponent,
+    TestComponent,
+    DashboardMainComponent,
     
   ],
   imports: [
@@ -54,6 +60,7 @@ import { NavbarAppComponent } from './navbar-app/navbar-app.component';
           return localStorage.getItem('access_token');
         },
         allowedDomains: ['localhost'],
+        
       },
     }),
   ],

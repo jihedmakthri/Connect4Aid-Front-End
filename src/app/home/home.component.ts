@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
     if(token != null )
     {
       if (this.jwtHelper.decodeToken(token).role === 'USER') { this.router.navigateByUrl('/user/main') }
-      else if (this.jwtHelper.decodeToken(token).role === 'ADMIN') { this.router.navigateByUrl('/dashboard') }
+      else if (this.jwtHelper.decodeToken(token).role === 'ADMIN') { this.router.navigateByUrl('/admin') }
       else { this.router.navigateByUrl('/member/main') }
     }
   }

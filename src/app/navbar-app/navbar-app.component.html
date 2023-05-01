@@ -18,24 +18,26 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
+                        <i class="fad fa-user-minus" style="--fa-primary-color: #ffffff; --fa-secondary-color: #868686;"></i>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#"><i class="fal fa-user" style="color: #000000;"></i>         Profile</a></li>
+                        <li><a class="dropdown-item" routerLink="profile"
+                            routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}"><i class="fal fa-user" style="color: #000000;"></i>         Profile</a></li>
                         <li><a class="dropdown-item" href="#"><i class="fal fa-users-cog" style="color: #000000;"></i>     Setting</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li style="color: red;"><a class="dropdown-item" (click)="logout()"><i class="fal fa-sign-out-alt" style="color: #000000;"></i><b>             Logout </b></a></li>
+                        <li ><a class="dropdown-item" (click)="logout()"><i class="fal fa-sign-out-alt" style="color: #000000;"></i>Logout </a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled">Disabled</a>
+                    <a class="nav-link disabled">Market Place</a>
                 </li>
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-outline-dark" type="submit">Search</button>
             </form>
         </div>
     </div>

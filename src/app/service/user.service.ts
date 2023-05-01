@@ -4,6 +4,7 @@ import { User } from '../model/user';
 import { Observable } from 'rxjs';
 import { Login } from '../model/login';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 
 
@@ -12,19 +13,38 @@ import { Router } from '@angular/router';
 })
 export class UserService {
 
-  private baseUrl = 'http://localhost:8082/user';
+  private baseUrl = 'http://localhost:8082';
+  
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) { }
+  
+  
 
   signUp(user: User) : Observable<User>{
-    return this.http.post<User>(`${this.baseUrl}/signup`, user,{headers:new HttpHeaders({ 'Content-Type': 'application/json' })});
+    return this.http.post<User>(`${this.baseUrl}/user/signup`, user,{headers:new HttpHeaders({ 'Content-Type': 'application/json' })});
   }
 
     forgotPassword(data: any) {
-    return this.http.post(`${this.baseUrl}/forgotPassword`, data,{headers:new HttpHeaders({ 'Content-Type': 'application/json' })});
+    return this.http.post(`${this.baseUrl}/user/forgotPassword`, data,{headers:new HttpHeaders({ 'Content-Type': 'application/json' })});
     }
   login(loginCredentials: Login) {
-    return this.http.post(`${this.baseUrl}/login`, loginCredentials,{headers:new HttpHeaders({ 'Content-Type': 'application/json' })})
+    return this.http.post(`${this.baseUrl}/user/login`, loginCredentials,{headers:new HttpHeaders({ 'Content-Type': 'application/json' })})
+  }
+  getAllUsers() {
+    const token = localStorage.getItem('token');
+    return this.http.get(`${this.baseUrl}/user/get`,{headers:new HttpHeaders({ 'Content-Type': 'application/json' , Authorization : `Bearer ${token}` })})
+  }
+  activateAccount(data: any) {
+    const token = localStorage.getItem('token');
+    return this.http.post(`${this.baseUrl}/user/activateaccount`,data, {headers:new HttpHeaders({ 'Content-Type': 'application/json' , Authorization : `Bearer ${token}` })} )
+  }
+  getUserById(id: any) {
+    const token = localStorage.getItem('token');
+    return this.http.get(`${this.baseUrl}/user/get/${id}`,{headers:new HttpHeaders({ 'Content-Type': 'application/json' , Authorization : `Bearer ${token}` })})
+  }
+  changePassword(data: any) {
+    const token = localStorage.getItem('token')
+    return this.http.post(`${this.baseUrl}/user/changePassword`,data,{headers:new HttpHeaders({ 'Content-Type': 'application/json' , Authorization : `Bearer ${token}` })})
   }
   verifySession(router:Router){
       let token:string;

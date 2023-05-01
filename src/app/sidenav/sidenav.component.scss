@@ -2,7 +2,6 @@
     background: #948b8c;
     transition: all .5s ease;
     position: fixed;
-    z-index: 1;
     top: 5rem;
     width: 5rem;
     height: 100vh;
@@ -55,7 +54,7 @@
             top: 0;
             left: 0;
             right: 0;
-            z-index: 9999;
+            z-index: 1;
         }
 .sidenav-collapsed {
     width: 16.5625rem;

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Login } from '../model/login';
 import { UserService } from '../service/user.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-signin',
@@ -22,19 +23,24 @@ export class SigninComponent implements OnInit {
     if(token != null )
     {
       if (this.jwtHelper.decodeToken(token).role === 'USER') { this.router.navigateByUrl('/user/main') }
-      else if (this.jwtHelper.decodeToken(token).role === 'ADMIN') { this.router.navigateByUrl('/dashboard') }
+      else if (this.jwtHelper.decodeToken(token).role === 'ADMIN') { this.router.navigateByUrl('/admin') }
       else { this.router.navigateByUrl('/member/main') }
     }
   }
 
   login() {
     this.userService.login(this.loginInfo).subscribe(
-        (response: any) => {
+      (response: any) => {
+        Swal.fire(
+          'Signed In!',
+          'Welcome To Connect4Aid',
+          'success'
+        )
         localStorage.setItem('token', response.token)
         const decodedToken = this.jwtHelper.decodeToken(response.token);
         const role = decodedToken.role;
         if (role == 'ADMIN') {
-          this.router.navigate(['/dashboard'])
+          this.router.navigate(['/admin'])
         }
         else if (role == 'USER') {
           this.router.navigate(['/user/main'])
@@ -45,7 +51,12 @@ export class SigninComponent implements OnInit {
       },
         (error) => {
           if (error.error?.message) {
-          console.log(error.error.message)
+            console.log(error.error.message)
+            Swal.fire(
+               error.error.message,
+              'Incorrect Email or Password ...',
+              'error'
+            )
         }
       })
   }
