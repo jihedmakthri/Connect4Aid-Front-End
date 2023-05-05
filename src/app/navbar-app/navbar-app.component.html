@@ -18,9 +18,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fad fa-user-minus" style="--fa-primary-color: #ffffff; --fa-secondary-color: #868686;"></i>
+                        <i class="fad fa-user-minus" style="--fa-primary-color: #ffffff; --fa-secondary-color: #ffffff;"></i>
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" routerLink="profile"
                             routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}"><i class="fal fa-user" style="color: #000000;"></i>         Profile</a></li>
@@ -32,13 +32,14 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled">Market Place</a>
+                    <button class="btn btn-outline-light" [disabled]="disable" routerLink="usersDetails" routerLinkActive="true" type="button">Dashboard</button>
                 </li>
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-dark" type="submit">Search</button>
             </form>
+            
         </div>
     </div>
 </nav>
