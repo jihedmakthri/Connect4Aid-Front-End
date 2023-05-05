@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { label } from './../model/Event/Label';
+import { Component, OnInit, ChangeDetectorRef, Renderer2 } from '@angular/core';
 import { Event } from '../model/Event/Event';
 import { EvenetService } from '../service/event.service';
 import { CalendarOptions, EventApi } from '@fullcalendar/core';
@@ -8,22 +9,43 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import { label } from '../model/Event/Label';
 import { User } from '../model/user';
-
+import { Router } from '@angular/router';
+interface CalEvent {
+  title: string;
+  start: Date;
+  end: Date;
+  evId: Number;
+}
 @Component({
   selector: 'app-event-dash',
   templateUrl: './event-dash.component.html',
   styleUrls: ['./event-dash.component.css'],
 })
 export class EventDashComponent implements OnInit {
-  eventCalender = [
+  EventList!: Event[];
+  calevents!: CalEvent[];
+  Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    showCloseButton: true,
+    timer: 6000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    },
+  });
+  eventCalender: CalEvent[] = [
     {
       title: 'Helloooooo',
-      start: '2023-10-11',
-      end: '2023-12-30',
+      start: new Date('2023-10-11'),
+      end: new Date('2023-12-30'),
+      evId: 12,
     },
   ];
+
   calendarOptions: CalendarOptions = {
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     headerToolbar: {
@@ -32,10 +54,13 @@ export class EventDashComponent implements OnInit {
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
     },
     initialView: 'dayGridMonth',
-    initialEvents: this.eventCalender, // alternatively, use the `events` setting to fetch from a feed
+    events: this.calevents, // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
     editable: true,
-    themeSystem: 'standard',
+    eventClick(arg) {
+      const ider = arg.event.id;
+    },
+    themeSystem: 'bootstrap5',
     selectable: true,
     selectMirror: true,
     //eventClick:WhenClickingOneventInsidetheCalender,
@@ -46,11 +71,15 @@ export class EventDashComponent implements OnInit {
     eventRemove:
     */
   };
-
+  labelPhrase!: string;
+  eventRes!: User;
+  isCollapsed = true;
   filterStartDate!: Date;
   filterEndDate!: Date;
-  filterName!: string;
+  filterName: string = '';
   selectedValues!: label[];
+  Responsables!: User[];
+  token!: string;
   toAddEvent: Event = {
     eventId: undefined,
     eventName: '',
@@ -59,10 +88,7 @@ export class EventDashComponent implements OnInit {
     eventEnd: new Date(),
     labels: [],
     attendies: [],
-    responsable: {
-      userId: 12,
-      contactNumber: '99999999',
-    },
+    responsable: this.eventRes,
     maxAttend: 0,
   };
   closeResult = '';
@@ -76,24 +102,32 @@ export class EventDashComponent implements OnInit {
     attendies: [],
     labels: [],
   };
-  EventList!: Event[];
+
+  toAddLabel: label = {
+    LabelId: undefined,
+    value: '',
+    Subscribers: [],
+  };
   LabelList!: label[];
   todaysDate: Date = new Date();
   constructor(
     private eventService: EvenetService,
     private modalService: NgbModal,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+    private renderer: Renderer2
   ) {}
   viewMode: boolean = false;
   ngOnInit(): void {
-    this.filterEndDate = new Date('1999-01-01');
-    this.filterStartDate = new Date('2060-01-01');
+    this.token = localStorage.getItem('token') || '{}';
+    this.filterEndDate = new Date('2060-01-01');
+    this.filterStartDate = new Date('1999-01-01');
     this.filterName = '';
     this.emptyEvent;
     this.viewMode = false;
     this.getEvents();
-    console.log();
     this.getlabels();
+    this.getHighUsers();
   }
   changeView(x: boolean) {
     this.viewMode = x;
@@ -106,36 +140,31 @@ export class EventDashComponent implements OnInit {
   }
   deleteEvent(event: Event) {
     this.eventService
-      .deleteEvent(
-        'http://localhost:8082/event/' + event.eventId,
-        localStorage.getItem('token') || '{}'
-      )
+      .deleteEvent('http://localhost:8082/event/' + event.eventId, this.token)
       .subscribe(
         (response: any) => {
-          console.log(response);
-          this.cdr.detectChanges();
+          this.getEvents();
         },
         (error) => {
           if (error.error?.message) {
             alert(error.error.message);
-            this.cdr.detectChanges();
           }
         }
       );
-  }
-  test1() {
-    Swal.fire('Any fool can use a computer');
   }
   postEvent() {
     this.eventService
       .postEvent(
         'http://localhost:8082/event/postevent',
-        localStorage.getItem('token') || '{}',
+        this.token,
         this.toAddEvent
       )
       .subscribe(
         (response: any) => {
-          console.log(response);
+          this.Toast.fire({
+            icon: 'success',
+            title: 'Event Added successfully',
+          });
           this.getEvents();
         },
         (error) => {
@@ -147,14 +176,12 @@ export class EventDashComponent implements OnInit {
   }
   getEvents() {
     this.eventService
-      .getAll(
-        'http://localhost:8082/event/getevent',
-        localStorage.getItem('token') || '{}'
-      )
+      .getAll('http://localhost:8082/event/getevent', this.token)
       .subscribe(
         (response: any) => {
           this.EventList = response;
-          console.log(this.EventList);
+          this.calevents = this.lister();
+          console.log('testing cal events:', this.calevents);
         },
         (error) => {
           if (error.error?.message) {
@@ -178,40 +205,46 @@ export class EventDashComponent implements OnInit {
     };
   }
   saveEvent() {
-    console.log(this.toAddEvent);
-    console.log(this.selectedValues);
-
-    /* for (var e of this.selectedValues) {
-      const templabel: label = {
-        LabelId: e.LabelId,
-      };
-      this.toAddEvent.labels.push(templabel);
-    }*/
     this.toAddEvent.labels = this.selectedValues;
-    console.log(this.toAddEvent.labels);
+    this.toAddEvent.responsable = this.eventRes;
 
-    // this.toAddEvent.labels = this.selectedValues;
     this.postEvent();
-
-    // this.emptyEvent(this.toAddEvent);
   }
-  applyFilter() {
-    console.log(
-      this.filterStartDate + ' ' + this.filterEndDate + ' ' + this.filterName
-    );
+  updateEvent() {
+    this.toUpdateEvent.responsable = this.eventRes;
+    this.toUpdateEvent.labels = this.selectedValues;
+
     this.eventService
-      .filterEvent(
-        'http://localhost:8082/event/filtered',
-        localStorage.getItem('token') || '{}',
-        {
-          filterStartDate: this.filterStartDate,
-          filterEndDate: this.filterEndDate,
-          filterName: this.filterName,
-        }
+      .postEvent(
+        'http://localhost:8082/event/postevent',
+        this.token,
+        this.toUpdateEvent
       )
       .subscribe(
         (response: any) => {
-          console.log(response);
+          this.getEvents();
+          this.Toast.fire({
+            icon: 'success',
+            title: 'Event Updated successfully',
+          });
+        },
+        (error) => {
+          if (error.error?.message) {
+            alert(error.error.message);
+          }
+        }
+      );
+  }
+
+  applyFilter() {
+    this.eventService
+      .filterEvent('http://localhost:8082/event/filtered', this.token, {
+        filterStartDate: this.filterStartDate,
+        filterEndDate: this.filterEndDate,
+        filterName: this.filterName,
+      })
+      .subscribe(
+        (response: any) => {
           this.EventList = response;
           this.cdr.detectChanges();
         },
@@ -225,13 +258,9 @@ export class EventDashComponent implements OnInit {
 
   getlabels() {
     this.eventService
-      .getlabels(
-        'http://localhost:8082/event/labelall',
-        localStorage.getItem('token') || '{}'
-      )
+      .getlabels('http://localhost:8082/event/labelall', this.token)
       .subscribe(
         (response: any) => {
-          console.log(response);
           this.LabelList = response;
           this.cdr.detectChanges();
         },
@@ -260,12 +289,178 @@ export class EventDashComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.deleteEvent(event);
-        Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+        this.Toast.fire({
+          icon: 'success',
+          title: 'Event Has Been Deleted',
+        });
       }
     });
+    this.ngOnInit();
   }
   setupdate(event: Event) {
     this.toUpdateEvent = event;
-    console.log(this.toUpdateEvent);
+  }
+  getHighUsers() {
+    this.eventService
+      .highUsers('http://localhost:8082/user/getEventers', this.token)
+      .subscribe(
+        (response: any) => {
+          this.Responsables = response;
+        },
+        (error) => {
+          if (error.error?.message) {
+            alert(error.error.message);
+          }
+        }
+      );
+  }
+  labelPhraser(labels: label[]): string {
+    this.labelPhrase = '';
+    labels.forEach((l) => {
+      this.labelPhrase = this.labelPhrase + l.value + ' | ';
+    });
+    this.labelPhrase = this.labelPhrase.slice(0, -2);
+    return this.labelPhrase;
+  }
+  affichtest() {
+    console.log('Logger testing responsable : ', this.eventRes);
+  }
+  moreInfo(E: Event) {
+    let path: string = '/member/main/event/' + E.eventId;
+    this.router.navigate([path]);
+  }
+  assignUpdate(E: Event) {
+    this.selectedValues = E.labels;
+    this.eventRes = E.responsable;
+  }
+  toggleCollapse() {
+    this.isCollapsed = !this.isCollapsed;
+    const div = document.querySelector('.collapse');
+    if (this.isCollapsed) {
+      this.renderer.removeClass(div, 'show');
+    } else {
+      this.renderer.addClass(div, 'show');
+    }
+  }
+  async toggleAddLabel() {
+    const { value: label } = await Swal.fire({
+      input: 'text',
+      title: 'New Label',
+      inputPlaceholder: 'Ex: Meet-up',
+      showCancelButton: true,
+    });
+
+    if (label) {
+      const lbX = this.LabelList.find((l) => l.value === label.toString());
+      Swal.fire({
+        icon: 'error',
+        title: 'Already Exists',
+        text: "There's a Label with that name already",
+      });
+
+      this.toAddLabel.value = label.toString();
+      this.eventService
+        .addLabel(
+          'http://localhost:8082/event/addlabel',
+          this.toAddLabel,
+          this.token
+        )
+        .subscribe(
+          (response: any) => {
+            this.Toast.fire({
+              icon: 'success',
+              title: 'Label Added successfully',
+            });
+            console.log(response);
+            this.getlabels();
+          },
+          (error) => {
+            if (error.error?.message) {
+              alert(error.error.message);
+            }
+          }
+        );
+    }
+  }
+
+  async selectLabel() {
+    const options = this.LabelList.map((label) => label.value);
+    console.log(options);
+    const { value: label } = await Swal.fire({
+      title: 'Select a label',
+      input: 'select',
+      inputOptions: options,
+      inputPlaceholder: 'Select a label',
+      showCancelButton: true,
+    });
+    if (label) {
+      const selectedLabel = this.LabelList[label];
+      console.log(selectedLabel);
+      this.Toast.fire({
+        icon: 'success',
+        title: 'Label Has Been Deleted',
+      });
+      this.eventService
+        .deleteLabel(
+          'http://localhost:8082/event/labeldel',
+          selectedLabel,
+          this.token
+        )
+        .subscribe(
+          (response: any) => {
+            console.log(response);
+
+            this.ngOnInit();
+          },
+          (error) => {
+            if (error.error?.message) {
+              alert(error.error.message);
+            }
+          }
+        );
+      this.getlabels();
+    }
+  }
+  filterEvents(date1: Date, date2: Date, ch1: string) {
+    const filteredEvents: Event[] = [];
+    this.EventList.forEach((event: Event) => {
+      if (
+        event.eventName.includes(ch1) &&
+        event.eventStart >= date1 &&
+        event.eventStart <= date2
+      ) {
+        filteredEvents.push(event);
+      }
+    });
+    console.log(
+      'name =',
+      this.filterName + ' and start :',
+      this.filterStartDate,
+      'and end : ',
+      this.filterEndDate
+    );
+    console.log(filteredEvents);
+    this.EventList = filteredEvents;
+  }
+  clear() {
+    this.filterEndDate = new Date('2060-01-01');
+    this.filterStartDate = new Date('1999-01-01');
+    this.filterName = '';
+    this.getEvents;
+  }
+  lister(): CalEvent[] {
+    const calEvents: CalEvent[] = [];
+
+    for (const event of this.EventList) {
+      const calEvent: CalEvent = {
+        title: event?.eventId?.toString()!,
+        start: event.eventStart,
+        end: event.eventEnd,
+        evId: event.eventId!,
+      };
+
+      calEvents.push(calEvent);
+    }
+    return calEvents;
   }
 }

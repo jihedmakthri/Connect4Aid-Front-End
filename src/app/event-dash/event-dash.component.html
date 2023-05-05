@@ -1,23 +1,46 @@
 
- <div class="container-toolbar">
-    <div class="btn-group mr-3" role="group">
+<div class="container-toolbar">
+    <div class="d-flex flex-wrap align-items-center">
         <button type="button" class="btn btn-outline-dark" (click)="open(content)">Add an Event</button>
-        <div style="padding-left: 15px;">
-            <label for="FilterStartDate"  class="form-label">Starting Date</label>
-            <input id="filterStartDate" name="filterStartDate" class="form-control" type="date" [(ngModel)]="filterStartDate" />
+        <div class="dropdown" style="padding-left: 10px;">
+            <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Labels
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li ><a class="dropdown-item" (click)="toggleAddLabel()" style="cursor: pointer;">Add a Label</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" (click)="selectLabel()" style="cursor: pointer;">Delete a Label</a></li>
+            </ul>
         </div>
-        <div style="padding-left: 15px;">
-            <label for="FilterEndDate" class="form-label">Ending Date</label>
-            <input id="filterEndDate" name="filterStartDate" class="form-control" type="date" [(ngModel)]="filterEndDate" />
-        </div>
-        <div style="padding-left: 15px;">
-            <label for="FilterName" class="form-label"> By Event Name</label>
-            <input id="filterName" name="filterName" class="form-control" type="text" [(ngModel)]="filterName" />
-        </div>
-        <div style="padding-left: 15px;">
-            <button class="btn-dark" (click)="applyFilter()"> Apply filters </button>
-        </div>
+
     </div>
+           <form class="form-inline">
+                <div class="col">
+                    <label style="font-size: 15px;"for="FilterStartDate" class="form-label">Starting Date</label>
+                    <input id="filterStartDate" name="filterStartDate" class="form-control form-control-sm" type="date"
+                        [(ngModel)]="filterStartDate" />
+                </div>
+                <div class="col">
+                    <label style="font-size: 15px;"for="FilterEndDate" class="form-label">Ending Date</label>
+                    <input id="filterEndDate" name="filterStartDate" class="form-control form-control-sm" type="date" [(ngModel)]="filterEndDate" />
+                </div>
+                <div class="col">
+                    <label style="font-size: 15px;" for="FilterName" class="form-label">By Name</label>
+                    <input id="filterName" name="filterName" class="form-control form-control-sm" type="text" [(ngModel)]="filterName" />
+                </div>
+                <div class="col-auto">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                    <button class="btn btn-warning" (click)="applyFilter()">Apply</button>          
+                    <button class="btn btn-outline-warning" (click)="clear()"><i class="fas fa-redo"></i></button>
+                </div>
+                </div>
+            </form>
+    
+       
+        
     <div class="btn-group btn-group" role="group" aria-label="Basic example">
     <button type="button" class="btn btn-info" (click)="changeView(false)" [disabled]="viewMode==false"><div><i class="fal fa-th-list" style="padding-right:5px ;"></i>ListView</div></button>
     <button type="button" class="btn btn-info" (click)="changeView(true)" [disabled]="viewMode==true"><div><i class="fal fa-calendar-minus" style="padding-right:2px"></i> CalenderView</div></button>
@@ -29,7 +52,6 @@
 <div class='demo-app-main'*ngIf="viewMode==true">
     <full-calendar [options]='calendarOptions'>
         <ng-template #eventContent let-arg>
-            <b>{{ arg.timeText }}</b>
             <i>{{ arg.event.title }}</i>
         </ng-template>
     </full-calendar>
@@ -51,26 +73,25 @@
                                 <th style="padding-left:6%;">State</th>
                                 
                                 <th>Remaining Spots</th>                                
-                                <th>Actions</th>
+                                <th style="padding-left: 78px;">Actions</th>
                             </tr>
                         </thead>                      
                         <tbody>
                             <tr *ngFor="let event of EventList">
 
-                                <td>
+                                <td><!--
                                     <label class="align-items-center" style="align-items: center">
                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
                                     </label>
                                     </label>
-                                    </td>
+                                    --></td>
                              
-                                
                                 <td class="d-flex align-items-center">
 
                                     <div class="email">
                                         <span >{{event.eventName}}</span>
-                                        <span style="max-width: 20em;">Labels : Croissant rouge | Donation | Coffee | Meet up </span>
+                                        <span style="max-width: 20em;">Labels : {{labelPhraser(event.labels)}} </span>
                                     <!-- <span>{{ event.labels.map(label => label.value).join(' | ') }}</span>-->
                                     </div>
                                 </td>
@@ -80,19 +101,15 @@
                                 <td class="status"><span *ngIf="isEventActive(event.eventStart)" class="active">Soon to Happen</span>
                                 <span *ngIf="!isEventActive(event.eventStart)" class="waiting">Already Happened</span>
                                 <span *ngIf="isEndActive(event.eventStart,event.eventEnd)" class="alert">Happening Now</span></td>
-                                <td style="padding-left: 70px;" > <p *ngIf="event.attendies"> {{event.maxAttend-(event.attendies.length)}}</p>
+                                <td style="padding-left: 70px;padding-bottom: 15px;" > <p *ngIf="event.attendies"> {{event.maxAttend-(event.attendies.length)}}</p>
                                 <p *ngIf="event.attendies==null"> {{event.maxAttend-0}}</p></td>                                
                                 <td>
                                     <div class="btn-group"> 
-                                      <button type="button" style="border: none;"><i class="fal fa-minus-circle" (click)="DeleteSwol(event)" ></i></button>
-                                        <button type="button" class="mr-2" (click)="setupdate(event);open(updatemodal)">Modify</button>
-                                        <button type="button" (click)="deleteEvent(event)">Delete</button>
+                                    <button class="btn btn-info" data-toggle="tooltip" data-bs-placement="top" title="More Information" (click)="moreInfo(event)"><i class="fa fa-info-circle fa-lg m-0"></i></button>
+                                    <button class="btn btn-dark" (click)="setupdate(event);open(updatemodal)"><i class="far fa-pencil fa-lg m-0"></i></button>
+                                    <button class="btn btn-danger" (click)="DeleteSwol(event)"><i class="fas fa-minus-circle fa-lg m-0"></i></button>
                                     </div>
-                                    <!-- 
-                                        <button style="border:none;">
-                                            <img src="https://w7.pngwing.com/pngs/640/178/png-transparent-x-mark-computer-icons-desktop-cerca-cross-desktop-wallpaper-check-mark.png" style="height: 30px; height: 30px;" >
-                                        </button>
-                                        -->
+                                    
                                 </td>
                             </tr> 
                         </tbody>
@@ -103,36 +120,49 @@
 </div>
 <ng-template #content let-modal style="z-index: 3;">
     <div class="modal-header">
-        <h6 class="modal-title" id="modal-basic-title">Add a new Event</h6>
+        <h6 class="modal-title" id="modal-basic-title">Adding a new event</h6>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body" style="width: 80%;">
         <form>
-            <div class="mb-2">
-                <label for="eventName" class="form-label">Event Name</label>
-                <input type="text" id="eventName" name="eventName" [(ngModel)]="toAddEvent.eventName" >
+            <div class="form-group">
+                <label for="eventName" >Event Name</label>
+                <input  class ="form-control" type="text" id="eventName" name="eventName" [(ngModel)]="toAddEvent.eventName" placeholder="Ex : Croissant Rouge Appreciation Day" >
             </div>
-            <div class="mb-2">
-                <label for="infoInput" class="form-label">Information about the event</label>
-                <textarea class="form-control" id="infoInput" name="eventInfo" [(ngModel)]="toAddEvent.eventInfo"> </textarea>
+
+            <div class="form-group">
+                <label for="infoInput" >Information about the event</label>
+                <textarea class="form-control" id="infoInput" name="eventInfo" [(ngModel)]="toAddEvent.eventInfo" placeholder="In this new idea of an event ...."> </textarea>
             </div>
-            <div class="mb-2">
-                <label for="maxInput" class="form-label">Maximum number of attendies</label>
+            <div class="form-group">
+                <label for="maxInput">Maximum number of attendies</label>
                 <input type="number" class="form-control" id="maxInput" name="maxAttend" min="0" [(ngModel)]="toAddEvent.maxAttend">
             </div>
-            <div class="mb-2">
-                <label for="maxInput" class="form-label">Starting Date</label>
-                <input id="startDate" class="form-control" type="date" name="eventStart" [(ngModel)]="toAddEvent.eventStart" />
+            <div class="form-row">
+            <div class="col">
+                <label for="eventStart">Starting Date</label>
+                <input id="eventStart" class="form-control" type="date" name="eventStart" [(ngModel)]="toAddEvent.eventStart" />
             </div>
-            <div class="mb-2">
-                <label for="maxInput" class="form-label">Ending Date</label>
-                <input id="startDate" class="form-control" type="date"[(ngModel)]="toAddEvent.eventEnd" name="eventEnd" />
+            <div class="col">
+                <label for="eventEnd" >Ending Date</label>
+                <input id="eventEnd" class="form-control" name="eventEnd" type="date"[(ngModel)]="toAddEvent.eventEnd" name="eventEnd" />
             </div> 
-            <div class="mb-2">
-            <label for="selectedValues" class="form-label">Labels</label>
-            <select [(ngModel)]="selectedValues" multiple name="selectedValues">
-                <option *ngFor="let label of LabelList" [value]="label">{{ label.value }}</option>
+            </div>
+            <div class="form-row" style="padding-top: 10px;"> 
+            <div class="col">
+                <label for="eventRes" >Responsable</label>
+                <select [(ngModel)]="eventRes" name="eventRes" class="form-control">
+                    <option [ngValue]="undefined" [disabled]="true">Please Choose...</option>
+                    <option *ngFor="let responsable of Responsables" [ngValue]="responsable">{{responsable.firstName}} {{responsable.lastName}}</option>
+                </select>
+            </div>
+            <div class="col">
+            <label for="selectedValues" >Labels</label>
+            <select [(ngModel)]="selectedValues" multiple name="selectedValues" class="form-control">
+                
+                <option *ngFor="let label of LabelList" [ngValue]="label">{{ label.value }}</option>
             </select>
+            </div>
             </div>
         </form>
     </div>
@@ -141,49 +171,61 @@
     </div>
 </ng-template>
 
-
-
-
 <ng-template #updatemodal let-modal style="z-index: 3;">
     <div class="modal-header">
-        <h6 class="modal-title" id="modal-basic-title">Update an Event</h6>
+        <h6 class="modal-title" id="modal-basic-title">Updating an Event</h6>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body" style="width: 80%;">
         <form>
-            <div class="mb-2">
-                <label for="eventName" class="form-label">Event Name</label>
-                <input type="text" id="eventName" name="eventName" [(ngModel)]="toUpdateEvent.eventName">
+            <div class="form-group">
+                <label for="eventName">Event Name</label>
+                <input class="form-control" type="text" id="eventName" name="eventName"
+                    [(ngModel)]="toUpdateEvent.eventName" placeholder="Ex : Croissant Rouge Appreciation Day">
             </div>
-            <div class="mb-2">
-                <label for="infoInput" class="form-label">Information about the event</label>
-                <textarea class="form-control" id="infoInput" name="eventInfo"
-                    [(ngModel)]="toUpdateEvent.eventInfo"> </textarea>
+
+            <div class="form-group">
+                <label for="infoInput">Information about the event</label>
+                <textarea class="form-control" id="infoInput" name="eventInfo" [(ngModel)]="toUpdateEvent.eventInfo"
+                    placeholder="In this new Idea of an event, we decided to dedicate a day for our beloved members ...."> </textarea>
             </div>
-            <div class="mb-2">
-                <label for="maxInput" class="form-label">Maximum number of attendies</label>
+            <div class="form-group">
+                <label for="maxInput">Maximum number of attendies</label>
                 <input type="number" class="form-control" id="maxInput" name="maxAttend" min="0"
                     [(ngModel)]="toUpdateEvent.maxAttend">
             </div>
-            <div class="mb-2">
-                <label for="maxInput" class="form-label">Starting Date</label>
-                <input id="startDate" class="form-control" type="date" name="eventStart"
-                    [(ngModel)]="toUpdateEvent.eventStart" />
+            <div class="form-row">
+                <div class="col">
+                    <label for="eventStart">Starting Date</label>
+                    <input id="eventStart" class="form-control" type="date" name="eventStart"
+                        [(ngModel)]="toUpdateEvent.eventStart" />
+                </div>
+                <div class="col">
+                    <label for="eventEnd">Ending Date</label>
+                    <input id="eventEnd" class="form-control" name="eventEnd" type="date"
+                        [(ngModel)]="toUpdateEvent.eventEnd" name="eventEnd" />
+                </div>
             </div>
-            <div class="mb-2">
-                <label for="maxInput" class="form-label">Ending Date</label>
-                <input id="startDate" class="form-control" type="date" [(ngModel)]="toUpdateEvent.eventEnd"
-                    name="eventEnd" />
-            </div>
-            <div class="mb-2">
-                <label for="selectedValues" class="form-label">Labels</label>
-                <select [(ngModel)]="selectedValues" multiple name="selectedValues">
-                    <option *ngFor="let label of LabelList" [value]="label">{{ label.value }}</option>
-                </select>
+            <div class="form-row">
+                <div class="col">
+                    <label for="eventRes">Responsable</label>
+                    <select [(ngModel)]="eventRes" name="eventRes" class="form-control">
+                        <option *ngFor="let responsable of Responsables" [ngValue]="responsable">
+                            {{responsable.firstName}}
+                            {{responsable.lastName}}</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="selectedValues">Labels</label>
+                    <select [(ngModel)]="selectedValues" multiple name="selectedValues" class="form-control">
+                        <option *ngFor="let label of LabelList" [ngValue]="label">{{ label.value }}</option>
+                    </select>
+                </div>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');saveEvent()">Save</button>
+        <button type="button" class="btn btn-outline-dark"
+            (click)="modal.close('Save click');updateEvent()">Save</button>
     </div>
 </ng-template>
