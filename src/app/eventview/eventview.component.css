@@ -10,13 +10,18 @@
     font-family: Arial, sans-serif;
     font-size: 1.4em;
     letter-spacing: -1px;
-    color: #B7D6E0;
+    color: white;
     
 }
 
 .timer span {
     font-size: 2em;
     margin: 0 3px 0 15px;
-    color: #B7D6E0;
+    color: white;
     
+}
+.my-text {
+    color: white;
+    -webkit-text-stroke: 1px black;
+    text-stroke: 1px black;
 }

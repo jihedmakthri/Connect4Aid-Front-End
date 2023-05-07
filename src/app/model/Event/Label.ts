@@ -1,7 +1,7 @@
 import { User } from '../user';
 
 export interface label {
-  LabelId?: number;
+  labelId?: number;
   value?: string;
-  Subscribers?: User[];
+  subscribers: User[];
 }
