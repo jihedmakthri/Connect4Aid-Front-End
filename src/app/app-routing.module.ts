@@ -33,7 +33,10 @@ const routes: Routes = [
     path: 'user/main', component: UserPageComponent, canActivate: [UserGuard], children: [
           { path: 'profile', component: ProfileComponent },
   ]},
-  { path: 'member/main', component: MemberPageComponent, canActivate: [MemberGuard] },
+  {
+    path: 'member/main', component: MemberPageComponent, canActivate: [MemberGuard], children: [
+    { path: 'profile', component: ProfileComponent },
+  ] },
   { path: 'notfound', component: NotFoundComponent },
   { path: '**', component: NotFoundComponent }
 ];

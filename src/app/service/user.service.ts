@@ -46,6 +46,18 @@ export class UserService {
     const token = localStorage.getItem('token')
     return this.http.post(`${this.baseUrl}/user/changePassword`,data,{headers:new HttpHeaders({ 'Content-Type': 'application/json' , Authorization : `Bearer ${token}` })})
   }
+  changeRole(data: any) {
+    const token = localStorage.getItem('token')
+    return this.http.post( `${this.baseUrl}/user/changerole`,data,{headers:new HttpHeaders({ 'Content-Type': 'application/json' , Authorization : `Bearer ${token}` })} )
+  }
+  updateProfile(data: any,localID:string) {
+    const token = localStorage.getItem('token')
+    return this.http.post(`${this.baseUrl}/user/updateProfile/${localID}`,data,{headers:new HttpHeaders({ 'Content-Type': 'application/json' , Authorization : `Bearer ${token}` })})
+  }
+  deleteAccount(id:string) {
+    const token = localStorage.getItem('token')
+      return this.http.post(`${this.baseUrl}/user/delete/${id}`,null,{headers:new HttpHeaders({ 'Content-Type': 'application/json' , Authorization : `Bearer ${token}` })})
+  }
   verifySession(router:Router){
       let token:string;
     token=JSON.parse(localStorage.getItem('userId') || '{}');

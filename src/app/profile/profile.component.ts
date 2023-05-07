@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../service/user.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import Swal from 'sweetalert2';
+import { UpdateDetails } from '../model/update-details';
 
 declare var window: any
 
@@ -21,6 +22,7 @@ export class ProfileComponent implements OnInit {
   oldPassword!: string
   newPassword!: string
   confirmPassword!: string
+  updateDetails: UpdateDetails = new UpdateDetails()
   
 
   ngOnInit(): void {
@@ -50,22 +52,42 @@ export class ProfileComponent implements OnInit {
     }
     else {
           this.userService.changePassword(data).subscribe((response: any) => {
-            Swal.fire(
-              response.message,
-              '',
-          'success'
-      )
+              Swal.fire(
+               'COMPLETE',
+               response.message,
+               'success'
+              )
     }, (error) => {
             if (error.error?.message) {
               Swal.fire(
-          'Bad Request',
-          error.error.message,
-          'error'
-      )
+               'Bad Request',
+               error.error.message,
+               'error'
+              )
       }
     })
     }
 
+  }
+  updateProfile() {
+    const token: any = localStorage.getItem('token')
+    const decodeToken = this.jwtHelper.decodeToken(token)
+    const id = decodeToken.userId
+    this.userService.updateProfile(this.updateDetails, id).subscribe((response: any) => {
+      Swal.fire(
+        'COMPLETE',
+        response.message,
+        'success'
+      )
+    }, (error) => {
+        if (error.error?.message) {
+          Swal.fire(
+            'Bad Request',
+            error.error.message,
+            'error'
+          )
+      }
+    })
   }
 
 }

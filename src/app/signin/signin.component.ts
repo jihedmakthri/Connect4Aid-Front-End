@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 export class SigninComponent implements OnInit {
 
   loginInfo: Login = new Login();
+  hidePassword:boolean = true;
 
   constructor(private userService: UserService, private router:Router,private jwtHelper: JwtHelperService) { }
 
@@ -26,6 +27,7 @@ export class SigninComponent implements OnInit {
       else if (this.jwtHelper.decodeToken(token).role === 'ADMIN') { this.router.navigateByUrl('/admin') }
       else { this.router.navigateByUrl('/member/main') }
     }
+
   }
 
   login() {

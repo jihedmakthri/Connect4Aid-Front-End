@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 export class RegisterComponent implements OnInit {
 
   user: User = new User();
+  hidePassword = true;
 
   constructor(private userService: UserService,private router: Router,private jwtHelper: JwtHelperService) { }
 

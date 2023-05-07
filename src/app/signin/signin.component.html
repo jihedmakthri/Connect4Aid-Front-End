@@ -19,16 +19,22 @@
                             please reach out with any questions you may have and know that we’re glad you’re here.. </p>
                         <hr>
 
-                        <form (ngSubmit)="login()">
+                        <form #f="ngForm" (ngSubmit)="login()">
                             <div class="top-margin" >
                                 <label>Username/Email <span class="text-danger">*</span></label>
-                                <input type="email" class="form-control" [(ngModel)]="loginInfo.email" name="email">
+                                <input #n="ngModel" type="email" class="form-control" [(ngModel)]="loginInfo.email" name="email" required pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                                <div *ngIf="n.errors?.['required'] && n.touched" class="alert alert-danger mt-2">this is required !</div>
+                                <div *ngIf="n.errors?.['pattern'] && n.touched" class="alert alert-danger mt-2">email must be like 'example@mail.com' !</div>
                             </div>
                             <div class="top-margin">
                                 <label>Password <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" [(ngModel)]="loginInfo.password" name="password">
+                                <input #o="ngModel" type="{{ hidePassword ? 'password' : 'text' }}" class="form-control" [(ngModel)]="loginInfo.password" name="password" required>
+                                <div *ngIf="o.invalid && o.touched" class="alert alert-danger mt-2">this is required !</div>
                             </div>
-
+                            <div class="top-margin">
+                                <input class="form-check-input" type="checkbox" (change)="hidePassword = !hidePassword"  id="form2Example31" />
+                                <label class="form-check-label" for="form2Example31">show Password </label>
+                            </div>
                             <hr>
 
                             <div class="row">
@@ -36,7 +42,7 @@
                                     <b><a href="/forgotpassword">Forgot password?</a></b>
                                 </div>
                                 <div class="col-lg-4 text-right">
-                                    <button type="submit" class="btn btn-success">Login</button>
+                                    <button [disabled]="f.invalid" type="submit" class="btn btn-success">Login</button>
                                 </div>
                             </div>
                         </form>

@@ -112,46 +112,9 @@
                                     <p class="mb-0">Password</p>
                                 </div>
                                 <div class="col-sm-9" >
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        Change Password
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                                        Update Profile
                                     </button>
-                                    <!-- Modal -->
-                                    <form #f="ngForm" class="modal fade" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true" aria-disabled="false">
-                                        <div class="modal-dialog modal-dialog-centered" >
-                                            <div class="modal-content" >
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Change Password</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body" >
-                                                    <div class="form-outline mb-4">
-                                                        <label class="form-label" for="op">Old Password :</label>
-                                                        <input #oldPasswor="ngModel" name="oldPassword" [(ngModel)]="oldPassword" type="{{ hidePassword ? 'password' : 'text' }}" id="op" class="form-control" required>
-                                                        <div *ngIf="oldPasswor.invalid && oldPasswor.touched" class="alert alert-danger">this is required !</div>
-                                                    </div>
-                                                    <div class="form-outline mb-4">
-                                                        <label class="form-label" for="form2Example1">New Password :</label>
-                                                        <input #n="ngModel" name="newPassword" [(ngModel)]="newPassword" type="{{ hidePassword ? 'password' : 'text' }}" id="form2Example1" class="form-control" required>
-                                                        <div *ngIf="n.invalid && n.touched" class="alert alert-danger">this is required !</div>
-                                                    </div>
-                                                    <div class="form-outline mb-4">
-                                                        <label  class="form-label" for="nc">Confirm New Password :</label>
-                                                        <input #nc="ngModel" name="confirmPassword" [(ngModel)]="confirmPassword" type="{{ hidePassword ? 'password' : 'text' }}" id="nc" class="form-control" required>
-                                                                    <p class="alert alert-danger" *ngIf="nc.errors?.['required'] && nc.touched">this field is required !</p>
-                                                                    <p class="alert alert-danger" *ngIf="confirmPassword !== newPassword && nc.touched">Password Don't Match !</p>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" (change)="hidePassword = !hidePassword" id="form2Example31" />
-                                                        <label class="form-check-label" for="form2Example31">show password </label>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-success" [disabled]="f.invalid" (click)="changePass()">Save changes</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -230,4 +193,100 @@
             </div>
         </div>
     </section>
+    <div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLongTitle">Profile Settings</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img
+                                class="rounded-circle mt-5" width="150px"
+                                src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span
+                                class="font-weight-bold">{{jsonData.firstName+' '+jsonData.lastName}}</span><span
+                                class="text-black-50">{{jsonData.email}}</span><span> </span></div>
+                    </div>
+                    <hr>
+                    <form #g="ngForm">
+                        <div class="row">
+                            <div class="col">
+                                <label>First Name</label>
+                                <input #ndd="ngModel" [(ngModel)]="updateDetails.firstName" name="firstName" type="text"
+                                    class="form-control" placeholder="..." required />
+                                <div *ngIf="ndd.invalid && ndd.touched" class="alert alert-danger">this is required !</div>
+                            </div>
+                            <div class="col mb-2">
+                                <label>Last Name</label>
+                                <input #po="ngModel" [(ngModel)]="updateDetails.lastName" name="lastName" type="text"
+                                    class="form-control" placeholder="..." required />
+                                <div *ngIf="po.invalid && po.touched" class="alert alert-danger">this is required !</div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label>contact Number</label>
+                            <input #ncf="ngModel" [(ngModel)]="updateDetails.contactNumber" name="contactNumber" type="text"
+                                class="form-control" placeholder="+216" required pattern="[0-9]+" />
+                            <p class="alert alert-danger" *ngIf="ncf.errors?.['required'] && ncf.touched">this field is
+                                required !</p>
+                            <p class="alert alert-danger" *ngIf=" ncf.errors?.['pattern'] && ncf.touched">use only digits !
+                            </p>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label>Date Of Birth</label>
+                            <input #pod="ngModel" [(ngModel)]="updateDetails.dateOfBirth" type="date" name="dateOfBirth"
+                                class="form-control" placeholder="yyyy-MM-dd" required />
+                            <div *ngIf="pod.invalid && pod.touched" class="alert alert-danger">this is required !</div>
+                        </div>
+                        <hr>
+                        <form #f="ngForm" class="form-group mt-2">
+                            <div class="modal-body">
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="op">Old Password :</label>
+                                    <input #oldPasswor="ngModel" name="oldPassword" [(ngModel)]="oldPassword"
+                                        type="{{ hidePassword ? 'password' : 'text' }}" class="form-control" required />
+                                    <div *ngIf="oldPasswor.invalid && oldPasswor.touched" class="alert alert-danger">this is
+                                        required !</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col form-outline mb-4">
+                                        <label class="form-label" for="form2Example1">New Password :</label>
+                                        <input #n="ngModel" name="newPassword" [(ngModel)]="newPassword"
+                                            type="{{ hidePassword ? 'password' : 'text' }}" class="form-control" required />
+                                        <div *ngIf="n.invalid && n.touched" class="alert alert-danger">this is required !
+                                        </div>
+                                    </div>
+                                    <div class="col form-outline mb-4">
+                                        <label class="form-label" for="nc">Confirm New Password :</label>
+                                        <input #nc="ngModel" name="confirmPassword" [(ngModel)]="confirmPassword"
+                                            type="{{ hidePassword ? 'password' : 'text' }}" class="form-control" required />
+                                        <p class="alert alert-danger" *ngIf="nc.errors?.['required'] && nc.touched">this
+                                            field is required !</p>
+                                        <p class="alert alert-danger" *ngIf="confirmPassword !== newPassword && nc.touched">
+                                            Password Don't Match !</p>
+                                    </div>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" (change)="hidePassword = !hidePassword"
+                                        id="form2Example31" />
+                                    <label class="form-check-label" for="form2Example31">show password </label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" [disabled]="f.invalid"
+                                    (click)="changePass()">Change Password</button>
+                            </div>
+                        </form>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button [disabled]="g.invalid" type="button" (click)="updateProfile()" class="btn btn-primary">Save
+                        changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 

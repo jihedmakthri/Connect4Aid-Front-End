@@ -25,6 +25,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { TestComponent } from './test/test.component';
 import { DashboardMainComponent } from './dashboard-main/dashboard-main.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +46,7 @@ import { DashboardMainComponent } from './dashboard-main/dashboard-main.componen
     ProfileComponent,
     TestComponent,
     DashboardMainComponent,
-    
+
   ],
   imports: [
     BrowserModule,

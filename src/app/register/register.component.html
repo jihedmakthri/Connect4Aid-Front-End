@@ -17,38 +17,51 @@
                             please reach out with any questions you may have and know that we’re glad you’re here. </p>
                         <hr>
 
-                        <form (ngSubmit)="userRegister()">
+                        <form #ff="ngForm" (ngSubmit)="userRegister()">
                             <div class="top-margin form-group">
-                                <label for="firstName">First Name</label>
-                                <input id="firstName" type="text" class="form-control" [(ngModel)]="user.firstName" name="firstName" required>
+                                <label for="firstName">First Name<span class="text-danger">*</span></label>
+                                <input #nf="ngModel" id="firstName" type="text" class="form-control" [(ngModel)]="user.firstName" name="firstName" required>
+                                <div *ngIf="nf.invalid && nf.touched" class="alert alert-danger mt-2">this is required !</div>
                             </div>
                             <div class="top-margin form-group">
-                                <label>Last Name</label>
-                                <input id="lastName" type="text" class="form-control"  [(ngModel)]="user.lastName" name="lastName" required>
+                                <label>Last Name<span class="text-danger">*</span></label>
+                                <input #n="ngModel" id="lastName" type="text" class="form-control"  [(ngModel)]="user.lastName" name="lastName" required>
+                                <div *ngIf="n.invalid && n.touched" class="alert alert-danger mt-2">this is required !</div>
                             </div>
                             <div class="top-margin form-group">
-                                <label>Email Address</label>
-                                <input id="email" type="email" class="form-control"  [(ngModel)]="user.email" name="email" required>
+                                <label>Email Address<span class="text-danger">*</span></label>
+                                <input #e="ngModel" id="email" type="email" class="form-control"  [(ngModel)]="user.email" name="email" required pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                                <div *ngIf="e.errors?.['required'] && e.touched" class="alert alert-danger mt-2">this is required !</div>
+                                <div *ngIf="e.errors?.['pattern'] && n.touched" class="alert alert-danger mt-2">email must be like 'example@mail.com' !</div>
                             </div>
                             <div class="top-margin form-group">
-                                <label>Contact Number</label>
-                                <input id="contactNumber" type="number" class="form-control"  [(ngModel)]="user.contactNumber" name="contactNumber" required minlength="8">
+                                <label>Contact Number<span class="text-danger">*</span></label>
+                                <input #nx="ngModel" id="contactNumber" type="text" class="form-control" placeholder="+216 Tunisia"  [(ngModel)]="user.contactNumber" name="contactNumber" required pattern="[0-9]+">
+                                <div *ngIf="nx.errors?.['required'] && nx.touched" class="alert alert-danger mt-2">this is required !</div>
+                                <div *ngIf="nx.errors?.['pattern'] && nx.touched" class="alert alert-danger mt-2">you must enter a valid number !
+                                </div>
                             </div>
                             <div class="top-margin form-group">
-                                <label>Date Of Birth</label>
-                                <input id="dateOfBirth" class="form-control" (click)="d.toggle()" placeholder="yyyy-mm-dd" name="dateOfBirth" [(ngModel)]="user.dateOfBirth" ngbDatepicker
+                                <label>Date Of Birth<span class="text-danger">*</span></label>
+                                <input #t="ngModel" id="dateOfBirth" class="form-control" (click)="d.toggle()" placeholder="yyyy-mm-dd" name="dateOfBirth" [(ngModel)]="user.dateOfBirth" ngbDatepicker
                                     #d="ngbDatepicker" [minDate]="{year: 1900, month: 1, day: 1}"
                                     [maxDate]="{year: 2022, month: 12, day: 31}" required>
+                                <div *ngIf="t.invalid && t.touched" class="alert alert-danger mt-2">this is required !</div>
                             </div>
-        
                             <div class="row top-margin">
                                 <div class="col-sm-6 form-group">
-                                    <label>Password</label>
-                                    <input id="password" type="password" class="form-control" [(ngModel)]="user.password" name="password" required>
+                                    <label>Password<span class="text-danger">*</span></label>
+                                    <input id="password" type="{{hidePassword ? 'password' : 'text' }}" class="form-control" [(ngModel)]="user.password" name="password" required>
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                    <label>Confirm Password</label>
-                                    <input id="confirmPassword" type="password" class="form-control" [(ngModel)]="user.confirmPassword" name="confirmPassword" required>
+                                    <label>Confirm Password<span class="text-danger">*</span></label>
+                                    <input #ncx="ngModel" id="confirmPassword" type="{{hidePassword ? 'password' : 'text' }}" class="form-control" [(ngModel)]="user.confirmPassword" name="confirmPassword" required>
+                                        <p class="alert alert-danger mt-2" *ngIf="ncx.errors?.['required'] && ncx.touched">this field is required !</p>
+                                        <p class="alert alert-danger" *ngIf="user.confirmPassword !== user.password && ncx.touched">Password Don't Match !</p>
+                                </div>
+                                <div class="top-margin">
+                                    <input class="form-check-input" type="checkbox" (change)="hidePassword = !hidePassword" id="form2Example31" />
+                                    <label class="form-check-label" for="form2Example31">show Password </label>
                                 </div>
                             </div>
 
@@ -57,12 +70,12 @@
                             <div class="row">
                                 <div class="col-lg-8">
                                     <label class="checkbox">
-                                        <input type="checkbox">
+                                        <input type="checkbox" required>
                                         I've read the <a href="page_terms.html">Terms and Conditions</a>
                                     </label>
                                 </div>
                                 <div class="col-lg-4 text-right">
-                                    <button class="btn btn-action" type="submit" >Register</button>
+                                    <button [disabled]="ff.invalid" class="btn btn-action" type="submit" >Register</button>
                                 </div>
                             </div>
                         </form>
