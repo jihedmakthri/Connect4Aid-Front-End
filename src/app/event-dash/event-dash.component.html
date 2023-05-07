@@ -98,9 +98,9 @@
                                 
                                 <td style="padding-right: 10px;">{{event.responsable.firstName}} {{event.responsable.lastName}}</td>
                                 <td > {{event.eventStart}}</td>
-                                <td class="status"><span *ngIf="isEventActive(event.eventStart)" class="active">Soon to Happen</span>
-                                <span *ngIf="!isEventActive(event.eventStart)" class="waiting">Already Happened</span>
-                                <span *ngIf="isEndActive(event.eventStart,event.eventEnd)" class="alert">Happening Now</span></td>
+                                <td class="status"><span *ngIf="isHappened(event.eventStart)" class="active">Soon to Happen</span>
+                                <span *ngIf="!isHappened(event.eventStart)" class="waiting">Already Happened</span>
+                            <!-- <span *ngIf="isEndActive(event.eventStart,event.eventEnd)" class="alert">Happening Now</span></td>-->
                                 <td style="padding-left: 70px;padding-bottom: 15px;" > <p *ngIf="event.attendies"> {{event.maxAttend-(event.attendies.length)}}</p>
                                 <p *ngIf="event.attendies==null"> {{event.maxAttend-0}}</p></td>                                
                                 <td>

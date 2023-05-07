@@ -37,6 +37,18 @@ export class EventDashComponent implements OnInit {
       toast.addEventListener('mouseleave', Swal.resumeTimer);
     },
   });
+  Toast2 = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    showCloseButton: true,
+    timer: 99999,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    },
+  });
   eventCalender: CalEvent[] = [
     {
       title: 'Helloooooo',
@@ -104,9 +116,9 @@ export class EventDashComponent implements OnInit {
   };
 
   toAddLabel: label = {
-    LabelId: undefined,
+    labelId: undefined,
     value: '',
-    Subscribers: [],
+    subscribers: [],
   };
   LabelList!: label[];
   todaysDate: Date = new Date();
@@ -132,8 +144,8 @@ export class EventDashComponent implements OnInit {
   changeView(x: boolean) {
     this.viewMode = x;
   }
-  isEventActive(eventStart: Date): boolean {
-    return new Date(eventStart) > this.todaysDate;
+  isHappened(eventStart: Date): boolean {
+    return eventStart > this.todaysDate;
   }
   open(content: any) {
     this.modalService.open(content, { centered: true });
@@ -153,6 +165,15 @@ export class EventDashComponent implements OnInit {
       );
   }
   postEvent() {
+    /* this.Toast2.fire({
+      title: 'Event is being created!',
+      html: 'Please hold on while we create your event',
+      timer: 99999,
+      timerProgressBar: true,
+      didOpen: () => {
+        this.Toast.showLoading();
+      },
+    });*/
     this.eventService
       .postEvent(
         'http://localhost:8082/event/postevent',
@@ -352,34 +373,36 @@ export class EventDashComponent implements OnInit {
 
     if (label) {
       const lbX = this.LabelList.find((l) => l.value === label.toString());
-      Swal.fire({
-        icon: 'error',
-        title: 'Already Exists',
-        text: "There's a Label with that name already",
-      });
-
-      this.toAddLabel.value = label.toString();
-      this.eventService
-        .addLabel(
-          'http://localhost:8082/event/addlabel',
-          this.toAddLabel,
-          this.token
-        )
-        .subscribe(
-          (response: any) => {
-            this.Toast.fire({
-              icon: 'success',
-              title: 'Label Added successfully',
-            });
-            console.log(response);
-            this.getlabels();
-          },
-          (error) => {
-            if (error.error?.message) {
-              alert(error.error.message);
+      if (lbX) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Already Exists',
+          text: "There's a Label with that name already",
+        });
+      } else {
+        this.toAddLabel.value = label.toString();
+        this.eventService
+          .addLabel(
+            'http://localhost:8082/event/addlabel',
+            this.toAddLabel,
+            this.token
+          )
+          .subscribe(
+            (response: any) => {
+              this.Toast.fire({
+                icon: 'success',
+                title: 'Label Added successfully',
+              });
+              console.log(response);
+              this.getlabels();
+            },
+            (error) => {
+              if (error.error?.message) {
+                alert(error.error.message);
+              }
             }
-          }
-        );
+          );
+      }
     }
   }
 

@@ -27,6 +27,7 @@ import { DashboardMainComponent } from './dashboard-main/dashboard-main.componen
 import { EventDashComponent } from './event-dash/event-dash.component';
 import { EventviewComponent } from './eventview/eventview.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { EventstatComponent } from './eventstat/eventstat.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +50,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     DashboardMainComponent,
     EventviewComponent,
     EventDashComponent,
+    EventstatComponent,
   ],
   imports: [
     BrowserModule,

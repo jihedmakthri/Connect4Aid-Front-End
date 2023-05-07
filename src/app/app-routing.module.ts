@@ -17,6 +17,7 @@ import { TestComponent } from './test/test.component';
 import { DashboardMainComponent } from './dashboard-main/dashboard-main.component';
 import { EventDashComponent } from './event-dash/event-dash.component';
 import { EventviewComponent } from './eventview/eventview.component';
+import { EventstatComponent } from './eventstat/eventstat.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -47,6 +48,7 @@ const routes: Routes = [
     children: [
       { path: 'EventDash', component: EventDashComponent },
       { path: 'event/:id', component: EventviewComponent },
+      { path: 'eventstat', component: EventstatComponent },
     ],
   },
   { path: 'notfound', component: NotFoundComponent },
