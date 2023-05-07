@@ -1,0 +1,22 @@
+.my-component {
+    height: 100%;
+    width: 100%;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.timer {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 1.4em;
+    letter-spacing: -1px;
+    color: #B7D6E0;
+    
+}
+
+.timer span {
+    font-size: 2em;
+    margin: 0 3px 0 15px;
+    color: #B7D6E0;
+    
+}
