@@ -1,76 +1,61 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
 import {DonationService} from "../../service/donation.service";
 import {Donation} from "../../model/donation";
-
+import {ToastrService} from "ngx-toastr";
+interface Type {
+  value: string;
+  viewValue: string;
+}
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit {
-
+  donationForm!: FormGroup;
+    test:any
   default_amount: number = 0;
   form!: FormGroup;
-
+  donation!:Donation
+  type: Type[] = [
+    {value: 'Money', viewValue: 'Money'},
+    {value: 'cloth', viewValue: 'cloth'},
+    {value: 'food', viewValue: 'food'},
+  ];
   constructor(
     public donationsService: DonationService,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+  private toastr: ToastrService
+
   ) { }
 
   ngOnInit(): void {
+    this.donation = new Donation()
     this.form = new FormGroup({
-      amount: new FormControl('', [Validators.required]),
-      blns_1: new FormControl('', [Validators.required]),
-      blns_2: new FormControl('', Validators.required),
-      other: new FormControl('', Validators.required),
+      name: new FormControl('', [Validators.required]),
+      type: new FormControl('', [Validators.required]),
+      date: new FormControl('', Validators.required),
       raison: new FormControl('', Validators.required),
     });
   }
 
-  get f() {
-    return this.form.controls;
+
+
+
+
+
+  create(){
+    this.donation.type=this.form.get('type')?.value
+    this.donation.name=this.form.get('name')?.value
+    this.donation.date=this.form.get('date')?.value
+    this.donation.raison=this.form.get('raison')?.value
+    if(this.donation.type =="Money")  this.router.navigate(['user/main/payment']);
+    this.toastr.success('Notification message', 'Notification Title');
+    console.log(this.donation)
+
   }
-
-  onchange_amount(e: any) {
-    this.default_amount = e.target.defaultValue
-  }
-
-  padTo2Digits(num: number) {
-    return num.toString().padStart(2, '0');
-  }
-
-  submit() {
-    const now = new Date();
-
-    console.log(this.form.value);
-    const donation = {} as Donation;
-
-    const default_amount = this.default_amount
-    const amount = this.form.value.amount
-    if (default_amount == 0 && amount != 0) {
-      donation.amount = amount;
-    } else if (default_amount != 0 && amount == 0) {
-      donation.amount = default_amount;
-    }else{
-      alert("Amoun't cannot be 0.")
-    }
-
-
-    donation.reason = this.form.value.raison;
-    donation.date = [
-      now.getFullYear(),
-      this.padTo2Digits(now.getMonth() + 1),
-      this.padTo2Digits(now.getDate()),
-    ].join('-'); // 2023-05-01
-
-    console.log(donation);
-    this.donationsService.create(donation).subscribe((res: any) => {
-      console.log('Thanks for donating !');
-      this.router.navigateByUrl('donations/index');
-    })
-  }
-
-
 }

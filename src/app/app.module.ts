@@ -28,6 +28,10 @@ import { CreateComponent } from './donation/create/create.component';
 import { IndexComponent } from './donation/index/index.component';
 import { ViewComponent } from './donation/view/view.component';
 import { PaymentCreateComponent } from './payment/payment-create/payment-create.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -72,6 +76,10 @@ import { PaymentCreateComponent } from './payment/payment-create/payment-create.
             },
         }),
         ReactiveFormsModule,
+      MatInputModule,
+      MatSelectModule,
+      BrowserAnimationsModule,
+      ToastrModule.forRoot()
     ],
   providers: [],
   bootstrap: [AppComponent]
