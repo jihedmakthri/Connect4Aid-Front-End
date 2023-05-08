@@ -24,6 +24,22 @@ import { UsersDetailsComponent } from './users-details/users-details.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TestComponent } from './test/test.component';
 import { DashboardMainComponent } from './dashboard-main/dashboard-main.component';
+import { CandidatureComponent } from './candidature/candidature.component';
+import { CandidatureModule } from './candidature/candidature.module';
+import { ListCandidatureComponent } from './list-candidature/list-candidature.component';
+import { DialogCandidatureComponent } from './dialog-candidature/dialog-candidature.component';
+import {ReactiveFormsModule } from '@angular/forms';
+
+import {MatTableModule} from '@angular/material/table';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+import {MatIconModule} from '@angular/material/icon';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -45,15 +61,28 @@ import { DashboardMainComponent } from './dashboard-main/dashboard-main.componen
     ProfileComponent,
     TestComponent,
     DashboardMainComponent,
-    
+    ListCandidatureComponent,
+    DialogCandidatureComponent
   ],
   imports: [
     BrowserModule,
+    CandidatureModule,
+    NoopAnimationsModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     NgbModule,
     FormsModule,
-    HttpClientModule,
     MatButtonModule,
+    MatTableModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRadioModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatIconModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
