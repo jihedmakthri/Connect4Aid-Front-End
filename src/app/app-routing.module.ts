@@ -15,7 +15,8 @@ import { UsersDetailsComponent } from './users-details/users-details.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TestComponent } from './test/test.component';
 import { DashboardMainComponent } from './dashboard-main/dashboard-main.component';
-import { ListCandidatureComponent } from './candidature/list-candidature/list-candidature.component';
+import { ListCandidatureComponent } from './list-candidature/list-candidature.component';
+import { ListentretienComponent } from './list-entretien/list-entretien.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -37,6 +38,8 @@ const routes: Routes = [
   { path: 'member/main', component: MemberPageComponent, canActivate: [MemberGuard] },
   { path: 'notfound', component: NotFoundComponent },
   {path:'candidature',component: ListCandidatureComponent 
+},
+{path:'entretien',component: ListentretienComponent 
 },
   { path: '**', component: NotFoundComponent }
 ];

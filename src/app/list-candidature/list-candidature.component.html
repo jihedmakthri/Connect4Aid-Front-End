@@ -1,6 +1,9 @@
-<p>list-candidature works!</p>
+<app-sidenav></app-sidenav>
 
-<div>
+<app-body>[collapsed]="isSideNavCollapsed" [screenWidth]="screenWidth">
+</app-body>
+
+<div >
     <button style="margin-bottom: 10px;" mat-raised-button color="accent" (click)="openDialog()">Add Candidature</button>
 
     </div>
@@ -96,5 +99,5 @@
         <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
 
       </div>
-
+    
 
