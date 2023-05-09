@@ -18,6 +18,8 @@ interface SideNavToggle {
   ,'../../assetsf/css/style.css','../../assetsf/lib/owlcarousel/assets/owl.carousel.min.css']
 })
 export class CoursComponent implements OnInit {
+ 
+  
   formationId!: number;
   p: number=0
   screenWidth = 0; ///
@@ -34,12 +36,7 @@ export class CoursComponent implements OnInit {
     d!: string
     e!: string
     f!: string
-     g!: string
-      h!: string
-      i!: string
-      j!: string
-
-
+     
   constructor(private route: ActivatedRoute,private http: HttpClient,private jwtHelper: JwtHelperService) { }
 
   decodedToken = this.jwtHelper.decodeToken(localStorage.getItem('token') || '');
@@ -126,11 +123,11 @@ export class CoursComponent implements OnInit {
       }
 
      
+  
+/////// submit quiz
 
-
-
-      submitQuiz( a: string, b: string, c: string, d: string, e: string, f: string, g: string, h: string, i: string, j: string) {
-        console.log(a, b, c, d, e, f, g, h, i, j);
+      submitQuiz( a: string, b: string, c: string, d: string, e: string, f: string) {
+        console.log(a, b, c, d, e, f);
       
         let p = 0;
       
@@ -158,25 +155,11 @@ export class CoursComponent implements OnInit {
           p++;
         }
       
-        if (g === this.quiz.rv7) {
-          p++;
-        }
-      
-        if (h === this.quiz.rv8) {
-          p++;
-        }
-      
-        if (i === this.quiz.rv9) {
-          p++;
-        }
-      
-        if (j === this.quiz.rv10) {
-          p++;
-        }
+       
       
         console.log(p);
       
-        if (p >= 6) {
+        if (p >= 3) {
           Swal.fire({
             position: 'center',
             icon: 'success',
@@ -208,7 +191,7 @@ export class CoursComponent implements OnInit {
       rr(p:number){
 
    
-        const quizScore = this.submitQuiz(this.a, this.b, this.c, this.d, this.e, this.f, this.g, this.h, this.i, this.j);
+        const quizScore = this.submitQuiz(this.a, this.b, this.c, this.d, this.e, this.f);
            const headers = new HttpHeaders({
              'Authorization': 'Bearer ' + localStorage.getItem('token')
            });
@@ -230,39 +213,45 @@ export class CoursComponent implements OnInit {
 
 //delete quiz
    
-delete_q(id: number) {
+// delete_q(id: number) {
 
 
-  console.log(id)
-  const headers = new HttpHeaders({
-    'Authorization': 'Bearer ' + localStorage.getItem('token')
-  });
+//   console.log(id)
+//   const headers = new HttpHeaders({
+//     'Authorization': 'Bearer ' + localStorage.getItem('token')
+//   });
 
-  Swal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      this.http.post('http://localhost:8082/delete_q?idf=' + id, {}, { headers: headers }).subscribe(() => {
-        console.log('Post deleted successfully');
-        Swal.fire(
-          'Deleted!',
-          'Your post has been deleted.',
-          'success'
-        )
-      }, error => {
-        console.error('Error deleting post:', error);
-      });
-    }
-  });
-}
+//   Swal.fire({
+//     title: 'Are you sure?',
+//     text: "You won't be able to revert this!",
+//     icon: 'warning',
+//     showCancelButton: true,
+//     confirmButtonColor: '#3085d6',
+//     cancelButtonColor: '#d33',
+//     confirmButtonText: 'Yes, delete it!'
+//   }).then((result) => {
+//     if (result.isConfirmed) {
+//       this.http.post('http://localhost:8082/delete_q?idf=' + id, {}, { headers: headers }).subscribe(() => {
+//         console.log('Post deleted successfully');
+//         Swal.fire(
+//           'Deleted!',
+//           'Your post has been deleted.',
+//           'success'
+//         )
+//       }, error => {
+//         console.error('Error deleting post:', error);
+//       });
+//     }
+//   });
+// }
+
+
+
 
 ////////POST Quiz ///////
+
+
+
 onAddQ(formationIdLong: number) {
   const headers = new HttpHeaders({
     'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -273,9 +262,23 @@ onAddQ(formationIdLong: number) {
     .subscribe(response => {
       this.quiz=new Quiz
       console.log('Quiz added successfully:', response);
+      Swal.fire(
+                  
+                  'Your Quiz has been added.',
+                  'success'
+                )
     }, error => {
       console.error('Error adding quiz:', error);
     });
+}
+
+
+///// lien de pdf 
+
+   
+openPDF(pdfUrl: string): void {
+  const fullUrl = `http://localhost:4200/member/main/${pdfUrl}`;
+  window.open(fullUrl, '_blank');
 }
 
 

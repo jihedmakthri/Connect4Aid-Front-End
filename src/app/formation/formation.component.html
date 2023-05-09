@@ -1,30 +1,4 @@
 
-<style>
-    .button {
-        background-color: #4CAF50; /* Green */
-        border: none;
-        color: white;
-        padding: 16px 28px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 15px;
-        margin: 4px 2px;
-        -webkit-transition-duration: 0.4s; /* Safari */
-        transition-duration: 0.4s;
-        cursor: pointer;
-    }
-    
-     .button {
-        background-color: #555555;
-     color: white;
-        }
-
-    .button:hover {
-        background-color: #f44336;
-         color: white;
-    }
-    </style>
    
 
     <!-- Header Start -->
@@ -46,12 +20,12 @@
 
      <!-- formulaire POST -->
 
-     <button  *ngIf="usersession.role==x"  type="button" class="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add Formation</button>
+     <button  *ngIf="usersession.role==x"  type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal" >Add Formation</button>
 
 
      <div style="z-index: 999999;" class="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true" aria-disabled="false">
       <!-- Scrollable modal -->
-   <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-dialog modal-dialog-scrollable">
  
          <div class="modal-content">
            <div class="modal-header">
@@ -63,46 +37,51 @@
              <form (ngSubmit)="onSubmit()">
                <div class="mb-3">
                  <label for="recipient-name" class="col-form-label">Title :</label>
-                 <input type="text" class="form-control" id="title" name="title" [(ngModel)]="title">
+                 <input type="text" class="form-control" id="title" name="title" [(ngModel)]="title" #t>
                </div>
                <div class="mb-3">
                  <label for="recipient-name" class="col-form-label">Date Debut :</label>
-                 <input type="date" class="form-control" id="dateDebut"  name="dateDebut" [(ngModel)]="dateDebut">
+                 <input type="date" class="form-control" id="dateDebut"  name="dateDebut" [(ngModel)]="dateDebut" #dd>
                </div>
                <div class="mb-3">
                  <label for="recipient-name" class="col-form-label">Date Fin :</label>
-                 <input type="date" class="form-control" id="dateFin"  name="dateFin" [(ngModel)]="dateFin">
+                 <input type="date" class="form-control" id="dateFin"  name="dateFin" [(ngModel)]="dateFin" #df >
                </div>
                <div class="mb-3">
                  <label for="recipient-name" class="col-form-label">Upload Image :</label>
-                 <input type="file"  type="file" (change)="onFileSelected($event)" class="form-control" id="title" name="image" [(ngModel)]="image">
+                 <input type="file"  type="file" (change)="onFileSelected($event)" class="form-control" id="title" name="image" [(ngModel)]="image" #img>
                </div>
                 <div class="mb-3">
                  <label for="recipient-name" class="col-form-label">Owner :</label>
-                 <input type="text" class="form-control" id="owner"  name="owner" [(ngModel)]="owner">
+                 <input type="text" class="form-control" id="owner"  name="owner" [(ngModel)]="owner" #ow>
                </div> 
                <div class="mb-3">
                  <label for="recipient-name" class="col-form-label">Choose a Place :</label>
-                 <input type="text" class="form-control" id="place"  name="place" [(ngModel)]="place">
+                 <input type="text" class="form-control" id="place"  name="place" [(ngModel)]="place" #pl>
                </div>
                  <div class="mb-3">
                  <label for="recipient-name" class="col-form-label">Description :</label>
-                 <input type="textarea" class="form-control" id="description" name="description"[(ngModel)]="description">
+                 <input type="textarea" class="form-control" id="description" name="description"[(ngModel)]="description" #desc>
                </div> 
             
                <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Categorie :</label>
-                <select (change)="onOptionSelected($event)">
+                <select class="form-control" (change)="onOptionSelected($event)">
+                  <option value="" selected>--Select an Option--</option>
                   <option value="AUTOMOBILE">AUTOMOBILE</option>
-                  <option value="option2">Option 2</option>
-                  <option value="option3">Option 3</option>
+                  <option value="INFORMATIQUE">INFORMATIQUE</option>
+                  <option value="GENIE_CIVIL">GENIE CIVIL</option>
+                  <option value="ELECTRONIQUE">ELECTRONIQUE</option>
+                  <option value="ENERGITIQUE">ENERGITIQUE</option>
+                  <option value="MECATRONIQUE">MECATRONIQUE</option>
                 </select>
                  </div>
                
              
              <div class="modal-footer">
              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-             <button type="button submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Add</button>
+             <button type="button submit" [disabled]="t.value ==''||dd.value =='' ||df.value ==
+             ''||ow.value =='' ||pl.value ==''||desc.value ==''||img.value ==''" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Add</button>
            
            </div>
             </form>
@@ -120,23 +99,19 @@
                 <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Types</h5>
                 <h1>Explore Type Formation</h1>
                 
-                <div class="rounded overflow-hidden mb-2"*ngFor="let lists of list" >
-                  
-             
-                  
-               
+                <a class="rounded overflow-hidden mb-2"*ngFor="let lists of list" >
                   <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#typeF"style="margin :5px;background-color:#f44336;padding: 13px 28px" (click)="getbytypeforamtion(lists)"  >{{lists}}</button>
-  
-            </div>
+                  </a>
+            
         </div>
     </div>
    
 
 
     <!-- Formation Start -->
-    <div class="container-fluid py-5">
-        <div class="container py-5">
-            <div class="text-center mb-5">
+    <!-- <div class="container-fluid py-5"> -->
+        <div  class="container-fluid py-5" class="container py-5" class="text-center mb-5">
+            <!-- <div class="text-center mb-5"> -->
                 <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Formations</h5>
                 <h1>Our Popular Formations</h1>
             </div>
@@ -169,15 +144,6 @@
                                       <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
                                       <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
                                     </svg></small>
-
-
-
-
-
-
-
-
-
 
                                     
                                     

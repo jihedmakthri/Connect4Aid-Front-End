@@ -1,6 +1,9 @@
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
 <div class="container-fluid py-5">
 
+
+
+  
     <div class="container py-5">
         <div class="text-center mb-5">
           <div>  <h1>The List of Courses </h1>
@@ -15,7 +18,7 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Title</th>
-        <th scope="col">PDF Link</th>
+        <th scope="col"></th>
       
       </tr>
     </thead>
@@ -23,8 +26,13 @@
       <tr    *ngFor="let Courses of cours">
         <th scope="row">1</th>
         <td>{{Courses.title}}</td>
-        <td> <a href="#" >link<script class="img-fluid" [src]="'data:' + Courses.pdftype + ';base64,' + Courses.pdf"  > </script></a>  </td>
+        <a type="button" >dddddd</a>
+        <td>
+          
+          <iframe [src]="'data:' + Courses.pdftype + ';base64,' + Courses.pdf" ></iframe> 
+        </td>
         
+     
       </tr>
     </tbody>
   </table>
@@ -53,6 +61,7 @@
  
 
 <!-- ajouter quiz -->
+
 <div style="z-index: 999999;" class="modal fade" id="add" aria-labelledby="addLabel" aria-hidden="true" aria-disabled="false" >
  <!-- Scrollable modal -->
  <div class="modal-dialog modal-dialog-scrollable">
@@ -68,33 +77,158 @@
 
         <div class="mb-3">
             
-            <div><label for="recipient-name" class="col-form-label">Question 1 :</label>
-            <input type="text" class="form-control" id="q1" name="q1" [(ngModel)]="quiz.q1">
-            </div>
+           <label for="recipient-name" class="col-form-label">Question 1 :</label>
+            <input type="text" class="form-control" id="q1" name="q1" [(ngModel)]="quiz.q1" #n>
+          
 
           
             <label for="recipient-name" class="col-form-label">Anser 1:</label>
-            <input type="text" class="form-control" id="a1" name="a1" [(ngModel)]="quiz.a1">
+            <input type="text" class="form-control" id="a1" name="a1" [(ngModel)]="quiz.a1" #n1>
            
            
             <label for="recipient-name" class="col-form-label">Anser 2 :</label>
-            <input type="text" class="form-control" id="b1" name="b1" [(ngModel)]="quiz.b1">
+            <input type="text" class="form-control" id="b1" name="b1" [(ngModel)]="quiz.b1" #n2>
            
           
             <label for="recipient-name" class="col-form-label">Anser 3:</label>
-            <input type="text" class="form-control" id="c1" name="c1" [(ngModel)]="quiz.c1">
+            <input type="text" class="form-control" id="c1" name="c1" [(ngModel)]="quiz.c1" #n3>
            
            
             <label for="recipient-name" class="col-form-label">Right Anser :</label>
-            <input type="text" class="form-control" id="rv1" name="rv1" [(ngModel)]="quiz.rv1">
+            <input type="text" class="form-control" id="rv1" name="rv1" [(ngModel)]="quiz.rv1" #n4>
           
         </div>
-          
+
+        <div class="mb-3">
+          <div> 
+         <label for="recipient-name" class="col-form-label">Question 2 :</label>
+          <input type="text" class="form-control"  name="q2" [(ngModel)]="quiz.q2" #m>
+       
+
+        
+          <label for="recipient-name" class="col-form-label">Anser 1:</label>
+          <input type="text" class="form-control" name="a2" [(ngModel)]="quiz.a2" #m1>
+         
+         
+          <label for="recipient-name" class="col-form-label">Anser 2 :</label>
+          <input type="text" class="form-control"  name="b2" [(ngModel)]="quiz.b2" #m2>
+         
+        
+          <label for="recipient-name" class="col-form-label">Anser 3:</label>
+          <input type="text" class="form-control"  name="c2" [(ngModel)]="quiz.c2" #m3>
+         
+         
+          <label for="recipient-name" class="col-form-label">Right Anser :</label>
+          <input type="text" class="form-control" name="rv2" [(ngModel)]="quiz.rv2" #m4>
+          </div>
+      </div>
+
+      
+      <div class="mb-3">
+        <div>   
+        <label for="recipient-name" class="col-form-label">Question 3 :</label>
+         <input type="text" class="form-control"  name="q3" [(ngModel)]="quiz.q3" #l>
+      
+
+       
+         <label for="recipient-name" class="col-form-label">Anser 1:</label>
+         <input type="text" class="form-control" name="a3" [(ngModel)]="quiz.a3" #l1>
+        
+        
+         <label for="recipient-name" class="col-form-label">Anser 2 :</label>
+         <input type="text" class="form-control"  name="b3" [(ngModel)]="quiz.b3" #l2>
+        
+       
+         <label for="recipient-name" class="col-form-label">Anser 3:</label>
+         <input type="text" class="form-control"  name="c3" [(ngModel)]="quiz.c3" #l3>
+        
+        
+         <label for="recipient-name" class="col-form-label">Right Anser :</label>
+         <input type="text" class="form-control" name="rv3" [(ngModel)]="quiz.rv3" #l4>
+        </div>
+     </div>
+
+     
+     <div class="mb-3">
+       <div>     
+      <label for="recipient-name" class="col-form-label">Question 4 :</label>
+       <input type="text" class="form-control"  name="q4" [(ngModel)]="quiz.q4" #o>
+    
+
+       <label for="recipient-name" class="col-form-label">Anser 1:</label>
+       <input type="text" class="form-control" name="a4" [(ngModel)]="quiz.a4" #o1>
+      
+      
+       <label for="recipient-name" class="col-form-label">Anser 2 :</label>
+       <input type="text" class="form-control"  name="b4" [(ngModel)]="quiz.b4" #o2>
+      
+     
+       <label for="recipient-name" class="col-form-label">Anser 3:</label>
+       <input type="text" class="form-control"  name="c4" [(ngModel)]="quiz.c4" #o3>
+      
+      
+       <label for="recipient-name" class="col-form-label">Right Anser :</label>
+       <input type="text" class="form-control" name="rv4" [(ngModel)]="quiz.rv4" #o4>
+       </div>
+   </div>
+
+
+   <div class="mb-3">
+    <div>     
+   <label for="recipient-name" class="col-form-label">Question 5 :</label>
+    <input type="text" class="form-control"  name="q5" [(ngModel)]="quiz.q5" #p>
+ 
+
+    <label for="recipient-name" class="col-form-label">Anser 1:</label>
+    <input type="text" class="form-control" name="a5" [(ngModel)]="quiz.a5" #p1>
+   
+   
+    <label for="recipient-name" class="col-form-label">Anser 2 :</label>
+    <input type="text" class="form-control"  name="b5" [(ngModel)]="quiz.b5" #p2>
+   
+  
+    <label for="recipient-name" class="col-form-label">Anser 3:</label>
+    <input type="text" class="form-control"  name="c5" [(ngModel)]="quiz.c5" #p3>
+   
+   
+    <label for="recipient-name" class="col-form-label">Right Anser :</label>
+    <input type="text" class="form-control" name="rv5" [(ngModel)]="quiz.rv5" #p4>
+    </div>
+</div>
+       
+<div class="mb-3">
+  <div>     
+ <label for="recipient-name" class="col-form-label">Question 6 :</label>
+  <input type="text" class="form-control"  name="q6" [(ngModel)]="quiz.q6" #qq>
+
+
+  <label for="recipient-name" class="col-form-label">Anser 1:</label>
+  <input type="text" class="form-control" name="a6" [(ngModel)]="quiz.a6" #q1>
+ 
+ 
+  <label for="recipient-name" class="col-form-label">Anser 2 :</label>
+  <input type="text" class="form-control"  name="b6" [(ngModel)]="quiz.b6" #q2>
+ 
+
+  <label for="recipient-name" class="col-form-label">Anser 3:</label>
+  <input type="text" class="form-control"  name="c6" [(ngModel)]="quiz.c6" #q3>
+ 
+ 
+  <label for="recipient-name" class="col-form-label">Right Anser :</label>
+  <input type="text" class="form-control" name="rv6" [(ngModel)]="quiz.rv6" #q4>
+  </div>
+</div>
+     
           
        
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button submit" class="btn btn-primary"  (click)="onAddQ(formationId)"  data-bs-toggle="modal" data-bs-target="#add" >Add</button>
+        <button type="button submit" [disabled]="q1.value ==''|| q2.value ==''  || q3.value ==''|| q4.value =='' || qq.value ==''||
+        p1.value ==''|| p2.value ==''  || p3.value ==''|| p4.value =='' || p.value =='' ||
+        o1.value =='' || o2.value ==''  || o3.value ==''|| o4.value =='' || o.value ==''||
+        l1.value ==''|| l2.value =='' || l3.value ==''|| l4.value =='' || l.value =='' ||
+        m1.value ==''|| m2.value ==''  || m3.value ==''|| m4.value =='' || m.value ==''||
+        n1.value ==''|| n2.value =='' || n3.value =='' || n4.value =='' || n.value ==''" class="btn btn-primary"  (click)="onAddQ(formationId)"  data-bs-toggle="modal" data-bs-target="#add" >Add</button>
       </div>
        </form>
       </div>
@@ -164,35 +298,7 @@
                    <div><input type="radio" name="t"  value={{quiz.c6}}  #optionC6>{{quiz.c6}}</div>     
                </div>
              
-               <div class="mb-3">
-                 <label for="recipient-name" class="col-form-label">Q7.  {{quiz.q7}} :</label>
-                   <div><input type="radio" name="e"  value={{quiz.a7}}  #optionA7>{{quiz.a7}}</div>    
-                   <div><input type="radio" name="e"  value={{quiz.b7}}  #optionB7>{{quiz.b7}}</div>    
-                   <div><input type="radio" name="e"  value={{quiz.c7}}  #optionC7>{{quiz.c7}}</div>     
-               </div>
-             
-               <div class="mb-3">
-                 <label for="recipient-name" class="col-form-label">Q8.  {{quiz.q8}} :</label>
-                   <div><input type="radio" name="r"  value={{quiz.a8}}  #optionA8>{{quiz.a8}}</div>    
-                   <div><input type="radio" name="r"  value={{quiz.b8}}  #optionB8>{{quiz.b8}}</div>    
-                   <div><input type="radio" name="r"  value={{quiz.c8}}  #optionC8>{{quiz.c8}}</div>     
-               </div>
-             
- 
-               <div class="mb-3">
-                 <label for="recipient-name" class="col-form-label">Q9.  {{quiz.q9}} :</label>
-                   <div><input type="radio" name="u"  value={{quiz.a9}}  #optionA9>{{quiz.a9}}</div>    
-                   <div><input type="radio" name="u"  value={{quiz.b9}}  #optionB9>{{quiz.b9}}</div>    
-                   <div><input type="radio" name="u"  value={{quiz.c9}}  #optionC9>{{quiz.c9}}</div>     
-               </div>
- 
- 
-               <div class="mb-3">
-                 <label for="recipient-name" class="col-form-label">Q10.  {{quiz.q10}} :</label>
-                   <div><input type="radio" name="o"  value={{quiz.a10}}  #optionA10>{{quiz.a10}}</div>    
-                   <div><input type="radio" name="o"  value={{quiz.b10}}  #optionB10>{{quiz.b10}}</div>    
-                   <div><input type="radio" name="o"  value={{quiz.c10}}  #optionC10>{{quiz.c10}}</div>     
-               </div>
+              
           
            <div class="modal-footer">
            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -201,11 +307,7 @@
                                       ,optionA3.checked ? optionA3.value : optionB3.checked ? optionB3.value : optionC3.checked ? optionC3.value : ''
                                       ,optionA4.checked ? optionA4.value : optionB4.checked ? optionB4.value : optionC4.checked ? optionC4.value : ''
                                       ,optionA5.checked ? optionA5.value : optionB5.checked ? optionB5.value : optionC5.checked ? optionC5.value : ''
-                                      ,optionA6.checked ? optionA6.value : optionB6.checked ? optionB6.value : optionC6.checked ? optionC6.value : ''
-                                      ,optionA7.checked ? optionA7.value : optionB7.checked ? optionB7.value : optionC7.checked ? optionC7.value : ''
-                                      ,optionA8.checked ? optionA8.value : optionB8.checked ? optionB8.value : optionC8.checked ? optionC8.value : ''
-                                      ,optionA9.checked ? optionA9.value : optionB9.checked ? optionB9.value : optionC9.checked ? optionC9.value : ''
-                                      ,optionA10.checked ? optionA10.value : optionB10.checked ? optionB10.value : optionC10.checked ? optionC10.value : '')"
+                                      ,optionA6.checked ? optionA6.value : optionB6.checked ? optionB6.value : optionC6.checked ? optionC6.value : '')"
                            type="button submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Submit</button>
          </div>
           </form>

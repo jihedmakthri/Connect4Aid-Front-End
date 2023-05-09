@@ -130,11 +130,7 @@ this.http.get<any>('http://localhost:8082/usernotee', {
     this.screenWidth = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
     }
-    onOptionSelected(event: any) {
-      this.typeF = event.target.value;
-      console.log(this.typeF)
-    }
-
+   
 
     ////////POST ///////
 
@@ -164,13 +160,22 @@ this.http.get<any>('http://localhost:8082/usernotee', {
         this.dateFin = '';
         this.place = '';
         this.owner = '';
-        this.typeF = '';
         this.description = '';
       
 
 
       });
     }
+
+    onOptionSelected(event: any) {
+      this.typeF = event.target.value;
+     
+    }
+////////
+
+
+
+
 
       gotoFormationDetails(formationId: number) {
       // Navigate to the FormationDetailsComponent with the formationId as a route parameter

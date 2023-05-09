@@ -26,6 +26,7 @@ import { TestComponent } from './test/test.component';
 import { DashboardMainComponent } from './dashboard-main/dashboard-main.component';
 import { FormationComponent } from './formation/formation.component';
 import { CoursComponent } from './cours/cours.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { CoursComponent } from './cours/cours.component';
     
   ],
   imports: [
+    NgxExtendedPdfViewerModule,
     BrowserModule,
     AppRoutingModule,
     NgbModule,
