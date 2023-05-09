@@ -21,8 +21,7 @@ import { EventstatComponent } from './eventstat/eventstat.component';
 import { BlogComponent } from './blog/blog.component';
 
 const routes: Routes = [
- 
-  { path: '', redirectTo: 'home', pathMatch: 'full'},
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'test', component: TestComponent },
   { path: 'home', component: HomeComponent },
   { path: 'signin', component: SigninComponent },
@@ -34,8 +33,8 @@ const routes: Routes = [
     component: DashboardComponent,
     canActivate: [AdminGuard],
     children: [
-     { path: '', redirectTo: 'blog', pathMatch: 'full'},
-      { path:'blog',component:BlogComponent},
+      { path: '', redirectTo: 'blog', pathMatch: 'full' },
+      { path: 'blog', component: BlogComponent },
       { path: 'usersDetails', component: UsersDetailsComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'dashboard', component: DashboardMainComponent },
@@ -49,8 +48,8 @@ const routes: Routes = [
     component: UserPageComponent,
     canActivate: [UserGuard],
     children: [
-      { path: '', redirectTo: 'blog', pathMatch: 'full'},
-      { path:'blog',component:BlogComponent},
+      { path: '', redirectTo: 'blog', pathMatch: 'full' },
+      { path: 'blog', component: BlogComponent },
       { path: 'profile', component: ProfileComponent },
     ],
   },
@@ -58,9 +57,9 @@ const routes: Routes = [
     path: 'member/main',
     component: MemberPageComponent,
     children: [
-     { path: '', redirectTo: 'blog', pathMatch: 'full'},
+      { path: '', redirectTo: 'blog', pathMatch: 'full' },
       { path: 'profile', component: ProfileComponent },
-      { path:'blog',component:BlogComponent},
+      { path: 'blog', component: BlogComponent },
       { path: 'EventDash', component: EventDashComponent },
       { path: 'event/:id', component: EventviewComponent },
       { path: 'eventstat', component: EventstatComponent },

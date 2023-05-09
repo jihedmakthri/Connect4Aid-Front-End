@@ -27,8 +27,8 @@ export class EvenetService {
       }),
     });
   }
-  deleteEvent(reqPath: string, token: string): Observable<string> {
-    return this.http.post<string>(
+  deleteEvent(reqPath: string, token: string): Observable<Event> {
+    return this.http.post<Event>(
       `${reqPath}`,
       {},
       {
