@@ -34,4 +34,9 @@ export const navbarData = [
         icon: 'fal fa-cog',
         label: 'Settings'
     },
+    {
+        routeLink: 'blog',
+        icon: 'fal fa-cog',
+        label: 'blog'
+    },
 ];
