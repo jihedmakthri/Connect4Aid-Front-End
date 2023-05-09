@@ -15,6 +15,8 @@ import { UsersDetailsComponent } from './users-details/users-details.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TestComponent } from './test/test.component';
 import { DashboardMainComponent } from './dashboard-main/dashboard-main.component';
+import { FormationComponent } from './formation/formation.component';
+import { CoursComponent } from './cours/cours.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -33,7 +35,10 @@ const routes: Routes = [
     path: 'user/main', component: UserPageComponent, canActivate: [UserGuard], children: [
           { path: 'profile', component: ProfileComponent },
   ]},
-  { path: 'member/main', component: MemberPageComponent, canActivate: [MemberGuard] },
+  { path: 'member/main', component: MemberPageComponent, canActivate: [MemberGuard],children:[
+    { path: 'formation', component: FormationComponent,canActivate: [MemberGuard] },] },
+  
+  { path: 'member/main/formation/cour/:idf', component: CoursComponent,canActivate: [MemberGuard] },
   { path: 'notfound', component: NotFoundComponent },
   { path: '**', component: NotFoundComponent }
 ];
