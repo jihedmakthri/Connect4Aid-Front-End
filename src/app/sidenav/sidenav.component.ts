@@ -5,6 +5,7 @@ import { navbarData } from './nav-data';
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
+  
 }
 
 @Component({

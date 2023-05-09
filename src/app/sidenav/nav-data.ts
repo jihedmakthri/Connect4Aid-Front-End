@@ -17,7 +17,13 @@ export const navbarData = [
     {
         routeLink: 'Candidates',
         icon: 'fal fa-address-card',
-        label: 'Candidates'
+        label: 'Candidates',
+        
+    },
+    {
+        routeLink: 'Entretien',
+        icon: 'fal fa-address-card',
+        label: 'Entretien'
     },
     {
         routeLink: 'pages',
@@ -34,4 +40,5 @@ export const navbarData = [
         icon: 'fal fa-cog',
         label: 'Settings'
     },
+    
 ];

@@ -30,6 +30,9 @@ const routes: Routes = [
       { path: 'usersDetails', component: UsersDetailsComponent },
       { path: 'profile', component: ProfileComponent },
       {path:'dashboard',component:DashboardMainComponent},
+      {path:'Candidates',component: ListCandidatureComponent },
+      {path:'Entretien',component: ListentretienComponent 
+},
   ]},
   {
     path: 'user/main', component: UserPageComponent, canActivate: [UserGuard], children: [
@@ -37,10 +40,6 @@ const routes: Routes = [
   ]},
   { path: 'member/main', component: MemberPageComponent, canActivate: [MemberGuard] },
   { path: 'notfound', component: NotFoundComponent },
-  {path:'candidature',component: ListCandidatureComponent 
-},
-{path:'entretien',component: ListentretienComponent 
-},
   { path: '**', component: NotFoundComponent }
 ];
 

@@ -7,7 +7,7 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class ServiceCandidatureService {
-  urlApi = 'http://localhost:8082/test';  // URL de l'API
+  urlApi = 'http://localhost:8082';  // URL de l'API
 
   constructor(private http: HttpClient ) {
 
@@ -22,7 +22,7 @@ export class ServiceCandidatureService {
   }
   
   getCandidature(){
-    return this.http.get<any>("http://localhost:8082/test/findAllcandidates");
+    return this.http.get<any>("http://localhost:8082/findAllcandidates");
 
   }
   

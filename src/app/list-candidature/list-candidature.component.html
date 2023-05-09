@@ -1,18 +1,16 @@
-<app-sidenav></app-sidenav>
-
 <app-body>[collapsed]="isSideNavCollapsed" [screenWidth]="screenWidth">
 </app-body>
 
-<div >
-    <button style="margin-bottom: 10px;" mat-raised-button color="accent" (click)="openDialog()">Add Candidature</button>
+<div style="text-align: left;">
+    <button style="margin-bottom: 10px;" mat-raised-button color="warn" style="background-color: #ed4652;" (click)="openDialog()">Add candidate</button>
 
     </div>
-    <div>
-      <button style="margin-bottom: 10px;" mat-raised-button color="accent" (click)="exportExperience()"> PDF </button>
+    <div style="text-align: left;">
+      <button style="margin-bottom: 10px;" mat-raised-button color="warn" style="background-color: #ed4652;"(click)="exportExperience()"> PDF </button>
 
-      <button style="margin-bottom: 10px;" mat-raised-button color="accent" (click)="exportExperienceExcel()">Excel</button>
+      <button style="margin-bottom: 10px;" mat-raised-button color="warn" style="background-color: #ed4652;" (click)="exportExperienceExcel()">Excel</button>
 
-      </div>
+    </div>
 
 
 
