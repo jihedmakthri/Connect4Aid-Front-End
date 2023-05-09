@@ -29,6 +29,8 @@ import { EventviewComponent } from './eventview/eventview.component';
 import { EventDashComponent } from './event-dash/event-dash.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { EventstatComponent } from './eventstat/eventstat.component';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +55,8 @@ import { EventstatComponent } from './eventstat/eventstat.component';
     EventviewComponent,
     EventDashComponent,
     EventstatComponent,
+    AboutComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,

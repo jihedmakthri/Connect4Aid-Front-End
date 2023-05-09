@@ -19,6 +19,8 @@ import { EventDashComponent } from './event-dash/event-dash.component';
 import { EventviewComponent } from './eventview/eventview.component';
 import { EventstatComponent } from './eventstat/eventstat.component';
 import { BlogComponent } from './blog/blog.component';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -27,7 +29,8 @@ const routes: Routes = [
   { path: 'signin', component: SigninComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'forgotpassword', component: ForgotPasswordComponent },
-
+  { path: 'about', component: AboutComponent },
+  { path: 'contact',component:ContactComponent},
   {
     path: 'admin',
     component: DashboardComponent,
