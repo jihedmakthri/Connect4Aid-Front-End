@@ -1,0 +1,35 @@
+<form [formGroup]="form" >
+  <div class="containerr">
+    <h3>Create Payment</h3>
+    <div>
+      <mat-form-field class="example-full-width">
+        <mat-label>amount</mat-label>
+        <input matInput  formControlName="amount" type="number" >
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="example-full-width">
+        <mat-label>status</mat-label>
+        <input matInput  formControlName="status" type="text" >
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>payment type</mat-label>
+        <mat-select  formControlName="type">
+          <mat-option *ngFor="let type of type" [value]="type.value" >
+            {{type.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="date">
+        <label for="exampleInputdatee">creation date</label>
+        <input   type="date" class="form-control" id="exampleInputdatee" value="" formControlName="date" >
+    </div>
+    <div>
+      <button href="https://buy.stripe.com/test_7sI4iYfv47hdgoMcMM" (click)="create()" class="btn btn-success"> Create Payment</button>
+    </div>
+
+  </div>
+</form>

@@ -1,0 +1,35 @@
+<form [formGroup]="form" >
+<div class="containerr">
+  <h3>Create Donation</h3>
+<div>
+  <mat-form-field class="example-full-width">
+    <mat-label>name</mat-label>
+    <input matInput  formControlName="name"  >
+  </mat-form-field>
+</div>
+  <div>
+    <mat-form-field class="example-full-width">
+      <mat-label>Leave a raison</mat-label>
+      <textarea matInput  formControlName="raison" ></textarea>
+    </mat-form-field>
+  </div>
+  <div>
+      <mat-form-field appearance="fill">
+        <mat-label>type</mat-label>
+        <mat-select  formControlName="type">
+          <mat-option *ngFor="let type of type" [value]="type.value" >
+            {{type.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  </div>
+<div class="date">
+   <label for="exampleInputdatee">creation date</label>
+   <input   type="date" class="form-control" id="exampleInputdatee" value="" formControlName="date" >
+</div>
+  <div>
+    <button (click)="create()" class="btn btn-success"> Create</button>
+  </div>
+
+</div>
+</form>

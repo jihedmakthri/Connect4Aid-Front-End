@@ -1,7 +1,7 @@
 export const navbarData = [
     {
         routeLink: 'blog',
-        icon: 'fal fa-home', 
+        icon: 'fal fa-home',
         label: 'Acceuil'
     },
     {
@@ -34,4 +34,18 @@ export const navbarData = [
         icon: 'fal fa-cog',
         label: 'Settings'
     },
+  {
+    routeLink: 'donation',
+    icon: 'fal fa-gift',
+    label: 'Donation'
+  },{
+    routeLink: 'list',
+    icon: 'fal fa-credit-card',
+    label: 'List Donation'
+  },
+  {
+    routeLink: 'listPayment',
+    icon: 'fal fa-credit-card',
+    label: 'List Payment'
+  },
 ];

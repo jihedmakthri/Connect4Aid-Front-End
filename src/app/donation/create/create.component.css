@@ -1,0 +1,23 @@
+.containerr{
+  height: 800px;
+  width: 100%;
+  text-align: center;
+  padding: 50px;
+  display: block;
+  background-color: white;
+}
+
+.mat-form-field{
+  width: 50%;
+}
+
+.containerr div{
+  margin-bottom: 20px;
+}
+
+.date{
+  margin-right: 25%;
+  margin-left: 25%;
+  text-align: center;
+}
+
