@@ -24,8 +24,9 @@ import { UsersDetailsComponent } from './users-details/users-details.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TestComponent } from './test/test.component';
 import { DashboardMainComponent } from './dashboard-main/dashboard-main.component';
-import { EventDashComponent } from './event-dash/event-dash.component';
+import { BlogComponent } from './blog/blog.component';
 import { EventviewComponent } from './eventview/eventview.component';
+import { EventDashComponent } from './event-dash/event-dash.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { EventstatComponent } from './eventstat/eventstat.component';
 @NgModule({
@@ -48,6 +49,7 @@ import { EventstatComponent } from './eventstat/eventstat.component';
     ProfileComponent,
     TestComponent,
     DashboardMainComponent,
+    BlogComponent,
     EventviewComponent,
     EventDashComponent,
     EventstatComponent,

@@ -18,41 +18,53 @@ import { DashboardMainComponent } from './dashboard-main/dashboard-main.componen
 import { EventDashComponent } from './event-dash/event-dash.component';
 import { EventviewComponent } from './eventview/eventview.component';
 import { EventstatComponent } from './eventstat/eventstat.component';
+import { BlogComponent } from './blog/blog.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+ 
+  { path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: 'test', component: TestComponent },
   { path: 'home', component: HomeComponent },
   { path: 'signin', component: SigninComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'forgotpassword', component: ForgotPasswordComponent },
+
   {
     path: 'admin',
     component: DashboardComponent,
     canActivate: [AdminGuard],
     children: [
+     { path: '', redirectTo: 'blog', pathMatch: 'full'},
+      { path:'blog',component:BlogComponent},
       { path: 'usersDetails', component: UsersDetailsComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'dashboard', component: DashboardMainComponent },
+      { path: 'EventDash', component: EventDashComponent },
+      { path: 'event/:id', component: EventviewComponent },
+      { path: 'eventstat', component: EventstatComponent },
     ],
   },
   {
     path: 'user/main',
     component: UserPageComponent,
     canActivate: [UserGuard],
-    children: [{ path: 'profile', component: ProfileComponent }],
+    children: [
+      { path:'blog',component:BlogComponent},
+      { path: 'profile', component: ProfileComponent },
+    ],
   },
   {
     path: 'member/main',
     component: MemberPageComponent,
     children: [
+      { path: 'profile', component: ProfileComponent },
+      { path:'blog',component:BlogComponent},
       { path: 'EventDash', component: EventDashComponent },
       { path: 'event/:id', component: EventviewComponent },
       { path: 'eventstat', component: EventstatComponent },
     ],
   },
   { path: 'notfound', component: NotFoundComponent },
-
   { path: '**', component: NotFoundComponent },
 ];
 

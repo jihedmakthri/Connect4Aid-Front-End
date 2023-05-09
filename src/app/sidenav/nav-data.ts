@@ -5,14 +5,14 @@ export const navbarData = [
         label: 'Acceuil'
     },
     {
-        routeLink: 'home',
-        icon: 'fal fa-home',
-        label: 'Users'
+        routeLink: 'EventDash',
+        icon: 'fas fa-calendar-week',
+        label: 'Events Dashboard'
     },
     {
-        routeLink: 'statistics',
-        icon: 'fal fa-chart-bar',
-        label: 'Statistics'
+        routeLink: 'ffff',
+        icon: 'far fa-hand-heart',
+        label: 'Donation'
     },
     {
         routeLink: 'Candidates',
@@ -20,18 +20,9 @@ export const navbarData = [
         label: 'Candidates'
     },
     {
-        routeLink: 'pages',
-        icon: 'fal fa-file',
-        label: 'Pages'
-    },
-    {
-        routeLink: 'media',
-        icon: 'fal fa-camera',
-        label: 'Media'
-    },
-    {
-        routeLink: 'settings',
-        icon: 'fal fa-cog',
-        label: 'Settings'
-    },
+        routeLink: 'formation',
+        icon: 'fas fa-book-reader',
+        label: 'Courses' 
+    }
+
 ];
