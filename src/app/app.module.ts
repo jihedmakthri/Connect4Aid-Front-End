@@ -24,6 +24,8 @@ import { UsersDetailsComponent } from './users-details/users-details.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TestComponent } from './test/test.component';
 import { DashboardMainComponent } from './dashboard-main/dashboard-main.component';
+import { BlogComponent } from './blog/blog.component';
+
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import { DashboardMainComponent } from './dashboard-main/dashboard-main.componen
     ProfileComponent,
     TestComponent,
     DashboardMainComponent,
+    BlogComponent,
     
   ],
   imports: [
