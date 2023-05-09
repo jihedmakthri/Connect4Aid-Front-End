@@ -39,8 +39,13 @@ export const navbarData = [
     icon: 'fal fa-gift',
     label: 'Donation'
   },{
-    routeLink: 'payment',
+    routeLink: 'list',
     icon: 'fal fa-credit-card',
-    label: 'Payment'
+    label: 'List Donation'
+  },
+  {
+    routeLink: 'listPayment',
+    icon: 'fal fa-credit-card',
+    label: 'List Payment'
   },
 ];

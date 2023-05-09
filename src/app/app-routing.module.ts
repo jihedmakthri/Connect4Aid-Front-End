@@ -17,6 +17,8 @@ import { TestComponent } from './test/test.component';
 import { DashboardMainComponent } from './dashboard-main/dashboard-main.component';
 import {CreateComponent} from "./donation/create/create.component";
 import {PaymentCreateComponent} from "./payment/payment-create/payment-create.component";
+import {IndexComponent} from "./donation/index/index.component";
+import {ListPaymentComponent} from "./payment/list-payment/list-payment.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -36,6 +38,8 @@ const routes: Routes = [
           { path: 'profile', component: ProfileComponent },
           { path: 'donation', component: CreateComponent },
           { path: 'payment', component: PaymentCreateComponent },
+            { path: 'listPayment', component: ListPaymentComponent },
+           { path: 'list', component: IndexComponent },
   ]},
   { path: 'member/main', component: MemberPageComponent, canActivate: [MemberGuard] },
   { path: 'notfound', component: NotFoundComponent },

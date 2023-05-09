@@ -32,6 +32,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
+import {MatTableModule} from '@angular/material/table';
+import { ListPaymentComponent } from './payment/list-payment/list-payment.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,7 @@ import {ToastrModule} from "ngx-toastr";
     IndexComponent,
     ViewComponent,
     PaymentCreateComponent,
+    ListPaymentComponent,
 
   ],
     imports: [
@@ -79,7 +82,8 @@ import {ToastrModule} from "ngx-toastr";
       MatInputModule,
       MatSelectModule,
       BrowserAnimationsModule,
-      ToastrModule.forRoot()
+      ToastrModule.forRoot(),
+      MatTableModule
     ],
   providers: [],
   bootstrap: [AppComponent]

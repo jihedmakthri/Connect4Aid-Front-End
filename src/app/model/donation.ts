@@ -2,9 +2,10 @@ export class Donation {
   id!: number;
   amount!: any;
   date!: any;
-  raison!: any;
+  reason!: any;
   type!:any
   name!:any
+  Payment!:Payment
 }
 export class Payment{
   type!:any

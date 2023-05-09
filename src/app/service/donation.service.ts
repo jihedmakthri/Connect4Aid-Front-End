@@ -11,7 +11,7 @@ import {Donation} from "../model/donation";
 export class DonationService {
 
 
-  private apiURL = "http://127.0.0.1:7072/donation";
+  private apiURL = "http://localhost:8082/donation";
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -50,5 +50,9 @@ export class DonationService {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     return throwError(errorMessage);
+  }
+
+  searchByType(type:any){
+    return this.httpClient.get<any>(this.apiURL + '/getByType/' + type)
   }
 }

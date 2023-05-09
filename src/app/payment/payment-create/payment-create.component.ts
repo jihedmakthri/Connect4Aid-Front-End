@@ -51,11 +51,10 @@ export class PaymentCreateComponent implements OnInit {
 
   create(){
     this.Payment.type=this.form.get('type')?.value
-    this.Payment.name=this.form.get('name')?.value
     this.Payment.status=this.form.get('status')?.value
     this.Payment.amount=this.form.get('amount')?.value
     this.Payment.date=this.form.get('date')?.value
-    this.toastr.success('Notification message', 'Notification Title');
+    this.toastr.success('Payment Created', 'Payment');
     console.log(this.Payment)
 
   }
