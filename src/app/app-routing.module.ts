@@ -37,7 +37,7 @@ const routes: Routes = [
     path: 'user/main', component: UserPageComponent, children: [
           { path: 'profile', component: ProfileComponent },
           { path: 'donation', component: CreateComponent },
-          { path: 'payment', component: PaymentCreateComponent },
+          { path: 'payment/:id', component: PaymentCreateComponent },
             { path: 'listPayment', component: ListPaymentComponent },
            { path: 'list', component: IndexComponent },
   ]},

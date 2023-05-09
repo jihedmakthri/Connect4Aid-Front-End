@@ -55,4 +55,5 @@ export class DonationService {
   searchByType(type:any){
     return this.httpClient.get<any>(this.apiURL + '/getByType/' + type)
   }
+
 }

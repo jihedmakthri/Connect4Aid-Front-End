@@ -53,14 +53,14 @@ export class CreateComponent implements OnInit {
     this.donation.name=this.form.get('name')?.value
     this.donation.date=this.form.get('date')?.value
     this.donation.reason=this.form.get('raison')?.value
-    if(this.donation.type =="Money")  {
-      this.router.navigate(['user/main/payment']);
-    }else{
-      this.router.navigate(['user/main/list']);
-    }
-    this.toastr.success('Donation Created', 'Donamtion');
     console.log(this.donation)
     this.donationsService.create(this.donation).subscribe(res=>{
+      if(this.donation.type =="Money")  {
+        this.router.navigate(['user/main/payment',res.id]);
+      }else{
+        this.router.navigate(['user/main/list']);
+      }
+      this.toastr.success('Donation Created', 'Donamtion');
       console.log("done")
     })
 

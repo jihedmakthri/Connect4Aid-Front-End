@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PaymentService } from 'src/app/service/payment.service';
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -25,11 +26,15 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./list-payment.component.css']
 })
 export class ListPaymentComponent implements OnInit {
-
-  constructor() { }
+  dataSource:any
+  constructor(private PaymentService:PaymentService) { }
 
   ngOnInit(): void {
+    this.PaymentService.getAll().subscribe(res=>{
+      console.log(res)
+      this.dataSource=res
+    })
   }
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = ['amount', 'status', 'type', 'date'];
+  
 }
