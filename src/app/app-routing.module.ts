@@ -49,6 +49,7 @@ const routes: Routes = [
     component: UserPageComponent,
     canActivate: [UserGuard],
     children: [
+      { path: '', redirectTo: 'blog', pathMatch: 'full'},
       { path:'blog',component:BlogComponent},
       { path: 'profile', component: ProfileComponent },
     ],
@@ -57,6 +58,7 @@ const routes: Routes = [
     path: 'member/main',
     component: MemberPageComponent,
     children: [
+     { path: '', redirectTo: 'blog', pathMatch: 'full'},
       { path: 'profile', component: ProfileComponent },
       { path:'blog',component:BlogComponent},
       { path: 'EventDash', component: EventDashComponent },
