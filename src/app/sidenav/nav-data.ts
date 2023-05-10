@@ -9,11 +9,7 @@ export const navbarData = [
         icon: 'fas fa-calendar-week',
         label: 'Events Dashboard'
     },
-    {
-        routeLink: 'EventDash',
-        icon: 'fas fa-calendar-week',
-        label: 'Events Dashboard'
-    },
+  
     {
         routeLink: 'ffff',
         icon: 'far fa-hand-heart',
