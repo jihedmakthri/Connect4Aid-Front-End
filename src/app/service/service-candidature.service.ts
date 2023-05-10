@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import{Candidature} from '../model/Candidature'
 import {Observable} from "rxjs";
 
@@ -13,16 +13,21 @@ export class ServiceCandidatureService {
 
   }
 
-  addCandidature(candidature: string, file: File): Observable<any> {
+  addCandidature(candidature: string, file: File): Observable<any> {const headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token')
+  });
     const formData = new FormData();
     formData.append('candidature', candidature);
     formData.append('file', file);
   
-    return this.http.post<any>('/addCV', formData);
+    return this.http.post<any>('/addCV', formData,{headers:headers});
   }
   
   getCandidature(){
-    return this.http.get<any>("http://localhost:8082/findAllcandidates");
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+    return this.http.get<any>("http://localhost:8082/findAllcandidates",{headers:headers});
 
   }
   
@@ -30,22 +35,30 @@ export class ServiceCandidatureService {
 
 
   deleteCandidature(id: number) : Observable<Candidature[]>{
-    return this.http.delete<[Candidature]>(this.urlApi+"/supp/"+id);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+    return this.http.post<[Candidature]>(this.urlApi+"/supp/"+id,{headers:headers});
   }
 
 
 
   postCandidature(data : any){
-    return this.http.post<any>("http://localhost:8082/newcandidates",data);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+    return this.http.post<any>("http://localhost:8082/newcandidates",data,{headers:headers});
 
   }
  /* addExperience(experience:Experience): Observable<Experience>{
     return this.http.post<Experience>(`${this.urlApi+"/add"}`,experience);
   }*/
 
-  updateCandidature(data:any,id:number){
+  updateCandidature(data:any,id:number){const headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token')
+  });
 
-    return this.http.put<any>("http://localhost:8082/updatecandidate/"+id,data)
+    return this.http.post<any>("http://localhost:8082/updatecandidate/"+id,data,{headers:headers})
     }
     /*updateCandidature(id:number, candidature: Candidature){
 
@@ -53,29 +66,34 @@ export class ServiceCandidatureService {
     return this.http.put(`${this.urlApi+"/updatecandidate/"+id}`,candidature);
    }*/
 
-   getCandidatureById(id:Number){
-     return this.http.get<Candidature>(this.urlApi+"/getByIdcandidate/"+id);
+   getCandidatureById(id:Number){const headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token')
+  });
+     return this.http.get<Candidature>(this.urlApi+"/getByIdcandidate/"+id,{headers:headers});
    }
 
-   exportPdfCandidatures():Observable<Blob>{
-    return this.http.get("http://localhost:8082/export/pdf", {responseType: 'blob' });
+   exportPdfCandidatures():Observable<Blob>{const headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token')
+  });
+    return this.http.get("http://localhost:8082/export/pdf", {responseType: 'blob',headers:headers });
    }
-    exportExcelCandidatures():Observable<Blob>{
-    return this.http.get("http://localhost:8082/export/excel", {responseType: 'blob' });
+    exportExcelCandidatures():Observable<Blob>{const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+    return this.http.get("http://localhost:8082/export/excel", {responseType: 'blob',headers:headers});
 }
-getentretienById(idEntretien:number){
+getentretienById(idEntretien:number){const headers = new HttpHeaders({
+  'Authorization': 'Bearer ' + localStorage.getItem('token')
+});
 
-  return this.http.get<any>("http://localhost:8082/getByIdE/"+idEntretien);
+  return this.http.get<any>("http://localhost:8082/getByIdE/"+idEntretien,{headers:headers});
   }
   assignCandidatureToEntretien(idCondidate: number, idEntretien: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
     const url = `http://localhost:8082/assign/${idCondidate}/${idEntretien}`;
-    return this.http.put(url, {});
+    return this.http.put(url, {},{headers:headers});
   }
-  exportExcelExperiences():Observable<Blob>{
-    return this.http.get("http://localhost:8082/Experience/export/excel", {responseType: 'blob' });
-  }
-  exportPdfExperiences():Observable<Blob>{
-    return this.http.get("http://localhost:8082/Experience/export/pdf", {responseType: 'blob' });
-   }
- 
+  
 }

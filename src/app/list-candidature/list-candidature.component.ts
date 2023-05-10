@@ -7,6 +7,7 @@ import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ServiceCandidatureService } from 'src/app/service/service-candidature.service';
 import { Observable } from 'rxjs';
 import * as FileSaver from 'file-saver';
+import { HttpHeaders } from '@angular/common/http';
 @Component({
   selector: 'app-list-candidature',
   templateUrl: './list-candidature.component.html',
@@ -99,10 +100,15 @@ exportExperienceExcel(){
       FileSaver.saveAs(blob, 'experiences.excel');
     });
   }
-  exportExperience(){
+  exportExperience() {
     this.candidatureService.getCandidature().subscribe((data) => {
       const blob = new Blob([data], { type: 'application/pdf' });
-      FileSaver.saveAs(blob, 'experiences.pdf');
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/pdf',
+      });
+      const options = { headers };
+      const file = new File([blob], 'experiences.pdf', { type: 'application/pdf' });
+      FileSaver.saveAs(file);
     });
   }
 }
