@@ -23,7 +23,7 @@ export class EventstatComponent implements OnInit {
   }
   getEvents() {
     this.EventService.getAll(
-      'http://localhost:8082/event/getevent',
+      'http://52.226.233.18:8082/event/getevent',
       this.token
     ).subscribe(
       (response: any) => {
@@ -42,7 +42,7 @@ export class EventstatComponent implements OnInit {
 
   getlabels() {
     this.EventService.getlabels(
-      'http://localhost:8082/event/labelall',
+      'http://52.226.233.18:8082/event/labelall',
       this.token
     ).subscribe(
       (response: any) => {
@@ -91,7 +91,7 @@ export class EventstatComponent implements OnInit {
   }
   getlabelstat() {
     this.EventService.getLabelStat(
-      'http://localhost:8082/event/getlabelstat',
+      'http://52.226.233.18:8082/event/getlabelstat',
       this.token
     ).subscribe(
       (response: any) => {

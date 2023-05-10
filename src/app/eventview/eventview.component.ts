@@ -107,7 +107,7 @@ export class EventviewComponent implements OnInit {
   getEvent(eventId: string) {
     this.evenetService
       .getEvent(
-        'http://localhost:8082/event/' + eventId,
+        'http://52.226.233.18:8082/event/' + eventId,
         localStorage.getItem('token') || '{}'
       )
       .subscribe(
@@ -161,7 +161,7 @@ export class EventviewComponent implements OnInit {
       if (result.isConfirmed) {
         this.evenetService
           .eventSub(
-            'http://localhost:8082/event/subscribe/' +
+            'http://52.226.233.18:8082/event/subscribe/' +
               this.currentUser +
               '/' +
               this.selectedEvent.eventId,
@@ -198,7 +198,7 @@ export class EventviewComponent implements OnInit {
       if (result.isConfirmed) {
         this.evenetService
           .eventUnsub(
-            'http://localhost:8082/event/unsubscribe/' +
+            'http://52.226.233.18:8082/event/unsubscribe/' +
               this.currentUser +
               '/' +
               this.selectedEvent.eventId,
@@ -225,7 +225,7 @@ export class EventviewComponent implements OnInit {
   labelSub(label: label) {
     this.evenetService
       .labelSub(
-        'http://localhost:8082/event/labelsub/' +
+        'http://52.226.233.18:8082/event/labelsub/' +
           this.currentUser +
           '/' +
           label.labelId,
@@ -256,7 +256,7 @@ export class EventviewComponent implements OnInit {
     console.log('testing unsub x : ', x);
     this.evenetService
       .labelUnsub(
-        'http://localhost:8082/event/labelunsub/' +
+        'http://52.226.233.18:8082/event/labelunsub/' +
           this.currentUser +
           '/' +
           label.labelId,

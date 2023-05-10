@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../service/user.service';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -33,11 +34,19 @@ export class ForgotPasswordComponent implements OnInit {
     }
     this.userService.forgotPassword(data).subscribe(
       (response: any) => { 
-      alert(response.message)
+      Swal.fire(
+          'Connec4Aid',
+          response.message,
+          'success'
+        )
       this.router.navigate(['/signin'])
       }, (error) => {
         if (error.error?.message) {
-          alert(error.error?.message)
+         Swal.fire(
+          'Connect4Aid',
+           error.error.message,
+          'error'
+        )
         }
      })
     

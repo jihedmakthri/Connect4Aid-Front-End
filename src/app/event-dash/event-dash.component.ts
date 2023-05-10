@@ -195,7 +195,7 @@ export class EventDashComponent implements OnInit {
   }
   deleteEvent(event: Event) {
     this.eventService
-      .deleteEvent('http://localhost:8082/event/' + event.eventId, this.token)
+      .deleteEvent('http://52.226.233.18:8082/event/' + event.eventId, this.token)
       .subscribe(
         (response: any) => {
           this.getEvents;
@@ -221,7 +221,7 @@ export class EventDashComponent implements OnInit {
     });*/
     this.eventService
       .postEvent(
-        'http://localhost:8082/event/postevent',
+        'http://52.226.233.18:8082/event/postevent',
         this.token,
         this.toAddEvent
       )
@@ -242,7 +242,7 @@ export class EventDashComponent implements OnInit {
   }
   getEvents() {
     this.eventService
-      .getAll('http://localhost:8082/event/getevent', this.token)
+      .getAll('http://52.226.233.18:8082/event/getevent', this.token)
       .subscribe(
         (response: any) => {
           this.EventList = response;
@@ -282,7 +282,7 @@ export class EventDashComponent implements OnInit {
 
     this.eventService
       .postEvent(
-        'http://localhost:8082/event/postevent',
+        'http://52.226.233.18:8082/event/postevent',
         this.token,
         this.toUpdateEvent
       )
@@ -304,7 +304,7 @@ export class EventDashComponent implements OnInit {
 
   applyFilter() {
     this.eventService
-      .filterEvent('http://localhost:8082/event/filtered', this.token, {
+      .filterEvent('http://52.226.233.18:8082/event/filtered', this.token, {
         filterStartDate: this.filterStartDate,
         filterEndDate: this.filterEndDate,
         filterName: this.filterName,
@@ -324,7 +324,7 @@ export class EventDashComponent implements OnInit {
 
   getlabels() {
     this.eventService
-      .getlabels('http://localhost:8082/event/labelall', this.token)
+      .getlabels('http://52.226.233.18:8082/event/labelall', this.token)
       .subscribe(
         (response: any) => {
           this.LabelList = response;
@@ -368,7 +368,7 @@ export class EventDashComponent implements OnInit {
   }
   getHighUsers() {
     this.eventService
-      .highUsers('http://localhost:8082/user/getEventers', this.token)
+      .highUsers('http://52.226.233.18:8082/user/getEventers', this.token)
       .subscribe(
         (response: any) => {
           this.Responsables = response;
@@ -431,7 +431,7 @@ export class EventDashComponent implements OnInit {
         this.toAddLabel.value = label.toString();
         this.eventService
           .addLabel(
-            'http://localhost:8082/event/addlabel',
+            'http://52.226.233.18:8082/event/addlabel',
             this.toAddLabel,
             this.token
           )
@@ -470,7 +470,7 @@ export class EventDashComponent implements OnInit {
 
       this.eventService
         .deleteLabel(
-          'http://localhost:8082/event/labeldel',
+          'http://52.226.233.18:8082/event/labeldel',
           selectedLabel,
           this.token
         )
