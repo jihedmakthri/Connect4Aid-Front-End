@@ -1,0 +1,24 @@
+.form-container {
+  padding: 20px;
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.form-field {
+  width: calc(50% - 10px);
+  margin-bottom: 20px;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.submit-button {
+  margin-left: 10px;
+}

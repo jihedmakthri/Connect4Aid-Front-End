@@ -23,6 +23,8 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { FormationComponent } from './formation/formation.component';
 import { CoursComponent } from './cours/cours.component';
+import { ListCandidatureComponent } from './list-candidature/list-candidature.component';
+import { ListentretienComponent } from './list-entretien/list-entretien.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -46,6 +48,9 @@ const routes: Routes = [
       { path: 'EventDash', component: EventDashComponent },
       { path: 'event/:id', component: EventviewComponent },
       { path: 'eventstat', component: EventstatComponent },
+      {path:'Candidates',component: ListCandidatureComponent },
+      {path:'Entretien',component: ListentretienComponent },
+      { path: 'formation', component: FormationComponent,canActivate: [MemberGuard] },
     ],
   },
   {
@@ -61,6 +66,8 @@ const routes: Routes = [
   {
     path: 'user/main', component: UserPageComponent, canActivate: [UserGuard], children: [
           { path: 'profile', component: ProfileComponent },
+          { path: 'formation', component: FormationComponent,canActivate: [MemberGuard] },
+         
   ]},
   { path: 'member/main', component: MemberPageComponent, canActivate: [MemberGuard],children:[
     { path: 'formation', component: FormationComponent,canActivate: [MemberGuard] },

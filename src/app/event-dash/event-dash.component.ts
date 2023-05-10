@@ -11,6 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { User } from '../model/user';
 import { Router } from '@angular/router';
+
 interface CalEvent {
   title: string;
   start: Date;

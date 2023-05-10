@@ -1,0 +1,50 @@
+/* Set margin and padding to 0 for the whole page */
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style for the app-body component */
+app-body {
+  display: block;
+  height: 100vh;
+}
+
+/* Style for the button */
+button {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Style for the filter input */
+.mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Style for the table */
+.mat-table {
+  width: 100%;
+  min-width: 800px;
+  font-size: 14px;
+}
+
+/* Style for the table header */
+.mat-header-cell {
+  font-weight: 600;
+}
+
+/* Style for the table rows */
+.mat-row {
+  height: 48px;
+}
+
+/* Style for the actions buttons */
+.mat-icon-button {
+  margin-right: 8px;
+}
+
+/* Style for the paginator */
+.mat-paginator {
+  margin-top: 20px;
+}

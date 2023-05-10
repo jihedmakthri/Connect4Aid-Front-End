@@ -1,0 +1,55 @@
+
+    <h1 mat-dialog-title class="mat-h1">Candidature</h1>
+
+    <div mat-dialog-content class="form-container">
+
+    <form [formGroup]="candidatureForm" class="form">
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Status</mat-label>
+            <input formControlName="enumEtat" matInput placeholder="Status" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Post</mat-label>
+            <input formControlName="enumPost" matInput placeholder="Post" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Firstname</mat-label>
+            <input type="text" formControlName="firstName" matInput placeholder="Firstname" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Lastname</mat-label>
+            <input type="text" formControlName="lastname" matInput placeholder="Lastname" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Email</mat-label>
+            <input formControlName="email" matInput placeholder="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Mobile</mat-label>
+            <input formControlName="mobile" matInput placeholder="Mobile" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>C.V.</mat-label>
+            <input formControlName="cv" matInput placeholder="C.V." />
+        </mat-form-field>
+
+        <div class="buttons-container">
+            <button mat-raised-button color="warn" mat-dialog-close>Annuler</button>
+
+            <button mat-raised-button color="primary" (click)="addCandidature()"
+                [ngStyle]="{'background-color': !candidatureForm.valid   ? '' : '#22ca80'  , 'color' : !candidatureForm.valid ? 'black' : 'white'  }"
+                [disabled]="candidatureForm.invalid"
+                class="submit-button"
+            >{{actionButton}}</button>
+        </div>
+
+    </form>
+
+    </div>
