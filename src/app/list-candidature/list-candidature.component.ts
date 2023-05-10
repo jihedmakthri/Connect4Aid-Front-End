@@ -98,23 +98,51 @@ deleteCandidature(id: number){
 
 
 })}
+
 exportExperienceExcel(){
-  
-    this.candidatureService.getCandidature().subscribe((data) => {
-      const blob = new Blob([data], { type: 'application/excel' });
-      FileSaver.saveAs(blob, 'experiences.excel');
-    });
-  }
-  exportExperience() {
-    this.candidatureService.getCandidature().subscribe((data) => {
-      const blob = new Blob([data], { type: 'application/pdf' });
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/pdf',
-      });
-      const options = { headers };
-      const file = new File([blob], 'experiences.pdf', { type: 'application/pdf' });
-      FileSaver.saveAs(file);
-    });
+  this.candidatureService.exportExcelCandidatures().subscribe(x => {
+    const blob = new Blob([x], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const n = (window.navigator as any);
+if (n.msSaveOrOpenBlob) {
+n.msSaveOrOpenBlob(blob);
+return;
+}
+    const data = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = data;
+    link.download="experience.xlsx";
+    link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
+
+    setTimeout(function() {
+      window.URL.revokeObjectURL(data);
+      link.remove();
+    }, 100);
+});
+
+}
+
+exportExperience(){
+  this.candidatureService.exportPdfCandidatures().subscribe(x => {
+    const blob = new Blob([x], { type: 'application/pdf' });
+    const url= window.URL.createObjectURL(blob);
+    const nav = (window.navigator as any);
+if (nav.msSaveOrOpenBlob) {
+  nav.msSaveOrOpenBlob(blob);
+  return;
+}
+
+  const data = window.URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href= data;
+  link.download="experience.pdf";
+  link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
+
+  setTimeout(function() {
+    window.URL.revokeObjectURL(data);
+    link.remove();
+  }, 100);
+});
+
   }
 }
 
