@@ -58,7 +58,7 @@ usersession:any;
 
 /////
 
-this.http.get<any>('http://localhost:8082/usernotee', {
+this.http.get<any>('http://52.226.233.18:8082/usernotee', {
   headers: new HttpHeaders({
     'Authorization': 'Bearer ' + localStorage.getItem('token')
   })
@@ -75,7 +75,7 @@ this.http.get<any>('http://localhost:8082/usernotee', {
 
 ////
 
-    this.http.get<any>(`http://localhost:8082/user/get/${this.userid}`,
+    this.http.get<any>(`http://52.226.233.18:8082/user/get/${this.userid}`,
     
     {
       headers: new HttpHeaders({
@@ -94,7 +94,7 @@ this.http.get<any>('http://localhost:8082/usernotee', {
     
 //////////// get all types
 
-    this.http.get<typeF[]>(' http://localhost:8082/types',
+    this.http.get<typeF[]>(' http://52.226.233.18:8082/types',
     
     {
       headers: new HttpHeaders({
@@ -110,7 +110,7 @@ this.http.get<any>('http://localhost:8082/usernotee', {
 ////////////
   
 /////// get all formation
-    this.http.get<Formation[]>('http://localhost:8082/formation',
+    this.http.get<Formation[]>('http://52.226.233.18:8082/formation',
     
     {
       headers: new HttpHeaders({
@@ -145,7 +145,7 @@ this.http.get<any>('http://localhost:8082/usernotee', {
       formData.append('description', this.description);
       formData.append('typeF', this.typeF);
       console.log(formData);
-      this.http.post<Formation>('http://localhost:8082/formation', formData, {
+      this.http.post<Formation>('http://52.226.233.18:8082/formation', formData, {
         headers: new HttpHeaders({
           'Authorization': 'Bearer ' + localStorage.getItem('token')
         })
@@ -212,7 +212,7 @@ delete(id: number) {
     confirmButtonText: 'Yes, delete it!'
   }).then((result) => {
     if (result.isConfirmed) {
-      this.http.post('http://localhost:8082/delete?idf=' + id, {}, { headers: headers }).subscribe(() => {
+      this.http.post('http://52.226.233.18:8082/delete?idf=' + id, {}, { headers: headers }).subscribe(() => {
         console.log('Post deleted successfully');
         this.formation = this.formation.filter(x => x.idf !== id);
         Swal.fire(
@@ -250,7 +250,7 @@ delete(id: number) {
 
   
    
-      this.http.post(`http://localhost:8082/updatef/${id}` , formData, { headers: headers }).subscribe(() => {
+      this.http.post(`http://52.226.233.18:8082/updatef/${id}` , formData, { headers: headers }).subscribe(() => {
         console.log(this.http)
         this.title = '';
         this.dateDebut = '';
@@ -267,7 +267,7 @@ delete(id: number) {
 
     getbytypeforamtion( t :typeF){
 
-      this.http.get<Formation[]>('http://localhost:8082/for?t='+t,
+      this.http.get<Formation[]>('http://52.226.233.18:8082/for?t='+t,
     
     {
       headers: new HttpHeaders({

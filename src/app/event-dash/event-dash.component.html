@@ -1,9 +1,9 @@
 
 <div class="container-toolbar">
     <div class="d-flex flex-wrap align-items-center">
-        <button type="button" class="btn btn-outline-dark" (click)="open(content)">Add an Event</button>
+        <button [disabled]="checkfraud()" type="button" class="btn btn-outline-dark" (click)="open(content)">Add an Event</button>
         <div class="dropdown" style="padding-left: 10px;">
-            <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton"
+            <button [disabled]="checkfraud()" class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 Labels
             </button>
@@ -50,7 +50,7 @@
 <div class="card shadow-none border-0 mb-0 rounded-0 d-flex justify-content-center"  >
     
 <div class='demo-app-main'*ngIf="viewMode==true">
-    <full-calendar [events]="calevents" [options]='calendarOptions'>
+    <full-calendar [events]="calevents" [options]='calendarOptions' >
         <ng-template #eventContent let-arg>
             <i>{{ arg.event.title }}</i>
         </ng-template>
@@ -106,8 +106,8 @@
                                 <td>
                                     <div class="btn-group"> 
                                     <button class="btn btn-info" data-toggle="tooltip" data-bs-placement="top" title="More Information" (click)="moreInfo(event)"><i class="fa fa-info-circle fa-lg m-0"></i></button>
-                                    <button class="btn btn-dark" (click)="setupdate(event);open(updatemodal)"><i class="far fa-pencil fa-lg m-0"></i></button>
-                                    <button class="btn btn-danger" (click)="DeleteSwol(event)"><i class="fas fa-minus-circle fa-lg m-0"></i></button>
+                                    <button [disabled]="checkfraud()" class="btn btn-dark" (click)="setupdate(event);open(updatemodal)"><i class="far fa-pencil fa-lg m-0"></i></button>
+                                    <button [disabled]="checkfraud()" class="btn btn-danger" (click)="DeleteSwol(event)"><i class="fas fa-minus-circle fa-lg m-0"></i></button>
                                     </div>
                                     
                                 </td>
@@ -119,8 +119,7 @@
             </div>           
         </div> 
 </div>
-                    
-<button style="padding-top: 10px;" type="button" class="btn btn-dark">Light</button>
+                
 <ng-template #content let-modal style="z-index: 3;">
     <div class="modal-header">
         <h6 class="modal-title" id="modal-basic-title">Adding a new event</h6>

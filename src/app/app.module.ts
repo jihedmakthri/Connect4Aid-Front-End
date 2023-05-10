@@ -49,9 +49,10 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatIconModule} from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { FullCalendarModule } from '@fullcalendar/angular';
+
+
 @NgModule({
   declarations: [
-  
     AppComponent,
     NavbarComponent,
     HomeComponent,
@@ -82,10 +83,10 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     ListCandidatureComponent,
     ListentretienComponent,
     DialogCandidatureComponent,
-    EntretienDialogComponent
+    EntretienDialogComponent,
+    FormationComponent
   ],
   imports: [
-    NgxExtendedPdfViewerModule,
     BrowserModule,
     HttpClientModule,
     NoopAnimationsModule,
@@ -105,6 +106,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     RouterModule,
     ReactiveFormsModule,
     FullCalendarModule,
+    NgxExtendedPdfViewerModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

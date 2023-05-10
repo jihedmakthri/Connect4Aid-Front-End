@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { User } from '../model/user';
 import { Router } from '@angular/router';
 
+import { JwtHelperService } from '@auth0/angular-jwt';
 interface CalEvent {
   title: string;
   start: Date;
@@ -25,6 +26,7 @@ interface CalEvent {
 })
 export class EventDashComponent implements OnInit {
   EventList!: Event[];
+  currentUser!: number;
   calevents!: CalEvent[];
   Toast = Swal.mixin({
     toast: true,
@@ -59,36 +61,6 @@ export class EventDashComponent implements OnInit {
     },
   ];
 
-  calendarOptions: CalendarOptions = {
-    plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
-    eventContent: function (info) {
-      return {
-        html: `<div>${info.event.title}</div>`,
-      };
-    },
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
-    },
-    initialView: 'dayGridMonth',
-    events: this.calevents, // alternatively, use the `events` setting to fetch from a feed
-    weekends: true,
-    editable: true,
-    eventClick(arg) {
-      console.log(arg.event.title);
-    },
-    themeSystem: 'bootstrap5',
-    selectable: true,
-    selectMirror: true,
-    //eventClick:WhenClickingOneventInsidetheCalender,
-    dayMaxEvents: true,
-    /* you can update a remote database when these fire:
-    eventAdd:
-    eventChange:
-    eventRemove:
-    */
-  };
   labelPhrase!: string;
   eventRes!: User;
   isCollapsed = true;
@@ -133,12 +105,48 @@ export class EventDashComponent implements OnInit {
     private modalService: NgbModal,
     private cdr: ChangeDetectorRef,
     private router: Router,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private jwtHelper: JwtHelperService
   ) {}
+  calendarOptions: CalendarOptions = {
+    plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
+    eventContent: function (info) {
+      return {
+        html: `<div>${info.event.title}</div>`,
+      };
+    },
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
+    },
+    initialView: 'dayGridMonth',
+    events: this.calevents, // alternatively, use the `events` setting to fetch from a feed
+    weekends: true,
+    editable: true,
+
+    //this.navigater(arg.event.extendedProps.evId);
+    eventClick: this.handleEventClick.bind(this),
+
+    themeSystem: 'bootstrap5',
+    selectable: true,
+    selectMirror: true,
+    //eventClick:WhenClickingOneventInsidetheCalender,
+    dayMaxEvents: true,
+    /* you can update a remote database when these fire:
+    eventAdd:
+    eventChange:
+    eventRemove:
+    */
+  };
   viewMode: boolean = false;
   ngOnInit(): void {
     this.token = localStorage.getItem('token') || '{}';
     this.filterEndDate = new Date('2060-01-01');
+    const decodedToken = this.jwtHelper.decodeToken(
+      localStorage.getItem('token') || ''
+    );
+    this.currentUser = decodedToken.userId;
     this.filterStartDate = new Date('1999-01-01');
     this.filterName = '';
     this.emptyEvent;
@@ -147,7 +155,21 @@ export class EventDashComponent implements OnInit {
     this.getlabels();
     this.getHighUsers();
   }
-
+  handleEventClick(clickInfo: any): void {
+    const eventId = clickInfo.event.extendedProps.evId;
+    let currentPath: string = this.router.routerState.snapshot.url;
+    if (currentPath.includes('admin'))
+      //let path: string = '/member/main/event/' + E.eventId;
+      this.router.navigate(['admin/event', eventId]);
+    else this.router.navigate(['member/main/event', eventId]);
+  }
+  navigater(eventId: any) {
+    let currentPath: string = this.router.routerState.snapshot.url;
+    if (currentPath.includes('admin'))
+      //let path: string = '/member/main/event/' + E.eventId;
+      this.router.navigate(['admin/event', eventId]);
+    else this.router.navigate(['member/main/event', eventId]);
+  }
   changeView(x: boolean) {
     this.viewMode = x;
   }
@@ -174,7 +196,7 @@ export class EventDashComponent implements OnInit {
   }
   deleteEvent(event: Event) {
     this.eventService
-      .deleteEvent('http://localhost:8082/event/' + event.eventId, this.token)
+      .deleteEvent('http://52.226.233.18:8082/event/' + event.eventId, this.token)
       .subscribe(
         (response: any) => {
           this.getEvents;
@@ -200,7 +222,7 @@ export class EventDashComponent implements OnInit {
     });*/
     this.eventService
       .postEvent(
-        'http://localhost:8082/event/postevent',
+        'http://52.226.233.18:8082/event/postevent',
         this.token,
         this.toAddEvent
       )
@@ -221,11 +243,11 @@ export class EventDashComponent implements OnInit {
   }
   getEvents() {
     this.eventService
-      .getAll('http://localhost:8082/event/getevent', this.token)
+      .getAll('http://52.226.233.18:8082/event/getevent', this.token)
       .subscribe(
         (response: any) => {
           this.EventList = response;
-          return (this.calevents = this.lister());
+          this.calevents = this.lister();
           console.log('testing cal events:', this.calevents);
         },
         (error) => {
@@ -261,7 +283,7 @@ export class EventDashComponent implements OnInit {
 
     this.eventService
       .postEvent(
-        'http://localhost:8082/event/postevent',
+        'http://52.226.233.18:8082/event/postevent',
         this.token,
         this.toUpdateEvent
       )
@@ -283,7 +305,7 @@ export class EventDashComponent implements OnInit {
 
   applyFilter() {
     this.eventService
-      .filterEvent('http://localhost:8082/event/filtered', this.token, {
+      .filterEvent('http://52.226.233.18:8082/event/filtered', this.token, {
         filterStartDate: this.filterStartDate,
         filterEndDate: this.filterEndDate,
         filterName: this.filterName,
@@ -303,7 +325,7 @@ export class EventDashComponent implements OnInit {
 
   getlabels() {
     this.eventService
-      .getlabels('http://localhost:8082/event/labelall', this.token)
+      .getlabels('http://52.226.233.18:8082/event/labelall', this.token)
       .subscribe(
         (response: any) => {
           this.LabelList = response;
@@ -347,7 +369,7 @@ export class EventDashComponent implements OnInit {
   }
   getHighUsers() {
     this.eventService
-      .highUsers('http://localhost:8082/user/getEventers', this.token)
+      .highUsers('http://52.226.233.18:8082/user/getEventers', this.token)
       .subscribe(
         (response: any) => {
           this.Responsables = response;
@@ -410,7 +432,7 @@ export class EventDashComponent implements OnInit {
         this.toAddLabel.value = label.toString();
         this.eventService
           .addLabel(
-            'http://localhost:8082/event/addlabel',
+            'http://52.226.233.18:8082/event/addlabel',
             this.toAddLabel,
             this.token
           )
@@ -449,7 +471,7 @@ export class EventDashComponent implements OnInit {
 
       this.eventService
         .deleteLabel(
-          'http://localhost:8082/event/labeldel',
+          'http://52.226.233.18:8082/event/labeldel',
           selectedLabel,
           this.token
         )
@@ -515,5 +537,15 @@ export class EventDashComponent implements OnInit {
       calEvents.push(calEvent);
     }
     return calEvents;
+  }
+  checkfraud(): boolean {
+    const foundUser = this.Responsables.find(
+      (user) => user.userId === this.currentUser
+    );
+    if (foundUser) {
+      return false;
+    } else {
+      return false;
+    }
   }
 }
