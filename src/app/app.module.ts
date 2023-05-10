@@ -29,15 +29,15 @@ import { EventviewComponent } from './eventview/eventview.component';
 import { FormationComponent } from './formation/formation.component';
 import { CoursComponent } from './cours/cours.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-
 import { EventDashComponent } from './event-dash/event-dash.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { EventstatComponent } from './eventstat/eventstat.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
+
+
 @NgModule({
   declarations: [
-  
     AppComponent,
     NavbarComponent,
     HomeComponent,
@@ -62,9 +62,10 @@ import { ContactComponent } from './contact/contact.component';
     EventstatComponent,
     AboutComponent,
     ContactComponent,
+    CoursComponent,
+    FormationComponent,
   ],
   imports: [
-    NgxExtendedPdfViewerModule,
     BrowserModule,
     AppRoutingModule,
     NgbModule,
@@ -72,6 +73,7 @@ import { ContactComponent } from './contact/contact.component';
     HttpClientModule,
     MatButtonModule,
     FullCalendarModule,
+    NgxExtendedPdfViewerModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

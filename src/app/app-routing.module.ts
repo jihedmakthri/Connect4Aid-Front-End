@@ -63,7 +63,7 @@ const routes: Routes = [
           { path: 'profile', component: ProfileComponent },
   ]},
   { path: 'member/main', component: MemberPageComponent, canActivate: [MemberGuard],children:[
-    { path: 'formation', component: FormationComponent,canActivate: [MemberGuard] },
+      { path: 'formation', component: FormationComponent,canActivate: [MemberGuard] },
       { path: '', redirectTo: 'blog', pathMatch: 'full' },
       { path: 'profile', component: ProfileComponent },
       { path: 'blog', component: BlogComponent },
