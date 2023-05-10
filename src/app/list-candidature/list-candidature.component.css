@@ -53,5 +53,8 @@ section {
   padding: 50px 20px 20px 250px; /* adjust the padding values to your liking */
   /* 50px top, 20px right, 20px bottom, and 250px left to account for the sidebar width */
 }
+.custom-dialog-class {
+  margin-left: 250px;
+}
 
   

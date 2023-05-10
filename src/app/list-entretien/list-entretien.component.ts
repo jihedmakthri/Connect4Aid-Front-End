@@ -14,6 +14,8 @@ import { EntretienService } from 'src/app/service/entretien.service';
 export class ListentretienComponent implements OnInit {
   displayedColumns: string[] = ['idEntretien','lieu','date','description','actions'];
   dataSource!: MatTableDataSource<any>;
+  isSideNavCollapsed = false;
+  screenWidth = 0;
 
   @ViewChild(MatSort) sort!: MatSort;
 

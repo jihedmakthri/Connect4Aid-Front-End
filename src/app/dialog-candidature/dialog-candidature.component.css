@@ -1,30 +1,24 @@
+.form-container {
+  padding: 20px;
+}
 
-mat-form-field{
-  width: 100%;
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
 
-  }
-  
-  .example-radio-group {
-      display: flex;
-      flex-direction: column;
-      margin: 15px 0;
-      align-items: flex-start;
-    }
-    
-    .example-radio-button {
-      margin: 5px;
-    }
-    .my-dialog {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-    }
-    
-    .my-dialog-content {
-      width: 500px;
-      max-width: 90%;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-   
+.form-field {
+  width: calc(50% - 10px);
+  margin-bottom: 20px;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.submit-button {
+  margin-left: 10px;
+}

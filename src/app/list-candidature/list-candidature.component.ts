@@ -23,15 +23,20 @@ export class ListCandidatureComponent implements OnInit {
     private candidatureService:ServiceCandidatureService) {}
 
     openDialog() {
-      this.dialog.open(DialogCandidatureComponent, {
-      width:'30%'
-  
-      }).afterClosed().subscribe(val=>{
-      if(val==='ajout'){
-      this.getAllCandidatures()
-      }
+      const dialogRef = this.dialog.open(DialogCandidatureComponent, {
+        width: '60%',
+        position: {
+          top: '50px',
+          right: '50px'
+        }
       });
-      }
+      dialogRef.afterClosed().subscribe(val => {
+        if (val === 'ajout') {
+          this.getAllCandidatures();
+        }
+      });
+    }
+    
   
 
   ngOnInit(): void {
@@ -69,7 +74,7 @@ export class ListCandidatureComponent implements OnInit {
 
       editCandidature(row :any) {
       this.dialog.open(DialogCandidatureComponent, {
-      width:'30%',
+      width:'60%',
       data:row
 
       }).afterClosed().subscribe(val=>{

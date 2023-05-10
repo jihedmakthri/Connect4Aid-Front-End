@@ -1,50 +1,50 @@
-section {
-    display: table;
-  }
-  
-  .example-label {
-    display: table-cell;
-    font-size: 14px;
-    margin-left: 8px;
-    min-width: 120px;
-  }
-  
-  .example-button-row {
-    display: table-cell;
-    width: 490px;
-  }
-  
-  .example-button-row .mat-button-base {
-    margin: 8px 8px 8px 0;
-  }
-  
-  .example-flex-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-  
-  .example-button-container {
-    display: flex;
-    justify-content: center;
-    width: 120px;
-  }
-  table {
-    width: 100%;
-  }
-  
-  
-  table {
-    width: 100%;
-  }
-  
-  .mat-mdc-form-field {
-    font-size: 14px;
-    width: 100%;
-  }
-  
-  td, th {
-    width: 25%;
-    
-  }
-  
+/* Set margin and padding to 0 for the whole page */
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style for the app-body component */
+app-body {
+  display: block;
+  height: 100vh;
+}
+
+/* Style for the button */
+button {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Style for the filter input */
+.mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Style for the table */
+.mat-table {
+  width: 100%;
+  min-width: 800px;
+  font-size: 14px;
+}
+
+/* Style for the table header */
+.mat-header-cell {
+  font-weight: 600;
+}
+
+/* Style for the table rows */
+.mat-row {
+  height: 48px;
+}
+
+/* Style for the actions buttons */
+.mat-icon-button {
+  margin-right: 8px;
+}
+
+/* Style for the paginator */
+.mat-paginator {
+  margin-top: 20px;
+}

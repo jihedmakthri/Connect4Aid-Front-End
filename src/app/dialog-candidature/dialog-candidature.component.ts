@@ -13,7 +13,7 @@ import { MatDialogRef,MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class DialogCandidatureComponent implements OnInit {
   candidatureForm !: FormGroup;
   actionButton: string = "Ajouter";
- 
+  
 
   constructor(private formBuilder: FormBuilder, private candidatureService: ServiceCandidatureService,
     @Inject(MAT_DIALOG_DATA) public editdata: any,

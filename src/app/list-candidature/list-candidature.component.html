@@ -1,83 +1,73 @@
-<app-body>[collapsed]="isSideNavCollapsed" [screenWidth]="screenWidth">
-</app-body>
+<div style="text-align: left;">
+  <button style="margin-bottom: 10px;" mat-raised-button color="warn" style="background-color: #ed4652;" (click)="openDialog()">Add candidate</button> 
+  <!-- <button type="button" class="button" style="margin-bottom: 10px;" mat-raised-button color="warn" style="background-color: #ed4652;"  data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" (click)="openDialog()">Add candidature</button> -->
+</div>
 
 <div style="text-align: left;">
-    <button style="margin-bottom: 10px;" mat-raised-button color="warn" style="background-color: #ed4652;" (click)="openDialog()">Add candidate</button> 
-    <button type="button" class="button" style="margin-bottom: 10px;" mat-raised-button color="warn" style="background-color: #ed4652;"  data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" (click)="openDialog()">Add candidature</button>
+  <button style="margin-bottom: 10px;" mat-raised-button color="warn" style="background-color: #ed4652;"(click)="exportExperience()"> PDF </button>
+  <button style="margin-bottom: 10px;" mat-raised-button color="warn" style="background-color: #ed4652;" (click)="exportExperienceExcel()">Excel</button>
+</div>
 
-    </div>
-    <div style="text-align: left;">
-      <button style="margin-bottom: 10px;" mat-raised-button color="warn" style="background-color: #ed4652;"(click)="exportExperience()"> PDF </button>
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+</mat-form-field>
 
-      <button style="margin-bottom: 10px;" mat-raised-button color="warn" style="background-color: #ed4652;" (click)="exportExperienceExcel()">Excel</button>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
 
-    </div>
+    <!-- ID Column -->
+    <ng-container matColumnDef="idCondidate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> idCondidate </th>
+      <td mat-cell *matCellDef="let row"> {{row.idCondidate}} </td>
+    </ng-container>
 
+    <!-- Progress Column -->
+    <ng-container matColumnDef="enumEtat">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> enumEtat </th>
+      <td mat-cell *matCellDef="let row"> {{row.enumEtat}} </td>
+    </ng-container>
 
+    <!-- Name Column -->
+    <ng-container matColumnDef="enumPost">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> enumPost </th>
+      <td mat-cell *matCellDef="let row">{{row.enumPost}} </td>
+    </ng-container>
 
-    <mat-form-field>
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-      </mat-form-field>
+    <!-- Fruit Column -->
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> firstName </th>
+      <td mat-cell *matCellDef="let row"> {{row.firstName}} </td>
+    </ng-container>
 
-         
-      <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="lastname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> lastname</th>
+      <td mat-cell *matCellDef="let row"> {{row.lastname}} </td>
+    </ng-container>
 
-          <!-- ID Column -->
-          <ng-container matColumnDef="idCondidate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> idCondidate </th>
-            <td mat-cell *matCellDef="let row"> {{row.idCondidate}} </td>
-          </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> email</th>
+      <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+    </ng-container>
 
-          <!-- Progress Column -->
-          <ng-container matColumnDef="enumEtat">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> enumEtat </th>
-            <td mat-cell *matCellDef="let row"> {{row.enumEtat}} </td>
-          </ng-container>
+    <ng-container matColumnDef="mobile">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> mobile</th>
+      <td mat-cell *matCellDef="let row"> {{row.mobile}} </td>
+    </ng-container>
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="enumPost">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> enumPost </th>
-            <td mat-cell *matCellDef="let row">{{row.enumPost}} </td>
-          </ng-container>
+    <ng-container matColumnDef="cv">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> cv</th>
+      <td mat-cell *matCellDef="let row"> {{row.cv}} </td>
+    </ng-container>
 
-          <!-- Fruit Column -->
-          <ng-container matColumnDef="firstName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> firstName </th>
-            <td mat-cell *matCellDef="let row"> {{row.firstName}} </td>
-          </ng-container>
-
-
-          <ng-container matColumnDef="lastname">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> lastname</th>
-            <td mat-cell *matCellDef="let row"> {{row.lastname}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> email</th>
-            <td mat-cell *matCellDef="let row"> {{row.email}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="mobile">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> mobile</th>
-            <td mat-cell *matCellDef="let row"> {{row.mobile}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="cv">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> cv</th>
-            <td mat-cell *matCellDef="let row"> {{row.cv}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions</th>
-            <td mat-cell *matCellDef="let row">
-                <div>
-                <button (click)="editCandidature(row)" mat-icon-button color="primary">
-                   <mat-icon>edit</mat-icon>
-                </button>
-                <button  (click)=" deleteCandidature(row.idCondidate)" mat-icon-button color="warn">
-                    <mat-icon>delete</mat-icon>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions</th>
+      <td mat-cell *matCellDef="let row">
+        <div class="actions-container">
+          <button (click)="editCandidature(row)" mat-icon-button color="primary">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button (click)="deleteCandidature(row.idCondidate)" mat-icon>
                  </button>
 
                 </div>
