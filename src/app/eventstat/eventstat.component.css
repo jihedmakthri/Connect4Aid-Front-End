@@ -1,0 +1,15 @@
+.chart-wrapper {
+    width: 25%;
+    /* or any other desired width */
+    border: 1px solid black;
+    /* or any other desired border style */
+    float: left;
+    /* position on the left */
+    margin-right: 20px;
+    /* add some margin to the right for spacing */
+}
+
+.chart-container {
+    width: 100%;
+    height: auto;
+}

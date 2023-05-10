@@ -10,4 +10,3 @@ export class Formation {
   image!: string;
   imgtype!: string;
 }
-  

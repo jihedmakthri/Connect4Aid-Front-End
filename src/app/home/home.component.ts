@@ -5,7 +5,10 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css', '../../assets/charity/css/animate.css', '../../assets/charity/css/bootstrap.css',
+    '../../assets/charity/css/icomoon.css',
+    '../../assets/charity/css/style.css',
+    '../../assets/charity/css/superfish.css']
 })
 export class HomeComponent implements OnInit {
 

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Event } from '../model/Event/Event';
 import Swal from 'sweetalert2';
 import { User } from '../model/user';
+import { Byte } from '@angular/compiler/src/util';
 @Injectable({
   providedIn: 'root',
 })
@@ -26,8 +27,8 @@ export class EvenetService {
       }),
     });
   }
-  deleteEvent(reqPath: string, token: string): Observable<string> {
-    return this.http.post<string>(
+  deleteEvent(reqPath: string, token: string): Observable<Event> {
+    return this.http.post<Event>(
       `${reqPath}`,
       {},
       {
@@ -92,6 +93,74 @@ export class EvenetService {
     token: string
   ): Observable<string> {
     return this.http.post<string>(`${reqPath}`, label, {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+        'content-type': 'application/json',
+      }),
+    });
+  }
+  eventSub(reqPath: string, token: string): Observable<Event> {
+    return this.http.post<Event>(
+      `${reqPath}`,
+      {},
+      {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+          'content-type': 'application/json',
+        }),
+      }
+    );
+  }
+  eventUnsub(reqPath: string, token: string): Observable<Event> {
+    return this.http.post<Event>(
+      `${reqPath}`,
+      {},
+      {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+          'content-type': 'application/json',
+        }),
+      }
+    );
+  }
+  labelSub(reqPath: string, token: string): Observable<label> {
+    return this.http.post<label>(
+      `${reqPath}`,
+      {},
+      {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+          'content-type': 'application/json',
+        }),
+      }
+    );
+  }
+  labelUnsub(reqPath: string, token: string): Observable<label> {
+    return this.http.post<label>(
+      `${reqPath}`,
+      {},
+      {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+          'content-type': 'application/json',
+        }),
+      }
+    );
+  }
+  getQR(reqPath: string, token: string): Observable<Byte[]> {
+    return this.http.get<Byte[]>(`${reqPath}`, {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+        'content-type': 'application/json',
+      }),
+    });
+  }
+
+  getLabelStat(
+    reqPath: string,
+    token: string
+  ): Observable<Map<String, Number>> {
+    return this.http.get<Map<String, Number>>(`${reqPath}`, {
       headers: new HttpHeaders({
         Authorization: `Bearer ${token}`,
         'content-type': 'application/json',

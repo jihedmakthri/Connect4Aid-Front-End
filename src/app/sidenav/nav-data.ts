@@ -1,14 +1,23 @@
 export const navbarData = [
-   
     {
-        routeLink: 'home',
-        icon: 'fal fa-home',
-        label: 'Users'
+        routeLink: 'blog',
+        icon: 'fal fa-home', 
+        label: 'Acceuil'
     },
     {
-        routeLink: 'statistics',
-        icon: 'fal fa-chart-bar',
-        label: 'Statistics'
+        routeLink: 'EventDash',
+        icon: 'fas fa-calendar-week',
+        label: 'Events Dashboard'
+    },
+    {
+        routeLink: 'EventDash',
+        icon: 'fas fa-calendar-week',
+        label: 'Events Dashboard'
+    },
+    {
+        routeLink: 'ffff',
+        icon: 'far fa-hand-heart',
+        label: 'Donation'
     },
     {
         routeLink: 'Candidates',
@@ -18,12 +27,8 @@ export const navbarData = [
    
     {
         routeLink: 'formation',
-        icon: 'fal fa-file',
-        label: 'Fomration'
-    },
-    {
-        routeLink: 'settings',
-        icon: 'fal fa-cog',
-        label: 'Settings'
-    },
+        icon: 'fas fa-book-reader',
+        label: 'Fomration' 
+    }
+
 ];

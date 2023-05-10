@@ -50,7 +50,7 @@
 <div class="card shadow-none border-0 mb-0 rounded-0 d-flex justify-content-center"  >
     
 <div class='demo-app-main'*ngIf="viewMode==true">
-    <full-calendar [options]='calendarOptions'>
+    <full-calendar [events]="calevents" [options]='calendarOptions'>
         <ng-template #eventContent let-arg>
             <i>{{ arg.event.title }}</i>
         </ng-template>
@@ -98,9 +98,9 @@
                                 
                                 <td style="padding-right: 10px;">{{event.responsable.firstName}} {{event.responsable.lastName}}</td>
                                 <td > {{event.eventStart}}</td>
-                                <td class="status"><span *ngIf="isEventActive(event.eventStart)" class="active">Soon to Happen</span>
-                                <span *ngIf="!isEventActive(event.eventStart)" class="waiting">Already Happened</span>
-                                <span *ngIf="isEndActive(event.eventStart,event.eventEnd)" class="alert">Happening Now</span></td>
+                                <td class="status"><span [hidden]="isgoing(event.eventStart)" class="active">Soon to Happen</span>
+                                <span [hidden]="!isalready(event.eventEnd)" class="waiting">Already Happened</span>
+                            <span [hidden]="!ishappening(event.eventStart,event.eventEnd)" class="alert">Happening Now</span></td>
                                 <td style="padding-left: 70px;padding-bottom: 15px;" > <p *ngIf="event.attendies"> {{event.maxAttend-(event.attendies.length)}}</p>
                                 <p *ngIf="event.attendies==null"> {{event.maxAttend-0}}</p></td>                                
                                 <td>
@@ -114,60 +114,70 @@
                             </tr> 
                         </tbody>
                     </table>
+                    
                 </div>
-            </div>
-        </div>
+            </div>           
+        </div> 
 </div>
+                    
+<button style="padding-top: 10px;" type="button" class="btn btn-dark">Light</button>
 <ng-template #content let-modal style="z-index: 3;">
     <div class="modal-header">
         <h6 class="modal-title" id="modal-basic-title">Adding a new event</h6>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body" style="width: 80%;">
-        <form>
+        <form #f1="ngForm">
             <div class="form-group">
                 <label for="eventName" >Event Name</label>
-                <input  class ="form-control" type="text" id="eventName" name="eventName" [(ngModel)]="toAddEvent.eventName" placeholder="Ex : Croissant Rouge Appreciation Day" >
+                <input required #ename="ngModel" class ="form-control" type="text" id="eventName" name="eventName" [(ngModel)]="toAddEvent.eventName" placeholder="Ex : Croissant Rouge Appreciation Day" >
+                <div *ngIf="ename.invalid && ename.touched" class="alert alert-danger mt-2">this is required !</div>
             </div>
 
             <div class="form-group">
                 <label for="infoInput" >Information about the event</label>
-                <textarea class="form-control" id="infoInput" name="eventInfo" [(ngModel)]="toAddEvent.eventInfo" placeholder="In this new idea of an event ...."> </textarea>
+                <textarea required #einfo="ngModel" class="form-control" id="infoInput" name="eventInfo" [(ngModel)]="toAddEvent.eventInfo" placeholder="In this new idea of an event ...."> </textarea>
+                <div *ngIf="einfo.invalid && einfo.touched " class="alert alert-danger mt-2">this is required !</div>
             </div>
             <div class="form-group">
                 <label for="maxInput">Maximum number of attendies</label>
-                <input type="number" class="form-control" id="maxInput" name="maxAttend" min="0" [(ngModel)]="toAddEvent.maxAttend">
+                <input  required #emax="ngModel" type="number" class="form-control" id="maxInput" name="maxAttend" min="3"  [(ngModel)]="toAddEvent.maxAttend">
+                <div *ngIf="emax.invalid && emax.touched" class="alert alert-danger mt-2">must be above 0</div>
             </div>
             <div class="form-row">
             <div class="col">
                 <label for="eventStart">Starting Date</label>
-                <input id="eventStart" class="form-control" type="date" name="eventStart" [(ngModel)]="toAddEvent.eventStart" />
+                <input required #estart="ngModel" id="eventStart" class="form-control" type="date" name="eventStart" [(ngModel)]="toAddEvent.eventStart" />
+                <div *ngIf="estart.invalid && estart.touched" class="alert alert-danger mt-2">this is required !</div>
             </div>
             <div class="col">
                 <label for="eventEnd" >Ending Date</label>
-                <input id="eventEnd" class="form-control" name="eventEnd" type="date"[(ngModel)]="toAddEvent.eventEnd" name="eventEnd" />
+                <input required #eend="ngModel" id="eventEnd" class="form-control" name="eventEnd" type="date"[(ngModel)]="toAddEvent.eventEnd" name="eventEnd" />
+                <div *ngIf="eend.invalid && eend.touched" class="alert alert-danger mt-2">this is required !</div>
             </div> 
             </div>
             <div class="form-row" style="padding-top: 10px;"> 
             <div class="col">
                 <label for="eventRes" >Responsable</label>
-                <select [(ngModel)]="eventRes" name="eventRes" class="form-control">
+                <select required #select1="ngModel"   [(ngModel)]="eventRes" name="eventRes" class="form-control">
                     <option [ngValue]="undefined" [disabled]="true">Please Choose...</option>
                     <option *ngFor="let responsable of Responsables" [ngValue]="responsable">{{responsable.firstName}} {{responsable.lastName}}</option>
                 </select>
+                <div *ngIf="select1.invalid && select1.touched" class="alert alert-danger mt-2">this is required !</div>
             </div>
             <div class="col">
             <label for="selectedValues" >Labels</label>
-            <select [(ngModel)]="selectedValues" multiple name="selectedValues" class="form-control">
+            <select #select2="ngModel" [(ngModel)]="selectedValues" multiple name="selectedValues" class="form-control">
                 
                 <option *ngFor="let label of LabelList" [ngValue]="label">{{ label.value }}</option>
             </select>
+            <div *ngIf="select2.invalid && select2.touched" class="alert alert-danger mt-2">this is required !</div>
             </div>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');saveEvent()">Save</button>
+        <button type="submit"[disabled]="f1.invalid" class="btn btn-outline-dark" (click)="modal.close('Save click');saveEvent()">Save</button>
     </div>
 </ng-template>
 
@@ -177,49 +187,58 @@
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body" style="width: 80%;">
-        <form>
+        <form #f2="ngForm">
             <div class="form-group">
                 <label for="eventName">Event Name</label>
-                <input class="form-control" type="text" id="eventName" name="eventName"
+                <input required #ename2="ngModel"  class="form-control" type="text" id="eventName" name="eventName"
                     [(ngModel)]="toUpdateEvent.eventName" placeholder="Ex : Croissant Rouge Appreciation Day">
+            <div *ngIf="ename2.invalid && ename2.touched" class="alert alert-danger mt-2">this is required !</div>
+
             </div>
 
             <div class="form-group">
                 <label for="infoInput">Information about the event</label>
-                <textarea class="form-control" id="infoInput" name="eventInfo" [(ngModel)]="toUpdateEvent.eventInfo"
+                <textarea #einfo2="ngModel" required class="form-control" id="infoInput" name="eventInfo" [(ngModel)]="toUpdateEvent.eventInfo"
                     placeholder="In this new Idea of an event, we decided to dedicate a day for our beloved members ...."> </textarea>
+            <div *ngIf="einfo2.invalid && einfo2.touched" class="alert alert-danger mt-2">this is required !</div>
             </div>
             <div class="form-group">
                 <label for="maxInput">Maximum number of attendies</label>
-                <input type="number" class="form-control" id="maxInput" name="maxAttend" min="0"
+                <input required #emax2="ngModel" type="number" class="form-control" id="maxInput" name="maxAttend" min="3"
                     [(ngModel)]="toUpdateEvent.maxAttend">
+        <div *ngIf="emax2.invalid && emax2.touched" class="alert alert-danger mt-2">this is required !</div>
             </div>
             <div class="form-row">
                 <div class="col">
                     <label for="eventStart">Starting Date</label>
-                    <input id="eventStart" class="form-control" type="date" name="eventStart"
+                    <input required #estart2="ngModel" id="eventStart" class="form-control" type="date" name="eventStart"
                         [(ngModel)]="toUpdateEvent.eventStart" />
+                        <div *ngIf="estart2.invalid && estart2.touched" class="alert alert-danger mt-2">this is required !</div>
                 </div>
                 <div class="col">
                     <label for="eventEnd">Ending Date</label>
-                    <input id="eventEnd" class="form-control" name="eventEnd" type="date"
+                    <input required #eend2="ngModel" id="eventEnd" class="form-control" name="eventEnd" type="date"
                         [(ngModel)]="toUpdateEvent.eventEnd" name="eventEnd" />
+                    <div *ngIf="eend2.invalid && eend2.touched" class="alert alert-danger mt-2">this is required !</div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="col">
                     <label for="eventRes">Responsable</label>
-                    <select [(ngModel)]="eventRes" name="eventRes" class="form-control">
+                    <select #select3="ngModel" required [(ngModel)]="eventRes" name="eventRes" class="form-control">
+                        <option [ngValue]="undefined" [disabled]="true">Please Choose...</option>
                         <option *ngFor="let responsable of Responsables" [ngValue]="responsable">
                             {{responsable.firstName}}
                             {{responsable.lastName}}</option>
                     </select>
+                    <div *ngIf="select3.invalid && select3.touched" class="alert alert-danger mt-2">this is required !</div>
                 </div>
                 <div class="col">
                     <label for="selectedValues">Labels</label>
-                    <select [(ngModel)]="selectedValues" multiple name="selectedValues" class="form-control">
+                    <select required #select4="ngModel" [(ngModel)]="selectedValues" multiple name="selectedValues" class="form-control">
                         <option *ngFor="let label of LabelList" [ngValue]="label">{{ label.value }}</option>
                     </select>
+                    <div *ngIf="select4.invalid && select4.touched" class="alert alert-danger mt-2">this is required !</div>
                 </div>
             </div>
         </form>

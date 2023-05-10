@@ -37,6 +37,18 @@ export class EventDashComponent implements OnInit {
       toast.addEventListener('mouseleave', Swal.resumeTimer);
     },
   });
+  Toast2 = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    showCloseButton: true,
+    timer: 99999,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    },
+  });
   eventCalender: CalEvent[] = [
     {
       title: 'Helloooooo',
@@ -48,6 +60,11 @@ export class EventDashComponent implements OnInit {
 
   calendarOptions: CalendarOptions = {
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
+    eventContent: function (info) {
+      return {
+        html: `<div>${info.event.title}</div>`,
+      };
+    },
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
@@ -58,7 +75,7 @@ export class EventDashComponent implements OnInit {
     weekends: true,
     editable: true,
     eventClick(arg) {
-      const ider = arg.event.id;
+      console.log(arg.event.title);
     },
     themeSystem: 'bootstrap5',
     selectable: true,
@@ -89,7 +106,7 @@ export class EventDashComponent implements OnInit {
     labels: [],
     attendies: [],
     responsable: this.eventRes,
-    maxAttend: 0,
+    maxAttend: 3,
   };
   closeResult = '';
   toUpdateEvent: Event = {
@@ -104,9 +121,9 @@ export class EventDashComponent implements OnInit {
   };
 
   toAddLabel: label = {
-    LabelId: undefined,
+    labelId: undefined,
     value: '',
-    Subscribers: [],
+    subscribers: [],
   };
   LabelList!: label[];
   todaysDate: Date = new Date();
@@ -129,12 +146,28 @@ export class EventDashComponent implements OnInit {
     this.getlabels();
     this.getHighUsers();
   }
+
   changeView(x: boolean) {
     this.viewMode = x;
   }
-  isEventActive(eventStart: Date): boolean {
-    return new Date(eventStart) > this.todaysDate;
+  isgoing(eventStart: Date): boolean {
+    /*console.log(eventStart);
+    console.log(new Date());
+    console.log(eventStart > new Date());
+    let b: boolean = eventStart > new Date();*/
+    const dater = new Date(eventStart);
+    return dater < this.todaysDate;
   }
+  isalready(eventEnd: Date): boolean {
+    const dater = new Date(eventEnd);
+    return dater < this.todaysDate;
+  }
+  ishappening(eventStart: Date, eventEnd: Date): boolean {
+    const dater = new Date(eventStart);
+    const dater2 = new Date(eventEnd);
+    return dater < this.todaysDate && dater2 > this.todaysDate;
+  }
+
   open(content: any) {
     this.modalService.open(content, { centered: true });
   }
@@ -143,7 +176,9 @@ export class EventDashComponent implements OnInit {
       .deleteEvent('http://localhost:8082/event/' + event.eventId, this.token)
       .subscribe(
         (response: any) => {
-          this.getEvents();
+          this.getEvents;
+          console.log('arrived here', response);
+          location.reload();
         },
         (error) => {
           if (error.error?.message) {
@@ -153,6 +188,15 @@ export class EventDashComponent implements OnInit {
       );
   }
   postEvent() {
+    /* this.Toast2.fire({
+      title: 'Event is being created!',
+      html: 'Please hold on while we create your event',
+      timer: 99999,
+      timerProgressBar: true,
+      didOpen: () => {
+        this.Toast.showLoading();
+      },
+    });*/
     this.eventService
       .postEvent(
         'http://localhost:8082/event/postevent',
@@ -180,7 +224,7 @@ export class EventDashComponent implements OnInit {
       .subscribe(
         (response: any) => {
           this.EventList = response;
-          this.calevents = this.lister();
+          return (this.calevents = this.lister());
           console.log('testing cal events:', this.calevents);
         },
         (error) => {
@@ -289,13 +333,13 @@ export class EventDashComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.deleteEvent(event);
+        this.ngOnInit();
         this.Toast.fire({
           icon: 'success',
           title: 'Event Has Been Deleted',
         });
       }
     });
-    this.ngOnInit();
   }
   setupdate(event: Event) {
     this.toUpdateEvent = event;
@@ -326,8 +370,11 @@ export class EventDashComponent implements OnInit {
     console.log('Logger testing responsable : ', this.eventRes);
   }
   moreInfo(E: Event) {
-    let path: string = '/member/main/event/' + E.eventId;
-    this.router.navigate([path]);
+    let currentPath: string = this.router.routerState.snapshot.url;
+    if (currentPath.includes('admin'))
+      //let path: string = '/member/main/event/' + E.eventId;
+      this.router.navigate(['admin/event', E.eventId]);
+    else this.router.navigate(['member/main/event', E.eventId]);
   }
   assignUpdate(E: Event) {
     this.selectedValues = E.labels;
@@ -352,34 +399,36 @@ export class EventDashComponent implements OnInit {
 
     if (label) {
       const lbX = this.LabelList.find((l) => l.value === label.toString());
-      Swal.fire({
-        icon: 'error',
-        title: 'Already Exists',
-        text: "There's a Label with that name already",
-      });
-
-      this.toAddLabel.value = label.toString();
-      this.eventService
-        .addLabel(
-          'http://localhost:8082/event/addlabel',
-          this.toAddLabel,
-          this.token
-        )
-        .subscribe(
-          (response: any) => {
-            this.Toast.fire({
-              icon: 'success',
-              title: 'Label Added successfully',
-            });
-            console.log(response);
-            this.getlabels();
-          },
-          (error) => {
-            if (error.error?.message) {
-              alert(error.error.message);
+      if (lbX) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Already Exists',
+          text: "There's a Label with that name already",
+        });
+      } else {
+        this.toAddLabel.value = label.toString();
+        this.eventService
+          .addLabel(
+            'http://localhost:8082/event/addlabel',
+            this.toAddLabel,
+            this.token
+          )
+          .subscribe(
+            (response: any) => {
+              this.Toast.fire({
+                icon: 'success',
+                title: 'Label Added successfully',
+              });
+              console.log(response);
+              this.getlabels();
+            },
+            (error) => {
+              if (error.error?.message) {
+                alert(error.error.message);
+              }
             }
-          }
-        );
+          );
+      }
     }
   }
 
@@ -396,10 +445,7 @@ export class EventDashComponent implements OnInit {
     if (label) {
       const selectedLabel = this.LabelList[label];
       console.log(selectedLabel);
-      this.Toast.fire({
-        icon: 'success',
-        title: 'Label Has Been Deleted',
-      });
+
       this.eventService
         .deleteLabel(
           'http://localhost:8082/event/labeldel',
@@ -409,13 +455,19 @@ export class EventDashComponent implements OnInit {
         .subscribe(
           (response: any) => {
             console.log(response);
-
-            this.ngOnInit();
+            this.Toast.fire({
+              icon: 'success',
+              title: 'Label Has Been Deleted',
+            });
+            location.reload();
           },
           (error) => {
             if (error.error?.message) {
               alert(error.error.message);
             }
+          },
+          () => {
+            location.reload();
           }
         );
       this.getlabels();
@@ -453,7 +505,7 @@ export class EventDashComponent implements OnInit {
 
     for (const event of this.EventList) {
       const calEvent: CalEvent = {
-        title: event?.eventId?.toString()!,
+        title: event?.eventName?.toString()!,
         start: event.eventStart,
         end: event.eventEnd,
         evId: event.eventId!,

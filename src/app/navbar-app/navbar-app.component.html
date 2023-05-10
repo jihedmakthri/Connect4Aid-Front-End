@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #ed4652;">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #ff5722;">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
             <img src="../../assets/Connect4Aid-removebg-preview.png" alt="logo" class="img">
@@ -32,7 +32,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <button class="btn btn-outline-light" [disabled]="disable" routerLink="usersDetails" routerLinkActive="true" type="button">Dashboard</button>
+                    <button class="btn btn-outline-light" [hidden]="disable" routerLink="usersDetails" routerLinkActive="true" type="button">Dashboard</button>
                 </li>
             </ul>
             <form class="d-flex">

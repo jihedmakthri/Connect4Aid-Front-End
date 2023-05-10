@@ -11028,6 +11028,18 @@ h5,
     background: #f2be1d;
 }
 
+
+.table tbody td.status .alert {
+    background: #b1e6ec;
+    color: #06558e;
+}
+
+.table tbody td.status .alert:after {
+    background: #b1e6ec;
+}
+
+
+
 .table tbody td.status .fatal {
     background: #eb624d;
     color: #ff0000;
