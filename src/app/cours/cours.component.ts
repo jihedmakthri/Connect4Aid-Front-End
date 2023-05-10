@@ -50,7 +50,7 @@ export class CoursComponent implements OnInit {
 
 
 
-    this.http.get<any>(`http://localhost:8082/user/get/${this.userid}`,
+    this.http.get<any>(`http://52.226.233.18:8082/user/get/${this.userid}`,
     
     {
       headers: new HttpHeaders({
@@ -83,7 +83,7 @@ export class CoursComponent implements OnInit {
       console.log(this.formationId)
     });
     
-    this.http.get<Cours[]>(`http://localhost:8082/formation/cours/${this.formationId}`,
+    this.http.get<Cours[]>(`http://52.226.233.18:8082/formation/cours/${this.formationId}`,
   
     {
       headers: new HttpHeaders({
@@ -108,7 +108,7 @@ export class CoursComponent implements OnInit {
 
 
       getquiz(formationId: number) {
-        this.http.get<Quiz>(`http://localhost:8082/${this.formationId}/quiz/`,
+        this.http.get<Quiz>(`http://52.226.233.18:8082/${this.formationId}/quiz/`,
 
         {
           headers: new HttpHeaders({
@@ -196,7 +196,7 @@ export class CoursComponent implements OnInit {
              'Authorization': 'Bearer ' + localStorage.getItem('token')
            });
          
-           this.http.post('http://localhost:8082/noteF?noteF=' +quizScore, {}, { headers: headers }).subscribe(() => {
+           this.http.post('http://52.226.233.18:8082/noteF?noteF=' +quizScore, {}, { headers: headers }).subscribe(() => {
              console.log('Note saved successfully');
              
            }, error => {
@@ -231,7 +231,7 @@ export class CoursComponent implements OnInit {
 //     confirmButtonText: 'Yes, delete it!'
 //   }).then((result) => {
 //     if (result.isConfirmed) {
-//       this.http.post('http://localhost:8082/delete_q?idf=' + id, {}, { headers: headers }).subscribe(() => {
+//       this.http.post('http://52.226.233.18:8082/delete_q?idf=' + id, {}, { headers: headers }).subscribe(() => {
 //         console.log('Post deleted successfully');
 //         Swal.fire(
 //           'Deleted!',
@@ -257,7 +257,7 @@ onAddQ(formationIdLong: number) {
     'Authorization': 'Bearer ' + localStorage.getItem('token')
   });
 
-  const url = `http://localhost:8082/add/quiz/${formationIdLong}`;
+  const url = `http://52.226.233.18:8082/add/quiz/${formationIdLong}`;
   this.http.post(url, this.quiz, { headers: headers })
     .subscribe(response => {
       this.quiz=new Quiz
@@ -277,7 +277,7 @@ onAddQ(formationIdLong: number) {
 
    
 openPDF(pdfUrl: string): void {
-  const fullUrl = `http://localhost:4200/member/main/${pdfUrl}`;
+  const fullUrl = `http://52.226.233.18:4200/member/main/${pdfUrl}`;
   window.open(fullUrl, '_blank');
 }
 

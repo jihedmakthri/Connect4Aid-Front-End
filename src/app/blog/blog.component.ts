@@ -46,7 +46,7 @@ body!:string
 
   ngOnInit(): void {
     ////all the formation
-      this.http.get<Formation[]>('http://localhost:8082/formation',
+      this.http.get<Formation[]>('http://52.226.233.18:8082/formation',
       
       {
         headers: new HttpHeaders({
@@ -67,7 +67,7 @@ body!:string
 
 
   //get the all user info
-    this.http.get<any>(`http://localhost:8082/user/get/${this.userid}`,
+    this.http.get<any>(`http://52.226.233.18:8082/user/get/${this.userid}`,
     
     {
       headers: new HttpHeaders({
@@ -83,7 +83,7 @@ body!:string
 
 //get all the pub+coment
     
-    this.http.get<Publication[]>('http://localhost:8082/pub', {
+    this.http.get<Publication[]>('http://52.226.233.18:8082/pub', {
       headers: new HttpHeaders({
         'Authorization' : 'Bearer ' + localStorage.getItem('token')
       })
@@ -118,7 +118,7 @@ onSubmit() {
   if(this.body!=null){
   formData.append('body', this.body);
   }
-  this.http.post<Publication>('http://localhost:8082/pub', formData, {
+  this.http.post<Publication>('http://52.226.233.18:8082/pub', formData, {
     headers: new HttpHeaders({
       'Authorization': 'Bearer ' + localStorage.getItem('token')
     })
@@ -138,7 +138,7 @@ onFileSelected(event: any) {
 
     getmypoint(): void {
 
-      this.http.get<number>('http://localhost:8082/pub/point', {
+      this.http.get<number>('http://52.226.233.18:8082/pub/point', {
         headers: new HttpHeaders({
           'Authorization' : 'Bearer ' + localStorage.getItem('token')
         })
@@ -153,7 +153,7 @@ onFileSelected(event: any) {
 
 
     sort(): void {
-      this.http.get<Publication[]>('http://localhost:8082/pub/sort', {
+      this.http.get<Publication[]>('http://52.226.233.18:8082/pub/sort', {
         headers: new HttpHeaders({
           'Authorization' : 'Bearer ' + localStorage.getItem('token')
         })
@@ -172,7 +172,7 @@ addCommentToPublication(publicationId: number) {
     'Authorization': 'Bearer ' + localStorage.getItem('token')
   });
 
-  this.http.post<Comment>(`http://localhost:8082/com/${publicationId}`, this.comment, { headers: headers })
+  this.http.post<Comment>(`http://52.226.233.18:8082/com/${publicationId}`, this.comment, { headers: headers })
     .subscribe((response: Comment) => {
       // Find the publication that the comment belongs to
       const publication = this.publications.find(p => p.id === publicationId);
@@ -227,7 +227,7 @@ async onSubmit() {
 
 
   
-    this.http.post<Publication>('http://localhost:8082/pub',  formData , {
+    this.http.post<Publication>('http://52.226.233.18:8082/pub',  formData , {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       })
@@ -294,7 +294,7 @@ deletePost(id: number) {
     confirmButtonText: 'Yes, delete it!'
   }).then((result) => {
     if (result.isConfirmed) {
-      this.http.post('http://localhost:8082/pub/delete?id=' + id, {}, { headers: headers }).subscribe(() => {
+      this.http.post('http://52.226.233.18:8082/pub/delete?id=' + id, {}, { headers: headers }).subscribe(() => {
         console.log('Post deleted successfully');
         this.publications = this.publications.filter(pub => pub.id !== id);
         Swal.fire(
@@ -338,7 +338,7 @@ async updatepost(id: number) {
       'Authorization': 'Bearer ' + localStorage.getItem('token')
     });
   
-    this.http.post<Publication>(`http://localhost:8082/pub/modif/${id}`, formData, { headers }).subscribe(data => {
+    this.http.post<Publication>(`http://52.226.233.18:8082/pub/modif/${id}`, formData, { headers }).subscribe(data => {
       Swal.fire({
         position: 'center',
         icon: 'success',
