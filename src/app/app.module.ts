@@ -24,9 +24,16 @@ import { UsersDetailsComponent } from './users-details/users-details.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TestComponent } from './test/test.component';
 import { DashboardMainComponent } from './dashboard-main/dashboard-main.component';
+import { FormationComponent } from './formation/formation.component';
+import { CoursComponent } from './cours/cours.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
+import { EventDashComponent } from './event-dash/event-dash.component';
+import { EventviewComponent } from './eventview/eventview.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 @NgModule({
   declarations: [
+  
     AppComponent,
     NavbarComponent,
     HomeComponent,
