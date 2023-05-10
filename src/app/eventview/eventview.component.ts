@@ -300,6 +300,10 @@ export class EventviewComponent implements OnInit {
     } else return false;
   }
   return() {
-    this.router.navigate(['/member/main/EventDash']);
+    let currentPath: string = this.router.routerState.snapshot.url;
+    if (currentPath.includes('admin'))
+      //let path: string = '/member/main/event/' + E.eventId;
+      this.router.navigate(['admin/EventDash']);
+    else this.router.navigate(['member/main/EventDash']);
   }
 }

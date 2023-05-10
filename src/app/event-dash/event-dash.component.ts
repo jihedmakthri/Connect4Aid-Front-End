@@ -11,6 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { User } from '../model/user';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 interface CalEvent {
   title: string;
   start: Date;
@@ -24,6 +25,7 @@ interface CalEvent {
 })
 export class EventDashComponent implements OnInit {
   EventList!: Event[];
+  currentUser!: number;
   calevents!: CalEvent[];
   Toast = Swal.mixin({
     toast: true,
@@ -58,36 +60,6 @@ export class EventDashComponent implements OnInit {
     },
   ];
 
-  calendarOptions: CalendarOptions = {
-    plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
-    eventContent: function (info) {
-      return {
-        html: `<div>${info.event.title}</div>`,
-      };
-    },
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
-    },
-    initialView: 'dayGridMonth',
-    events: this.calevents, // alternatively, use the `events` setting to fetch from a feed
-    weekends: true,
-    editable: true,
-    eventClick(arg) {
-      console.log(arg.event.title);
-    },
-    themeSystem: 'bootstrap5',
-    selectable: true,
-    selectMirror: true,
-    //eventClick:WhenClickingOneventInsidetheCalender,
-    dayMaxEvents: true,
-    /* you can update a remote database when these fire:
-    eventAdd:
-    eventChange:
-    eventRemove:
-    */
-  };
   labelPhrase!: string;
   eventRes!: User;
   isCollapsed = true;
@@ -132,12 +104,48 @@ export class EventDashComponent implements OnInit {
     private modalService: NgbModal,
     private cdr: ChangeDetectorRef,
     private router: Router,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private jwtHelper: JwtHelperService
   ) {}
+  calendarOptions: CalendarOptions = {
+    plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
+    eventContent: function (info) {
+      return {
+        html: `<div>${info.event.title}</div>`,
+      };
+    },
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
+    },
+    initialView: 'dayGridMonth',
+    events: this.calevents, // alternatively, use the `events` setting to fetch from a feed
+    weekends: true,
+    editable: true,
+
+    //this.navigater(arg.event.extendedProps.evId);
+    eventClick: this.handleEventClick.bind(this),
+
+    themeSystem: 'bootstrap5',
+    selectable: true,
+    selectMirror: true,
+    //eventClick:WhenClickingOneventInsidetheCalender,
+    dayMaxEvents: true,
+    /* you can update a remote database when these fire:
+    eventAdd:
+    eventChange:
+    eventRemove:
+    */
+  };
   viewMode: boolean = false;
   ngOnInit(): void {
     this.token = localStorage.getItem('token') || '{}';
     this.filterEndDate = new Date('2060-01-01');
+    const decodedToken = this.jwtHelper.decodeToken(
+      localStorage.getItem('token') || ''
+    );
+    this.currentUser = decodedToken.userId;
     this.filterStartDate = new Date('1999-01-01');
     this.filterName = '';
     this.emptyEvent;
@@ -146,7 +154,21 @@ export class EventDashComponent implements OnInit {
     this.getlabels();
     this.getHighUsers();
   }
-
+  handleEventClick(clickInfo: any): void {
+    const eventId = clickInfo.event.extendedProps.evId;
+    let currentPath: string = this.router.routerState.snapshot.url;
+    if (currentPath.includes('admin'))
+      //let path: string = '/member/main/event/' + E.eventId;
+      this.router.navigate(['admin/event', eventId]);
+    else this.router.navigate(['member/main/event', eventId]);
+  }
+  navigater(eventId: any) {
+    let currentPath: string = this.router.routerState.snapshot.url;
+    if (currentPath.includes('admin'))
+      //let path: string = '/member/main/event/' + E.eventId;
+      this.router.navigate(['admin/event', eventId]);
+    else this.router.navigate(['member/main/event', eventId]);
+  }
   changeView(x: boolean) {
     this.viewMode = x;
   }
@@ -224,7 +246,7 @@ export class EventDashComponent implements OnInit {
       .subscribe(
         (response: any) => {
           this.EventList = response;
-          return (this.calevents = this.lister());
+          this.calevents = this.lister();
           console.log('testing cal events:', this.calevents);
         },
         (error) => {
@@ -514,5 +536,15 @@ export class EventDashComponent implements OnInit {
       calEvents.push(calEvent);
     }
     return calEvents;
+  }
+  checkfraud(): boolean {
+    const foundUser = this.Responsables.find(
+      (user) => user.userId === this.currentUser
+    );
+    if (foundUser) {
+      return false;
+    } else {
+      return false;
+    }
   }
 }
