@@ -37,6 +37,9 @@ const routes: Routes = [
   {
     path: 'user/main', component: UserPageComponent, canActivate: [UserGuard], children: [
           { path: 'profile', component: ProfileComponent },
+          {path:'Candidates',component: ListCandidatureComponent },
+      {path:'Entretien',component: ListentretienComponent 
+}
   ]},
   { path: 'member/main', component: MemberPageComponent, canActivate: [MemberGuard] },
   { path: 'notfound', component: NotFoundComponent },

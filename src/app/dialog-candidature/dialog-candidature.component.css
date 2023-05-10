@@ -1,14 +1,30 @@
+
 mat-form-field{
-    width: 100%;
+  width: 100%;
+
+  }
+  
+  .example-radio-group {
+      display: flex;
+      flex-direction: column;
+      margin: 15px 0;
+      align-items: flex-start;
     }
     
-    .example-radio-group {
-        display: flex;
-        flex-direction: column;
-        margin: 15px 0;
-        align-items: flex-start;
-      }
-      
-      .example-radio-button {
-        margin: 5px;
-      }
+    .example-radio-button {
+      margin: 5px;
+    }
+    .my-dialog {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+    
+    .my-dialog-content {
+      width: 500px;
+      max-width: 90%;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+   

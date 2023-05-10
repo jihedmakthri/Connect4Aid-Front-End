@@ -13,15 +13,35 @@ export class ServiceCandidatureService {
 
   }
 
-  addCandidature(candidature: string, file: File): Observable<any> {const headers = new HttpHeaders({
-    'Authorization': 'Bearer ' + localStorage.getItem('token')
-  });
+
+ 
+ addCandidature(candidature: string, file: File): Observable<any> {
+    const token = localStorage.getItem('token');
+    console.log('Token:', token);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token
+    });
+    console.log('Headers:', headers);
     const formData = new FormData();
     formData.append('candidature', candidature);
     formData.append('file', file);
   
     return this.http.post<any>('/addCV', formData,{headers:headers});
   }
+  /*addCandidature(candidature: string, file: File): Observable<any> {
+    const token = localStorage.getItem('token');
+    console.log('Token:', token);
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token
+    });
+    console.log('Headers:', headers);
+    const formData = new FormData();
+    formData.append('candidature', candidature);
+    formData.append('file', file);
+  
+    return this.http.post<any>('/addCV',formData, { headers: headers });
+  }*/
+  
   
   getCandidature(){
     const headers = new HttpHeaders({
@@ -40,6 +60,7 @@ export class ServiceCandidatureService {
     });
     return this.http.post<[Candidature]>(this.urlApi+"/supp/"+id,{headers:headers});
   }
+  
 
 
 

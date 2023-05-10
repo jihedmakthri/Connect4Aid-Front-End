@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import{Entretien} from '../model/entretien';
 import{Candidature} from '../model/Candidature';
 import {Observable} from "rxjs";
@@ -19,35 +19,70 @@ export class EntretienService {
     return this.http.post<any>("http://localhost:8082/test/newE",data);
 
   }*/
-  addentretien(Entretien: string): Observable<any> {
+  addentretien(Entretien: string): Observable<any> {const headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + localStorage.getItem('token')
+  });
     const formData = new FormData();
     formData.append('entretien', Entretien);
     
-    return this.http.post<any>("http://localhost:8082/newE", formData);
+    return this.http.post<any>("http://localhost:8082/newE", formData,{headers:headers});
   }
 
-  getentretien(){
+  getentretien(){const token = localStorage.getItem('token');
+  console.log('Token:', token);
+  const headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + token
+  });
+    console.log('Headers:', headers);
 
-  return this.http.get<any>("http://localhost:8082/FindAllE");
+  return this.http.get<any>("http://localhost:8082/FindAllE",{headers:headers});
   }
   
-  deleteentretien(id:number):Observable<Entretien[]>{
-    return this.http.delete<[Entretien]>(this.urlApi+"/suppE/"+id);
+  deleteentretien(id:number):Observable<Entretien[]>{const token = localStorage.getItem('token');
+  console.log('Token:', token);
+  const headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + token
+  });
+    console.log('Headers:', headers);
+    return this.http.post<[Entretien]>(this.urlApi+"/suppE/"+id,{headers:headers});
   }
 
-  updateentretien(data:any,id:number){
-    return this.http.put<any>("http://localhost:8082/updateE/"+id,data );
+  updateentretien(data:any,id:number){const token = localStorage.getItem('token');
+  console.log('Token:', token);
+  const headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + token
+  });
+    console.log('Headers:', headers);
+    return this.http.post<any>("http://localhost:8082/updateE/"+id,data ,{headers:headers});
   }
   
   getentretienById(id:number){
-    return this.http.get<Entretien>(this.urlApi+"/getByIdE/"+id);
+    const token = localStorage.getItem('token');
+   console.log('Token:', token);
+   const headers = new HttpHeaders({
+     'Authorization': 'Bearer ' + token
+   });
+     console.log('Headers:', headers);
+    return this.http.get<Entretien>(this.urlApi+"/getByIdE/"+id,{headers:headers});
   }
   
   assignEntToCand(entretien: Entretien, idCandidate: number) {
-    return this.http.post<any>(`http://localhost:8082/assignEntToCand/${idCandidate}`, entretien);
+    const token = localStorage.getItem('token');
+   console.log('Token:', token);
+   const headers = new HttpHeaders({
+     'Authorization': 'Bearer ' + token
+   });
+     console.log('Headers:', headers);
+    return this.http.post<any>(`http://localhost:8082/assignEntToCand/${idCandidate}`, entretien,{headers:headers});
   }
   findAllCandidatesNotAssign(): Observable<Candidature[]> {
-    return this.http.get<Candidature[]>("http://localhost:8082/FindAllCandidatesNotAssign/");
+    const token = localStorage.getItem('token');
+   console.log('Token:', token);
+   const headers = new HttpHeaders({
+     'Authorization': 'Bearer ' + token
+   });
+     console.log('Headers:', headers);
+    return this.http.get<Candidature[]>("http://localhost:8082/FindAllCandidatesNotAssign/",{headers:headers});
   }
 }
 
