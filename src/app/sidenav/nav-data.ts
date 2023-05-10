@@ -1,9 +1,5 @@
 export const navbarData = [
-    {
-        routeLink: 'blog',
-        icon: 'fal fa-home', 
-        label: 'Acceuil'
-    },
+   
     {
         routeLink: 'home',
         icon: 'fal fa-home',
@@ -19,15 +15,11 @@ export const navbarData = [
         icon: 'fal fa-address-card',
         label: 'Candidates'
     },
+   
     {
-        routeLink: 'pages',
+        routeLink: 'formation',
         icon: 'fal fa-file',
-        label: 'Pages'
-    },
-    {
-        routeLink: 'media',
-        icon: 'fal fa-camera',
-        label: 'Media'
+        label: 'Fomration'
     },
     {
         routeLink: 'settings',

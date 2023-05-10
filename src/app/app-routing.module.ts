@@ -17,6 +17,8 @@ import { TestComponent } from './test/test.component';
 import { DashboardMainComponent } from './dashboard-main/dashboard-main.component';
 import { EventDashComponent } from './event-dash/event-dash.component';
 import { EventviewComponent } from './eventview/eventview.component';
+import { FormationComponent } from './formation/formation.component';
+import { CoursComponent } from './cours/cours.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -42,13 +44,15 @@ const routes: Routes = [
     children: [{ path: 'profile', component: ProfileComponent }],
   },
   {
-    path: 'member/main',
-    component: MemberPageComponent,
-    children: [
-      { path: 'EventDash', component: EventDashComponent },
-      { path: 'event/:id', component: EventviewComponent },
-    ],
-  },
+    path: 'user/main', component: UserPageComponent, canActivate: [UserGuard], children: [
+          { path: 'profile', component: ProfileComponent },
+  ]},
+  { path: 'member/main', component: MemberPageComponent, canActivate: [MemberGuard],children:[
+    { path: 'formation', component: FormationComponent,canActivate: [MemberGuard] },
+    { path: 'EventDash', component: EventDashComponent },
+    { path: 'event/:id', component: EventviewComponent },] },
+  
+  { path: 'member/main/formation/cour/:idf', component: CoursComponent,canActivate: [MemberGuard] },
   { path: 'notfound', component: NotFoundComponent },
 
   { path: '**', component: NotFoundComponent },

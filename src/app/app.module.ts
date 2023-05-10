@@ -24,9 +24,7 @@ import { UsersDetailsComponent } from './users-details/users-details.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TestComponent } from './test/test.component';
 import { DashboardMainComponent } from './dashboard-main/dashboard-main.component';
-import { EventDashComponent } from './event-dash/event-dash.component';
-import { EventviewComponent } from './eventview/eventview.component';
-import { FullCalendarModule } from '@fullcalendar/angular';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,10 +45,10 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     ProfileComponent,
     TestComponent,
     DashboardMainComponent,
-    EventviewComponent,
-    EventDashComponent,
+    
   ],
   imports: [
+    NgxExtendedPdfViewerModule,
     BrowserModule,
     AppRoutingModule,
     NgbModule,

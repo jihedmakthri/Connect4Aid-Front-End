@@ -1,0 +1,237 @@
+
+   
+
+    <!-- Header Start -->
+    <div class="container-fluid page-header" style="margin-bottom: 90px;">
+        <div class="container">
+            <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
+                <h3 class="display-4 text-white text-uppercase">Formation</h3>
+                <div class="d-inline-flex text-white">
+                    <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
+                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                    <p class="m-0 text-uppercase">Formation</p>
+                </div>
+            </div>       
+        </div>    
+    </div>
+   
+   
+    
+
+     <!-- formulaire POST -->
+
+     <button  *ngIf="usersession.role==x"  type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal" >Add Formation</button>
+
+
+     <div style="z-index: 999999;" class="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true" aria-disabled="false">
+      <!-- Scrollable modal -->
+      <div class="modal-dialog modal-dialog-scrollable">
+ 
+         <div class="modal-content">
+           <div class="modal-header">
+             <h1 class="modal-title fs-5" id="exampleModalLabel">ADD FORMATION</h1>
+             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+           </div>
+     
+           <div class="modal-body">
+             <form (ngSubmit)="onSubmit()">
+               <div class="mb-3">
+                 <label for="recipient-name" class="col-form-label">Title :</label>
+                 <input type="text" class="form-control" id="title" name="title" [(ngModel)]="title" #t>
+               </div>
+               <div class="mb-3">
+                 <label for="recipient-name" class="col-form-label">Date Debut :</label>
+                 <input type="date" class="form-control" id="dateDebut"  name="dateDebut" [(ngModel)]="dateDebut" #dd>
+               </div>
+               <div class="mb-3">
+                 <label for="recipient-name" class="col-form-label">Date Fin :</label>
+                 <input type="date" class="form-control" id="dateFin"  name="dateFin" [(ngModel)]="dateFin" #df >
+               </div>
+               <div class="mb-3">
+                 <label for="recipient-name" class="col-form-label">Upload Image :</label>
+                 <input type="file"  type="file" (change)="onFileSelected($event)" class="form-control" id="title" name="image" [(ngModel)]="image" #img>
+               </div>
+                <div class="mb-3">
+                 <label for="recipient-name" class="col-form-label">Owner :</label>
+                 <input type="text" class="form-control" id="owner"  name="owner" [(ngModel)]="owner" #ow>
+               </div> 
+               <div class="mb-3">
+                 <label for="recipient-name" class="col-form-label">Choose a Place :</label>
+                 <input type="text" class="form-control" id="place"  name="place" [(ngModel)]="place" #pl>
+               </div>
+                 <div class="mb-3">
+                 <label for="recipient-name" class="col-form-label">Description :</label>
+                 <input type="textarea" class="form-control" id="description" name="description"[(ngModel)]="description" #desc>
+               </div> 
+            
+               <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Categorie :</label>
+                <select class="form-control" (change)="onOptionSelected($event)">
+                  <option value="" selected>--Select an Option--</option>
+                  <option value="AUTOMOBILE">AUTOMOBILE</option>
+                  <option value="INFORMATIQUE">INFORMATIQUE</option>
+                  <option value="GENIE_CIVIL">GENIE CIVIL</option>
+                  <option value="ELECTRONIQUE">ELECTRONIQUE</option>
+                  <option value="ENERGITIQUE">ENERGITIQUE</option>
+                  <option value="MECATRONIQUE">MECATRONIQUE</option>
+                </select>
+                 </div>
+               
+             
+             <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+             <button type="button submit" [disabled]="t.value ==''||dd.value =='' ||df.value ==
+             ''||ow.value =='' ||pl.value ==''||desc.value ==''||img.value ==''" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Add</button>
+           
+           </div>
+            </form>
+           </div>
+         </div>
+       </div>
+     </div> 
+
+    
+             <!-- Category Start -->
+             
+    <div class="container-fluid py-5">
+        <div class="container pt-5 pb-3">
+            <div class="text-center mb-5">
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Types</h5>
+                <h1>Explore Type Formation</h1>
+                
+                <a class="rounded overflow-hidden mb-2"*ngFor="let lists of list" >
+                  <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#typeF"style="margin :5px;background-color:#f44336;padding: 13px 28px" (click)="getbytypeforamtion(lists)"  >{{lists}}</button>
+                  </a>
+            
+        </div>
+    </div>
+   
+
+
+    <!-- Formation Start -->
+    <!-- <div class="container-fluid py-5"> -->
+        <div  class="container-fluid py-5" class="container py-5" class="text-center mb-5">
+            <!-- <div class="text-center mb-5"> -->
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Formations</h5>
+                <h1>Our Popular Formations</h1>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4" *ngFor="let formations of formation" >
+                
+          <div (click)="gotoFormationDetails(formations.idf)"><img class="img-fluid" [src]="'data:' + formations.imgtype + ';base64,' + formations.image" alt="Formation Image"></div>
+                    <div class="rounded overflow-hidden mb-2">
+
+
+
+<div class="bg-secondary p-4">
+                            <div class="d-flex justify-content-between mb-3">
+                              
+                                <small class="m-0"><i class="far fa-clock text-primary mr-2"></i>Date Debut : {{formations.dateDebut}} </small>
+                                <small class="m-0"><i class="fa fa-clock text-primary mr-2"></i>Date Fin : {{formations.dateFin}} </small>
+            
+                            </div>
+                            <div>
+                            <a class="h5" >{{formations.title}}</a>
+                            <div class="h7" >{{formations.description}}</div>
+                            <div class="h7" >Categorie : {{formations.typeF}}</div>
+                            <div class="h7" >Place : {{formations.place}}</div>
+                        </div>
+                            <div class="border-top mt-4 pt-4">
+                                
+                                <div class="d-flex justify-content-between">
+                                    <small class="m-0"><i class="far fa-users text-primary mr-2"></i>Owner: {{formations.owner}}</small>
+                                    <small   *ngIf="usersession.role==x" class="m-0"><i class="far text-primary mr-2"></i><svg  xmlns="http://www.w3.org/2000/svg" color="red" width="16" height="16" fill="currentColor" class="bi bi-trash" (click)="delete(formations.idf)" viewBox="0 0 16 16" type="button">
+                                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                                    </svg></small>
+
+                                    
+                                    
+    <!-- update formation   -->
+    <div #d>
+    
+    </div>
+    <small   *ngIf="usersession.role==x"  class="m-0"><i class="far  text-primary mr-2"></i><svg xmlns="http://www.w3.org/2000/svg" color="green" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16"  type="button" data-bs-toggle="modal" data-bs-target="#k">
+      <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+    </svg></small>
+                                    
+    
+     <div style="z-index: 999999;" class="modal fade" id="k" aria-labelledby="exampleModalLabel" aria-hidden="true" aria-disabled="false">
+      <!-- Scrollable modal -->
+   <div class="modal-dialog modal-dialog-scrollable">
+ 
+         <div class="modal-content">
+           <div class="modal-header">
+             <h1 class="modal-title fs-5" id="kLabel">Update Formation</h1>
+             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+           </div>
+     
+           <div class="modal-body">
+             <form >
+               <div class="mb-3">
+                 <label for="recipient-name" class="col-form-label">Title :</label>
+                 <input type="text" class="form-control" id="title" name="title" [(ngModel)]="title">
+               </div>
+               <div class="mb-3">
+                 <label for="recipient-name" class="col-form-label">Date Debut :</label>
+                 <input type="date" class="form-control" id="dateDebut"  name="dateDebut" [(ngModel)]="dateDebut">
+               </div>
+            
+               <div class="mb-3">
+                 <label for="recipient-name" class="col-form-label">Upload Image :</label>
+                 <input type="file"  type="file" (change)="onFileSelected($event)" class="form-control" id="title" name="image" [(ngModel)]="image">
+               </div>
+                <div class="mb-3">
+                 <label for="recipient-name" class="col-form-label">Owner :</label>
+                 <input type="text" class="form-control" id="owner"  name="owner" [(ngModel)]="owner">
+               </div> 
+             
+            
+             <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+             <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#k" (click) ="update(formations.idf)"  > update</button>
+             </div>
+            </form>
+           </div>
+         </div>
+       </div>
+     </div> 
+
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- formation End -->
+
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+
+
+
+
+ 
+    
+
+   
+
+
+
+
+
+
+   
+     
+
+    
