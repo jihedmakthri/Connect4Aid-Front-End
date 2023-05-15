@@ -41,6 +41,7 @@ const routes: Routes = [
     canActivate: [AdminGuard],
     children: [
       { path: '', redirectTo: 'blog', pathMatch: 'full' },
+      { path: 'formation', component: FormationComponent },
       { path: 'blog', component: BlogComponent },
       { path: 'usersDetails', component: UsersDetailsComponent },
       { path: 'profile', component: ProfileComponent },
@@ -70,7 +71,7 @@ const routes: Routes = [
          
   ]},
   { path: 'member/main', component: MemberPageComponent, canActivate: [MemberGuard],children:[
-      { path: 'formation', component: FormationComponent,canActivate: [MemberGuard] },
+      { path: 'formation', component: FormationComponent },
       { path: '', redirectTo: 'blog', pathMatch: 'full' },
       { path: 'profile', component: ProfileComponent },
       { path: 'blog', component: BlogComponent },

@@ -41,7 +41,7 @@ description!: string;
 idz!:any;
 list:typeF[]=[]
  
-x:String="Technitial_MEMBER"
+x:String="ADMIN"
 
 
 usersession:any;
